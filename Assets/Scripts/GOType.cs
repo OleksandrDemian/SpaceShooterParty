@@ -1,5 +1,6 @@
 ﻿public enum GOType {
     ASTEROID,
     LASER,
-    SHIP
+    SHIP,
+    MISSILE
 }

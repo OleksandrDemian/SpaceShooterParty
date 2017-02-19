@@ -12,9 +12,6 @@ public class Asteroid : MonoBehaviour, IDamagable, IPoolable {
         health = new Attribute(AttributeType.HEALTH, 50);
         health.onValueChange = OnHealthChanged;
 
-        Get = this.gameObject;
-        Type = GOType.ASTEROID;
-
         rb = GetComponent<Rigidbody2D>();
         direction = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
         speed = Random.Range(1, 5);
@@ -57,13 +54,17 @@ public class Asteroid : MonoBehaviour, IDamagable, IPoolable {
 
     public GOType Type
     {
-        get;
-        private set;
+        get
+        {
+            return GOType.ASTEROID;
+        }
     }
 
     public GameObject Get
     {
-        get;
-        private set;
+        get
+        {
+            return gameObject;
+        }
     }
 }

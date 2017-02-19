@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IJoystickListener
 {
     private ConnectionReader reader;
     private ShipController ship;
+    private ShipInfo shipInfo;
     private bool controllEnabled = false;
 
     private string playerName = "Nameless";
@@ -25,10 +27,20 @@ public class Player : MonoBehaviour, IJoystickListener
         reader.Write(message);
     }
 
-    public void InitializeShip()
+    public void InitializeShip(int shipNumber)
     {
         ship = GameManager.ObjectPooler.Get(GOType.SHIP).GetComponent<ShipController>();
         ship.SetPlayer(this);
+
+        if (shipInfo == null)
+            return;
+
+        Debug.Log("Ship: " + shipInfo.ToString());
+        ship.SetHealth(shipInfo.health);
+        ship.SetDamage(shipInfo.damage);
+        ship.SetSpeed(shipInfo.speed);
+        ship.SetShield(shipInfo.shield);
+        ship.SetImage(GameManager.ObjectPooler.GetShipSkin(shipInfo.shipSkin * shipNumber));
     }
 
     public void EnableControll(bool action)
@@ -60,6 +72,13 @@ public class Player : MonoBehaviour, IJoystickListener
         StartCoroutine(Respawn());
     }
 
+    public ShipController SpaceShip {
+        get
+        {
+            return ship;
+        }
+    }
+
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(2);
@@ -83,37 +102,71 @@ public class Player : MonoBehaviour, IJoystickListener
         get { return reader.ID; }
     }
 
+    public void SendRequest(Request request)
+    {
+        Write(Converter.toString(request));
+    }
+
     private void ReadCommand(string message)
     {
         if (!controllEnabled)
             return;
 
-        switch (message[1])
+        switch (Converter.toCommand(message[1]))
         {
-            case 'l':
+            case Command.TURNLEFT:
                 ship.TurnLeft();
                 break;
-            case 'r':
+            case Command.TURNRIGHT:
                 ship.TurnRight();
                 break;
-            case 's':
-                ship.Shoot();
+            case Command.FIRE:
+                ship.Fire();
                 break;
-            case 'e':
-                ship.EnableEngine(message[2] == '1' ? true : false);
+            case Command.ENGINETRIGGER:
+                ship.EngineTrigger();
                 break;
         }
     }
 
     private void ReadRequest(string message)
     {
-        switch (message[1])
+        switch (Converter.toRequest(message[1]))
         {
-            case 'n':
+            case Request.NAME:
+                if (LobbyManager.Instance == null)
+                    return;
                 name = message.Substring(2);
                 playerName = message.Substring(2);
                 LobbyManager.Instance.AddName(name);
                 break;
+            case Request.SHIPINFO:
+                GetShipInfo(message.Substring(2));
+                break;
         }
+    }
+
+    private void GetShipInfo(string message)
+    {
+        Debug.Log("ShipInfo: " + message);
+        try
+        {
+            shipInfo = new ShipInfo();
+            string[] parts = message.Split(':');
+
+            shipInfo.health = int.Parse(parts[1]);
+            shipInfo.damage = int.Parse(parts[2]);
+            shipInfo.shield = int.Parse(parts[3]);
+            shipInfo.speed = int.Parse(parts[4]);
+            shipInfo.shipSkin = int.Parse(parts[5]);
+
+            Debug.Log(shipInfo.ToString());
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Ship info generation failed");
+            Debug.Log(e.Message);
+        }
+        
     }
 }

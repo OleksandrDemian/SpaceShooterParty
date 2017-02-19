@@ -3,8 +3,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
-public class LobbyManager : MonoBehaviour {
-
+public class LobbyManager : MonoBehaviour
+{
     [SerializeField]
     private Text[] playersNames;
     [SerializeField]
