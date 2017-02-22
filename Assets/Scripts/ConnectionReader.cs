@@ -25,17 +25,20 @@ public class ConnectionReader
         writer.Flush();
     }
 
-    //float time = 0;
     public void Read()
     {
-        //time += Time.deltaTime;
-        while (stream.DataAvailable)
+        try
         {
-            string message = reader.ReadLine();
-            listener.OnMessageRead(message);
+            while (stream.DataAvailable)
+            {
+                string message = reader.ReadLine();
+                listener.OnMessageRead(message);
+            }
         }
-        //Debug.Log(time);
-        //time = 0;
+        catch
+        {
+            return;
+        }
     }
 
     public int ID
@@ -46,5 +49,12 @@ public class ConnectionReader
     public void SetJoystickListener(IJoystickListener listener)
     {
         this.listener = listener;
+    }
+
+    public void CloseConnection()
+    {
+        stream.Close();
+        reader.Close();
+        writer.Close();
     }
 }

@@ -18,13 +18,28 @@ public class Player : MonoBehaviour, IJoystickListener
 
     }
 
+    float time = 0f;
     private void Update()
     {
+        time += Time.deltaTime;
+        if (time > 1)
+        {
+            Write("p");
+            time = 0;
+        }
         reader.Read();
     }
 
     public void Write(string message) {
-        reader.Write(message);
+        try
+        {
+            reader.Write(message);
+        }
+        catch
+        {
+            Debug.Log("Player: " + playerName + " left the game");
+            CloseConnection();
+        }
     }
 
     public void InitializeShip(int shipNumber)
@@ -126,6 +141,9 @@ public class Player : MonoBehaviour, IJoystickListener
             case Command.ENGINETRIGGER:
                 ship.EngineTrigger();
                 break;
+            case Command.ABILITYTRIGGER:
+                ship.AbilityTrigger();
+                break;
         }
     }
 
@@ -167,6 +185,12 @@ public class Player : MonoBehaviour, IJoystickListener
             Debug.Log("Ship info generation failed");
             Debug.Log(e.Message);
         }
-        
+    }
+
+    private void CloseConnection()
+    {
+        ship.gameObject.SetActive(false);
+        reader.CloseConnection();
+        this.enabled = false;
     }
 }

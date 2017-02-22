@@ -11,6 +11,8 @@
                 return Command.FIRE;
             case 'e':
                 return Command.ENGINETRIGGER;
+            case 'a':
+                return Command.ABILITYTRIGGER;
         }
         return Command.NONE;
     }

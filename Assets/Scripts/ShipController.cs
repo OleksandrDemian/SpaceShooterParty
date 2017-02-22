@@ -26,6 +26,9 @@ public class ShipController : MonoBehaviour, IDamagable
         shieldSprite = transform.Find("Shield").GetComponent<SpriteRenderer>();
 
         rotationSpeed = new Attribute(AttributeType.ROTATIONSPEED, 10);
+
+        ability = new CircleFire(damage, 5, transform);
+
         /*
         speed = new Attribute(AttributeType.SPEED, 500);
         rotationSpeed = new Attribute(AttributeType.ROTATIONSPEED, 10);
