@@ -6,8 +6,9 @@ public class Player : MonoBehaviour, IJoystickListener
 {
     private ConnectionReader reader;
     private ShipController ship;
-    private ShipInfo shipInfo;
     private bool controllEnabled = false;
+
+    private ShipInfo shipInfo;
 
     private string playerName = "Nameless";
     public int kill = 0;
@@ -18,7 +19,7 @@ public class Player : MonoBehaviour, IJoystickListener
 
     }
 
-    float time = 0f;
+    private float time = 0f;
     private void Update()
     {
         time += Time.deltaTime;
@@ -51,11 +52,7 @@ public class Player : MonoBehaviour, IJoystickListener
             return;
 
         Debug.Log("Ship: " + shipInfo.ToString());
-        ship.SetHealth(shipInfo.health);
-        ship.SetDamage(shipInfo.damage);
-        ship.SetSpeed(shipInfo.speed);
-        ship.SetShield(shipInfo.shield);
-        ship.SetImage(GameManager.ObjectPooler.GetShipSkin(shipInfo.shipSkin * shipNumber));
+        shipInfo.InitializeShip(ship, shipNumber);
     }
 
     public void EnableControll(bool action)
@@ -177,6 +174,8 @@ public class Player : MonoBehaviour, IJoystickListener
             shipInfo.shield = int.Parse(parts[3]);
             shipInfo.speed = int.Parse(parts[4]);
             shipInfo.shipSkin = int.Parse(parts[5]);
+            shipInfo.abilityType = (AbilityType)int.Parse(parts[6]);
+            shipInfo.abilityLevel = int.Parse(parts[7]);
 
             Debug.Log(shipInfo.ToString());
         }

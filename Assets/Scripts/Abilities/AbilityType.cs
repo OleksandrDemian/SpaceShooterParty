@@ -1,0 +1,8 @@
+﻿public enum AbilityType
+{
+    SHIELDRECOVERY,
+    CIRCLEFIRE,
+    MISSILE,
+    FREEZEENGINE,
+    DESTROYSHIELD
+}

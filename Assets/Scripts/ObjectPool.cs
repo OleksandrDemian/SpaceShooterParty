@@ -13,6 +13,8 @@ public class ObjectPool : MonoBehaviour
     private GameObject laserPrephab;
     [SerializeField]
     private Sprite[] shipSkins;
+    [SerializeField]
+    private Sprite[] laserSkins;
 
     private void Awake() {
         allObjcets = new List<IPoolable>();
@@ -25,9 +27,17 @@ public class ObjectPool : MonoBehaviour
 
     public Sprite GetShipSkin(int index)
     {
+        Debug.Log(index);
         if (index > 15)
             return shipSkins[16];
         return shipSkins[index];
+    }
+
+    public Sprite GetLaserSkin(int index)
+    {
+        if (index > laserSkins.Length)
+            index = 0;
+        return laserSkins[index];
     }
 
     public GameObject Get(GOType type)
@@ -38,7 +48,6 @@ public class ObjectPool : MonoBehaviour
             {
                 GameObject go = allObjcets[i].Get;
                 go.SetActive(true);
-                //Debug.Log("Creo: " + allObjcets[i].Type + " instead of " + type);
                 allObjcets.Remove(allObjcets[i]);
                 return go;
             }

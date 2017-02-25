@@ -1,0 +1,2 @@
+﻿- FreezeEngine ability non funziona - n
+- Missile non funziona - n
