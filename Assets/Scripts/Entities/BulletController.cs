@@ -7,6 +7,7 @@ public class BulletController : MonoBehaviour, IPoolable {
     private Rigidbody2D rb;
     private float timer = 0f;
     private int speed = 10;
+    private Player player;
 
     private void Start ()
     {
@@ -46,6 +47,11 @@ public class BulletController : MonoBehaviour, IPoolable {
         transform.rotation = rotation;
         transform.position = position + transform.up;
         timer = 0f;
+    }
+
+    public void SetPlayer(Player player)
+    {
+        this.player = player;
     }
 
     public void SetSprite(Sprite sprite)

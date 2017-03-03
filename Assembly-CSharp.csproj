@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Connection\Request.cs" />
      <Compile Include="Assets\Scripts\Connection\Server.cs" />
      <Compile Include="Assets\Scripts\Damage.cs" />
+     <Compile Include="Assets\Scripts\DamagePopUp.cs" />
      <Compile Include="Assets\Scripts\DestroyShield.cs" />
      <Compile Include="Assets\Scripts\Entities\Asteroid.cs" />
      <Compile Include="Assets\Scripts\Entities\BulletController.cs" />
@@ -79,6 +80,9 @@
      <Compile Include="Assets\Scripts\Utils\Test.cs" />
      <None Include="Assets\KnownProblems.txt" />
      <None Include="Assets\Audio\Ships\readme.txt" />
+ <Reference Include="UnityEngine.Advertisements">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -93,6 +97,9 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Purchasing">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>

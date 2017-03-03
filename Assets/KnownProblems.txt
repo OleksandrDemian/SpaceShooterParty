@@ -1,2 +1,3 @@
-﻿- FreezeEngine ability non funziona - n
-- Missile non funziona - n
+﻿- FreezeEngine ability does't work - n
+- Missile does't work - n
+- PopUpText first time animation does't work properly - d

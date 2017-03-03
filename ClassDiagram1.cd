@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Ability">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Abilities\Ability.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CircleFire">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgBAAAAAAAAAAAAAAAIAAAAAAAAAAgAA=</HashCode>
+      <FileName>Assets\Scripts\Abilities\CircleFire.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DestroyShieldAbility">
+    <Position X="3" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAAAAAAEgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Abilities\DestroyShieldAbility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EngineFreezAbility">
+    <Position X="5.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAABAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Abilities\EngineFreezAbility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ShieldRecovery">
+    <Position X="7.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAQAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Abilities\ShieldRecovery.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Attribute">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAABACQAAQAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Attributes\Attribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConnectionManager">
+    <Position X="19.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAABAACAAQAAAAAAAAAI=</HashCode>
+      <FileName>Assets\Scripts\Connection\ConnectionManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConnectionReader">
+    <Position X="19.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAgAAAAAAAABAgAIAAAAAACQAAAAEQCgA=</HashCode>
+      <FileName>Assets\Scripts\Connection\ConnectionReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server">
+    <Position X="16.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAUIAAAAAgAAIAAAgAAAAAI=</HashCode>
+      <FileName>Assets\Scripts\Connection\Server.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Damage">
+    <Position X="3.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Damage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DamagePopUp" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAQBAAAAAAAQAAAQAAAAIAQAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DamagePopUp.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.279" Collapsed="true" />
+  </Class>
+  <Class Name="DestroyShield">
+    <Position X="5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\DestroyShield.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroid" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAAiAAIABEAAAEAAAAAAAAAQAAAQAgAAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\Entities\Asteroid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="BulletController" BaseTypeListCollapsed="true">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAiABgRBEAAAAAAAAAEAAAQABAQAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\BulletController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Missile" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAACAACAAAQBAIAAAAAAAAAAAAAAAAQAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Entities\Missile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ShipController" BaseTypeListCollapsed="true">
+    <Position X="14.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAACAMioChRAFBAMAABGgAAEEAUABAABIAgAAAAg=</HashCode>
+      <FileName>Assets\Scripts\Entities\ShipController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FreezeEngine">
+    <Position X="2" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\FreezeEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameManager">
+    <Position X="21.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAiAAACAAAAAACAAAAAAAAAAAAAAAcACAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Managers\GameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LobbyManager">
+    <Position X="10" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAIACAAAAAAAAACAAAgAAAAAEAAQAAAAgAAAIA=</HashCode>
+      <FileName>Assets\Scripts\Managers\LobbyManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjectPool">
+    <Position X="21.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAQAAACAAAAABAQAAAgAAAAIAAgIAAAAAAAACAAUA=</HashCode>
+      <FileName>Assets\Scripts\ObjectPool.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" BaseTypeListCollapsed="true">
+    <Position X="16.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAEACCGIggABAAAEAABSABAAAAAEogBAABAUQAAA=</HashCode>
+      <FileName>Assets\Scripts\Player.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ShipInfo">
+    <Position X="18" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAgEAFAAAAAAAAAIAAAQAAAAAAAAEAAAg=</HashCode>
+      <FileName>Assets\Scripts\ShipInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Converter">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAABAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Utils\Converter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Test">
+    <Position X="19.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAARAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Assets\Scripts\Utils\Test.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="IDamagable">
+    <Position X="8.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Interfaces\IDamagable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IJoystickListener">
+    <Position X="10" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Interfaces\IJoystickListener.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IPoolable">
+    <Position X="8.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Interfaces\IPoolable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="AbilityType">
+    <Position X="8.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAgAAAAACAAAAAAAAAAAAAAACAAACAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Abilities\AbilityType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AttributeType">
+    <Position X="10" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEAAEAAIAAAAAABAgA=</HashCode>
+      <FileName>Assets\Scripts\Attributes\AttributeType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Command">
+    <Position X="11.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAQBAAAIAAAAAAAAAAAAAQAABAAA=</HashCode>
+      <FileName>Assets\Scripts\Connection\Command.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Request">
+    <Position X="11.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAEAIAAAIAAEA=</HashCode>
+      <FileName>Assets\Scripts\Connection\Request.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="GOType">
+    <Position X="10" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAIBwAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\GOType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="OnValueChange">
+    <Position X="8.25" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Attributes\Attribute.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

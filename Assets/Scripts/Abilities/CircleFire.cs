@@ -19,7 +19,7 @@ class CircleFire : Ability
     public override void Trigger()
     {
         int delta = (int)(360 / qta);
-        int angle = 0;
+        int angle = (int)playerPosition.rotation.eulerAngles.z;
         for (int i = 0; i < qta; i++) {
             Quaternion rotation = Quaternion.Euler(0, 0, angle);
             GameObject laser = GameManager.ObjectPooler.Get(GOType.LASER) as GameObject;

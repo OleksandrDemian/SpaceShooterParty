@@ -15,6 +15,8 @@ public class ObjectPool : MonoBehaviour
     private Sprite[] shipSkins;
     [SerializeField]
     private Sprite[] laserSkins;
+    [SerializeField]
+    private GameObject damagePopUpPrephab;
 
     private void Awake() {
         allObjcets = new List<IPoolable>();
@@ -60,6 +62,8 @@ public class ObjectPool : MonoBehaviour
                 return Instantiate(shipPrephab);
             case GOType.LASER:
                 return Instantiate(laserPrephab);
+            case GOType.DAMAGEPOPUP:
+                return Instantiate(damagePopUpPrephab);
         }
         return null;
     }

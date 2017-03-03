@@ -2,5 +2,6 @@
     ASTEROID,
     LASER,
     SHIP,
-    MISSILE
+    MISSILE,
+    DAMAGEPOPUP
 }

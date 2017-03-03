@@ -51,6 +51,8 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
     public void Damage(int amount)
     {
         health.Value -= amount;
+        DamagePopUp popup = GameManager.ObjectPooler.Get(GOType.DAMAGEPOPUP).GetComponent<DamagePopUp>();
+        popup.Initialize(transform.position, amount.ToString(), Color.white);
     }
 
     public GOType Type

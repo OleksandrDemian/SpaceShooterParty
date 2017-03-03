@@ -27,6 +27,13 @@ public class ShipController : MonoBehaviour, IDamagable
 
         rotationSpeed = new Attribute(AttributeType.ROTATIONSPEED, 10);
 
+#if UNITY_EDITOR
+        SetDamage(10);
+        SetHealth(20);
+        SetShield(3);
+        SetSpeed(500);
+#endif
+
         EnableEngine(false);
     }
 
@@ -35,8 +42,19 @@ public class ShipController : MonoBehaviour, IDamagable
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotationTarget), rotationSpeed.Value * Time.deltaTime);
         GameManager.Instance.CheckPosition(transform);
 
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.A))
+            TurnLeft();
+
+        if (Input.GetKeyDown(KeyCode.D))
+            TurnRight();
+
         if (Input.GetKeyDown(KeyCode.F))
-            AbilityTrigger();
+            Fire();
+
+        if (Input.GetKeyDown(KeyCode.W))
+            EngineTrigger();
+#endif
     }
 
     private void FixedUpdate()
@@ -98,6 +116,7 @@ public class ShipController : MonoBehaviour, IDamagable
         BulletController controller = bullet.GetComponent<BulletController>();
         controller.Initialize(transform.position, transform.rotation, new Damage(damage.Value));
         controller.SetSprite(GameManager.ObjectPooler.GetLaserSkin(0));
+        controller.SetPlayer(player);
     }
 
     public void AbilityTrigger()
@@ -132,13 +151,16 @@ public class ShipController : MonoBehaviour, IDamagable
 
     public void Damage(int amount)
     {
+        DamagePopUp popup = GameManager.ObjectPooler.Get(GOType.DAMAGEPOPUP).GetComponent<DamagePopUp>();
         if (shield.Value > 0)
         {
             shield.Value--;
+            popup.Initialize(transform.position, "1", Color.blue);
         }
         else
         {
             health.Value -= amount;
+            popup.Initialize(transform.position, amount.ToString(), Color.red);
         }
     }
 
