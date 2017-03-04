@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine;
 
+public delegate void OnConnectionClose(Player player);
+
 public class Player : MonoBehaviour, IJoystickListener
 {
     private ConnectionReader reader;
@@ -13,6 +15,7 @@ public class Player : MonoBehaviour, IJoystickListener
     private string playerName = "Nameless";
     public int kill = 0;
     public int dead = 0;
+    public OnConnectionClose onConnectionClose;
 
     private void Start()
     {
@@ -53,6 +56,7 @@ public class Player : MonoBehaviour, IJoystickListener
 
         Debug.Log("Ship: " + shipInfo.ToString());
         shipInfo.InitializeShip(ship, shipNumber);
+        onConnectionClose = null;
     }
 
     public void EnableControll(bool action)
@@ -89,6 +93,11 @@ public class Player : MonoBehaviour, IJoystickListener
         {
             return ship;
         }
+    }
+
+    public ConnectionReader Connection
+    {
+        get { return reader; }
     }
 
     private IEnumerator Respawn()
@@ -188,8 +197,11 @@ public class Player : MonoBehaviour, IJoystickListener
 
     private void CloseConnection()
     {
-        ship.gameObject.SetActive(false);
-        reader.CloseConnection();
-        this.enabled = false;
+        if(onConnectionClose != null)
+            onConnectionClose(this);
+
+        if(ship != null)
+            ship.gameObject.SetActive(false);        
+        enabled = false;
     }
 }

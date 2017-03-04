@@ -33,6 +33,12 @@ public class LobbyManager : MonoBehaviour
         UpdateNames();
     }
 
+    public void RemoveName(string name)
+    {
+        names.Remove(name);
+        UpdateNames();
+    }
+
     public void StartGame()
     {
         SceneManager.LoadScene("Game");

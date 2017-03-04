@@ -11,6 +11,7 @@ class Server
     private List<ConnectionReader> connections = new List<ConnectionReader>();
     private int nextID = 0;
     private bool hasNewConnection = false;
+    private int maxPlayers = 4;
 
     public Server(int port)
     {
@@ -31,7 +32,7 @@ class Server
         do
         {
             TcpClient client = server.AcceptTcpClient();
-            if (connections.Count > 3)
+            if (connections.Count > maxPlayers)
                 continue;
             connections.Add(new ConnectionReader(client, nextID));
             hasNewConnection = true;
@@ -53,6 +54,11 @@ class Server
             }
         }
         hasNewConnection = false;
+    }
+
+    public void RemoveConnection(ConnectionReader con)
+    {
+        connections.Remove(con);
     }
 
     public static string GetLocalIPAddress()
