@@ -41,7 +41,8 @@ public class LobbyManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Game");
+        if(names.Count != 0)
+            SceneManager.LoadScene("Game");
     }
 
     private void UpdateNames()

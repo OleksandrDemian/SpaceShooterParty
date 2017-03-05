@@ -7,7 +7,6 @@ public class BulletController : MonoBehaviour, IPoolable {
     private Rigidbody2D rb;
     private float timer = 0f;
     private int speed = 10;
-    private Player player;
 
     private void Start ()
     {
@@ -49,9 +48,9 @@ public class BulletController : MonoBehaviour, IPoolable {
         timer = 0f;
     }
 
-    public void SetPlayer(Player player)
+    public Damage GetDamage()
     {
-        this.player = player;
+        return damage;
     }
 
     public void SetSprite(Sprite sprite)

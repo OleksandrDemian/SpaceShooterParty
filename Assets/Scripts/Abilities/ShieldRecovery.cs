@@ -16,6 +16,7 @@ class ShieldRecovery : Ability
 
     public override void Trigger()
     {
-        playerShield.Value += amount;
+        playerShield.Value += 2;
+        UnityEngine.Debug.Log("Shield: " + playerShield.Value);
     }
 }

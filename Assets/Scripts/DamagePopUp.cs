@@ -15,10 +15,8 @@ public class DamagePopUp : MonoBehaviour, IPoolable {
     public void Initialize(Vector3 position, string message, Color color)
     {
         text = GetComponent<Text>();
-        Debug.Log("Message: " + message);
         text.text = message;
         text.color = Color.clear;
-        Debug.Log(position);
         targetColor = color;
         gameObject.SetActive(true);
         transform.position = position + Vector3.up;
@@ -37,8 +35,6 @@ public class DamagePopUp : MonoBehaviour, IPoolable {
         while (text.color.a > 0.1f)
         {
             text.color = Color.LerpUnclamped(text.color, Color.clear, 10 * Time.deltaTime);
-            Debug.Log(text.color.a);
-
             yield return new WaitForEndOfFrame();
         }
         Disable();

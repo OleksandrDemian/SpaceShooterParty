@@ -40,6 +40,6 @@
 
     public override string ToString()
     {
-        return "Ship ingo: health -> " + health + " damage -> " + damage + " shield -> " + shield + " speed -> " + speed;
+        return "Ship info: health -> " + health + " damage -> " + damage + " shield -> " + shield + " speed -> " + speed;
     }
 }

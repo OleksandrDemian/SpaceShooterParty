@@ -66,7 +66,7 @@ public class Player : MonoBehaviour, IJoystickListener
 
     public void OnMessageRead(string message)
     {
-        Debug.Log("Message: " + message);
+        //Debug.Log("Message: " + message);
         if (message[0] == 'c')
             ReadCommand(message);
         if (message[0] == 'r')
@@ -97,20 +97,25 @@ public class Player : MonoBehaviour, IJoystickListener
 
     public ConnectionReader Connection
     {
-        get { return reader; }
+        get
+        {
+            return reader;
+        }
     }
 
     private IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         ship.transform.position = Vector3.zero;
         ship.gameObject.SetActive(true);
+        ship.ResetAttributes();
     }
 
-    public void Kill()
+    public void Kill(GameObject killed)
     {
+        Debug.Log(Name + " killed " + killed.name);
         kill++;
-        reader.Write("Kill");
+        //reader.Write("Kill");
     }
 
     public string Name

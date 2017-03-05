@@ -2,7 +2,6 @@
 
 public class Asteroid : MonoBehaviour, IPoolable, IDamagable
 {
-
     private Attribute health;
 
     private Vector2 direction;
@@ -29,14 +28,12 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
 
     private void OnCollisionEnter2D(Collision2D collider)
     {
-        Debug.Log("Collide with: " + collider.gameObject.name);
         IDamagable damagable = collider.gameObject.GetComponent<IDamagable>();
         if (damagable != null)
-            damagable.Damage(10 + Random.Range(-5, 15));
+            damagable.Damage(10 + Random.Range(-5, 15), null);
     }
 
     public void OnHealthChanged(int value) {
-        Debug.Log(name + ": vita -> " + value);
         if (value < 0) {
             Disable();
         }
@@ -48,11 +45,13 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
         this.gameObject.SetActive(false);
     }
 
-    public void Damage(int amount)
+    public void Damage(int amount, OnDead onDead)
     {
         health.Value -= amount;
         DamagePopUp popup = GameManager.ObjectPooler.Get(GOType.DAMAGEPOPUP).GetComponent<DamagePopUp>();
         popup.Initialize(transform.position, amount.ToString(), Color.white);
+        if(onDead != null && health.Value < 0)
+            onDead(gameObject);
     }
 
     public GOType Type

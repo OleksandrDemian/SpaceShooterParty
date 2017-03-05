@@ -31,6 +31,6 @@ public class Attribute
     }
 
     public void ResetValue() {
-        value = maxValue;
+        Value = maxValue;
     }
 }

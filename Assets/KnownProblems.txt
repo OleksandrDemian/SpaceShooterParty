@@ -1,3 +1,4 @@
 ﻿- FreezeEngine ability does't work - n
 - Missile does't work - n
 - PopUpText first time animation does't work properly - d
+- Shield recovery doesn't work properly - d

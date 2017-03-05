@@ -26,14 +26,14 @@ public class ShipController : MonoBehaviour, IDamagable
         shieldSprite = transform.Find("Shield").GetComponent<SpriteRenderer>();
 
         rotationSpeed = new Attribute(AttributeType.ROTATIONSPEED, 10);
-
+/*
 #if UNITY_EDITOR
         SetDamage(10);
         SetHealth(20);
         SetShield(3);
         SetSpeed(500);
 #endif
-
+*/
         EnableEngine(false);
     }
 
@@ -116,7 +116,7 @@ public class ShipController : MonoBehaviour, IDamagable
         BulletController controller = bullet.GetComponent<BulletController>();
         controller.Initialize(transform.position, transform.rotation, new Damage(damage.Value));
         controller.SetSprite(GameManager.ObjectPooler.GetLaserSkin(0));
-        controller.SetPlayer(player);
+        controller.GetDamage().SetOnDeadCallback(player.Kill);
     }
 
     public void AbilityTrigger()
@@ -139,6 +139,14 @@ public class ShipController : MonoBehaviour, IDamagable
         EnableEngine(engineEnabled);
     }
 
+    public void ResetAttributes()
+    {
+        health.ResetValue();
+        shield.ResetValue();
+        damage.ResetValue();
+        EnableEngine(false);
+    }
+
     private void EnableEngine(bool action)
     {
         if (action)
@@ -149,7 +157,7 @@ public class ShipController : MonoBehaviour, IDamagable
         engineTrail.enabled = speed.Value > 0 ? true : false;
     }
 
-    public void Damage(int amount)
+    public void Damage(int amount, OnDead onDead)
     {
         DamagePopUp popup = GameManager.ObjectPooler.Get(GOType.DAMAGEPOPUP).GetComponent<DamagePopUp>();
         if (shield.Value > 0)
@@ -160,6 +168,8 @@ public class ShipController : MonoBehaviour, IDamagable
         else
         {
             health.Value -= amount;
+            if (health.Value < 0)
+                onDead(gameObject);
             popup.Initialize(transform.position, amount.ToString(), Color.red);
         }
     }
@@ -172,13 +182,13 @@ public class ShipController : MonoBehaviour, IDamagable
     {
         if (value < 0)
         {
-            health.ResetValue();
             player.Death();
         }
     }
 
     private void OnShieldValueChange(int value)
     {
+        Debug.Log("Shield: " + GetShield().Value);
         if (value < 1)
             shieldSprite.enabled = false;
         else

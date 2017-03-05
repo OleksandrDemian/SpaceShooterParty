@@ -27,6 +27,10 @@
                 return Request.ABILITYINFO;
             case 'd':
                 return Request.DISABLECONTROLLER;
+            case 'p':
+                return Request.ADDPOINT;
+            case 'm':
+                return Request.MATCHEND;
         }
         return Request.NONE;
     }
@@ -41,6 +45,10 @@
                 return "ra";
             case Request.DISABLECONTROLLER:
                 return "rd";
+            case Request.ADDPOINT:
+                return "rp";
+            case Request.MATCHEND:
+                return "rm";
         }
         return "";
     }
