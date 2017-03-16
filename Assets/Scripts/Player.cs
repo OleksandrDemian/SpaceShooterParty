@@ -12,14 +12,16 @@ public class Player : MonoBehaviour, IJoystickListener
 
     private ShipInfo shipInfo;
 
-    private string playerName = "Nameless";
+    private Transform respawnPoint;
+
+    private string playerName = "Commander";
     public int kill = 0;
     public int dead = 0;
     public OnConnectionClose onConnectionClose;
 
     private void Start()
     {
-
+        
     }
 
     private float time = 0f;
@@ -48,7 +50,7 @@ public class Player : MonoBehaviour, IJoystickListener
 
     public void InitializeShip(int shipNumber)
     {
-        ship = GameManager.ObjectPooler.Get(GOType.SHIP).GetComponent<ShipController>();
+        ship = GameManager.ObjectPooler.Get(EntityType.SHIP).GetComponent<ShipController>();
         ship.SetPlayer(this);
 
         if (shipInfo == null)
@@ -56,7 +58,13 @@ public class Player : MonoBehaviour, IJoystickListener
 
         Debug.Log("Ship: " + shipInfo.ToString());
         shipInfo.InitializeShip(ship, shipNumber);
+        ResetShipPosition();
         onConnectionClose = null;
+    }
+
+    public void SetRespawnPoint(Transform point)
+    {
+        respawnPoint = point;
     }
 
     public void EnableControll(bool action)
@@ -106,9 +114,15 @@ public class Player : MonoBehaviour, IJoystickListener
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(3);
-        ship.transform.position = Vector3.zero;
+        ResetShipPosition();
         ship.gameObject.SetActive(true);
         ship.ResetAttributes();
+    }
+
+    public void ResetShipPosition()
+    {
+        ship.transform.position = respawnPoint.position;
+        ship.transform.rotation = respawnPoint.rotation;
     }
 
     public void Kill(GameObject killed)

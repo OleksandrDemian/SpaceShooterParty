@@ -22,7 +22,7 @@ class CircleFire : Ability
         int angle = (int)playerPosition.rotation.eulerAngles.z;
         for (int i = 0; i < qta; i++) {
             Quaternion rotation = Quaternion.Euler(0, 0, angle);
-            GameObject laser = GameManager.ObjectPooler.Get(GOType.LASER) as GameObject;
+            GameObject laser = GameManager.ObjectPooler.Get(EntityType.LASER) as GameObject;
             BulletController bullet = laser.GetComponent<BulletController>();
             bullet.Initialize(playerPosition.position, rotation, new Damage(damage.Value));
             angle += delta;

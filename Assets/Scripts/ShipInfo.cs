@@ -14,7 +14,7 @@
         ship.SetDamage(damage);
         ship.SetSpeed(speed);
         ship.SetShield(shield);
-        ship.SetImage(GameManager.ObjectPooler.GetShipSkin((shipSkin * 4) + color));
+        ship.SetImage(GameManager.ImagePooler.GetShipSkin((shipSkin * 4) + color));
 
         Ability ability;
 

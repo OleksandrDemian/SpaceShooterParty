@@ -19,7 +19,7 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
 	}
 	
 	void FixedUpdate () {
-        rb.MovePosition((Vector2)transform.position + (direction * Time.deltaTime * speed));
+        rb.MovePosition((Vector2)transform.position + (direction * GameTime.TimeScale * speed));
 	}
 
     void Update() {
@@ -48,17 +48,17 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
     public void Damage(int amount, OnDead onDead)
     {
         health.Value -= amount;
-        DamagePopUp popup = GameManager.ObjectPooler.Get(GOType.DAMAGEPOPUP).GetComponent<DamagePopUp>();
+        DamagePopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<DamagePopUp>();
         popup.Initialize(transform.position, amount.ToString(), Color.white);
         if(onDead != null && health.Value < 0)
             onDead(gameObject);
     }
 
-    public GOType Type
+    public EntityType Type
     {
         get
         {
-            return GOType.ASTEROID;
+            return EntityType.ASTEROID;
         }
     }
 

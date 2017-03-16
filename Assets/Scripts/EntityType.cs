@@ -1,4 +1,4 @@
-﻿public enum GOType {
+﻿public enum EntityType {
     ASTEROID,
     LASER,
     SHIP,

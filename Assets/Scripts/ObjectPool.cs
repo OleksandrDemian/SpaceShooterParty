@@ -12,10 +12,6 @@ public class ObjectPool : MonoBehaviour
     [SerializeField]
     private GameObject laserPrephab;
     [SerializeField]
-    private Sprite[] shipSkins;
-    [SerializeField]
-    private Sprite[] laserSkins;
-    [SerializeField]
     private GameObject damagePopUpPrephab;
 
     private void Awake() {
@@ -27,22 +23,7 @@ public class ObjectPool : MonoBehaviour
         allObjcets.Add(obj);
     }
 
-    public Sprite GetShipSkin(int index)
-    {
-        Debug.Log(index);
-        if (index > 15)
-            return shipSkins[16];
-        return shipSkins[index];
-    }
-
-    public Sprite GetLaserSkin(int index)
-    {
-        if (index > laserSkins.Length)
-            index = 0;
-        return laserSkins[index];
-    }
-
-    public GameObject Get(GOType type)
+    public GameObject Get(EntityType type)
     {
         for (int i = 0; i < allObjcets.Count; i++)
         {
@@ -56,13 +37,13 @@ public class ObjectPool : MonoBehaviour
         }
 
         switch (type) {
-            case GOType.ASTEROID:
+            case EntityType.ASTEROID:
                 return Instantiate(asteroidPrephab);
-            case GOType.SHIP:
+            case EntityType.SHIP:
                 return Instantiate(shipPrephab);
-            case GOType.LASER:
+            case EntityType.LASER:
                 return Instantiate(laserPrephab);
-            case GOType.DAMAGEPOPUP:
+            case EntityType.DAMAGEPOPUP:
                 return Instantiate(damagePopUpPrephab);
         }
         return null;

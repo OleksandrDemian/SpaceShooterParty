@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
 public interface IPoolable {
-    GOType Type { get; }
+    EntityType Type { get; }
     GameObject Get { get; }
 }

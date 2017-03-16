@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ObjectPool))]
+[RequireComponent(typeof(ImagePool))]
+[RequireComponent(typeof(GameTime))]
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance
@@ -17,9 +19,16 @@ public class GameManager : MonoBehaviour
         private set;
     }
 
+    public static ImagePool ImagePooler
+    {
+        get;
+        private set;
+    }
+
     //LevelManager
     private Vector2 mapBounds = new Vector2(22, 13);
     private List<Player> players;
+    private Transform[] startPoints;
 
     //LevelManager
     public void CheckPosition(Transform transform)
@@ -36,21 +45,25 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         ObjectPooler = GetComponent<ObjectPool>();
+        ImagePooler = GetComponent<ImagePool>();
 
         players = GetPlayers();
+        startPoints = GetStartPoints();
 
         for (int i = 0; i < players.Count; i++)
         {
+            players[i].SetRespawnPoint(startPoints[i]);
             players[i].InitializeShip(i);
             players[i].EnableControll(false);
         }
 
         StartCoroutine(StartDeelay(3));
-        StartCoroutine(MatchTimer(120 + 3));
+        StartCoroutine(MatchTimer(20 + 3));
 	}
 
     private IEnumerator StartDeelay(int seconds)
     {
+        GameTime.TimeScale = 0.05f;
         for (int i = 0; i < seconds; i++)
         {
             yield return new WaitForSeconds(1);
@@ -60,6 +73,7 @@ public class GameManager : MonoBehaviour
         {
             players[i].EnableControll(true);
         }
+        GameTime.Instance.SetTimeScaleTarget(1);
     }
 	
 	private void Update ()
@@ -85,6 +99,16 @@ public class GameManager : MonoBehaviour
         return temp;
     }
 
+    private Transform[] GetStartPoints(){
+        GameObject[] points = GameObject.FindGameObjectsWithTag("Respawn");
+        Transform[] pointsTransform = new Transform[points.Length];
+        for (int i = 0; i < points.Length; i++)
+        {
+            pointsTransform[i] = points[i].transform;
+        }
+        return pointsTransform;
+    }
+
     private IEnumerator MatchTimer(float time)
     {
         yield return new WaitForSeconds(time);
@@ -99,12 +123,14 @@ public class GameManager : MonoBehaviour
             player.Write(Converter.toString(Request.MATCHEND));
             Debug.Log("Send to: " + player.Name + " -> " + Converter.toString(Request.ADDPOINT));
         }
-        Time.timeScale = 0.01f;
+        GameTime.Instance.SetTimeScaleTarget(0.04f);
         OpenMatchResult();
     }
 
     private void OpenMatchResult()
     {
         Debug.Log("Show result");
+        GameResultPanel result = FindObjectOfType<GameResultPanel>();
+        result.Show(players.ToArray());
     }
 }

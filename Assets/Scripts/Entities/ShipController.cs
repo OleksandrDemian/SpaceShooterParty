@@ -39,7 +39,7 @@ public class ShipController : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotationTarget), rotationSpeed.Value * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotationTarget), rotationSpeed.Value * GameTime.TimeScale);
         GameManager.Instance.CheckPosition(transform);
 
 #if UNITY_EDITOR
@@ -54,13 +54,34 @@ public class ShipController : MonoBehaviour, IDamagable
 
         if (Input.GetKeyDown(KeyCode.W))
             EngineTrigger();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameTime.Instance.SetTimeScaleTarget(0.1f);
+        }
 #endif
     }
 
     private void FixedUpdate()
     {
-        rb.AddForce(transform.up * speed.Value * Time.deltaTime, ForceMode2D.Force);
+        rb.AddForce(transform.up * speed.Value * GameTime.TimeScale);
+        /*Vector3 t = calculateMoveDirection();
+
+        rb.MovePosition(transform.position + transform.up * GameTime.TimeScale * speed.Value + t * GameTime.TimeScale);*/
     }
+
+    /*private Vector3 lastPosition = Vector3.zero;
+    private Vector3 direction = Vector3.zero;
+    private Vector3 calculateMoveDirection()
+    {
+        //Vector3 cDirection = transform.position - lastPosition;
+        //Debug.Log("CDIR: " + cDirection);
+        //cDirection *= (GameTime.TimeScale * speed.Value);
+        //lastPosition = transform.position;
+        //Debug.Log("Dir: " + direction + ", Up: " + transform.up);
+        direction = Vector3.Lerp(direction, transform.up, GameTime.TimeScale);
+        return direction;
+    }*/
 
     public void SetPlayer(Player player)
     {
@@ -112,10 +133,10 @@ public class ShipController : MonoBehaviour, IDamagable
 
     public void Fire()
     {
-        GameObject bullet = GameManager.ObjectPooler.Get(GOType.LASER);
+        GameObject bullet = GameManager.ObjectPooler.Get(EntityType.LASER);
         BulletController controller = bullet.GetComponent<BulletController>();
         controller.Initialize(transform.position, transform.rotation, new Damage(damage.Value));
-        controller.SetSprite(GameManager.ObjectPooler.GetLaserSkin(0));
+        controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
         controller.GetDamage().SetOnDeadCallback(player.Kill);
     }
 
@@ -147,6 +168,11 @@ public class ShipController : MonoBehaviour, IDamagable
         EnableEngine(false);
     }
 
+    public void SetRotationTarget(int rotationTarget)
+    {
+        this.rotationTarget = rotationTarget;
+    }
+
     private void EnableEngine(bool action)
     {
         if (action)
@@ -159,7 +185,7 @@ public class ShipController : MonoBehaviour, IDamagable
 
     public void Damage(int amount, OnDead onDead)
     {
-        DamagePopUp popup = GameManager.ObjectPooler.Get(GOType.DAMAGEPOPUP).GetComponent<DamagePopUp>();
+        DamagePopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<DamagePopUp>();
         if (shield.Value > 0)
         {
             shield.Value--;
@@ -188,7 +214,6 @@ public class ShipController : MonoBehaviour, IDamagable
 
     private void OnShieldValueChange(int value)
     {
-        Debug.Log("Shield: " + GetShield().Value);
         if (value < 1)
             shieldSprite.enabled = false;
         else

@@ -27,11 +27,11 @@ class Missile : MonoBehaviour, IPoolable
         }
     }
 
-    public GOType Type
+    public EntityType Type
     {
         get
         {
-            return GOType.MISSILE;
+            return EntityType.MISSILE;
         }
     }
 

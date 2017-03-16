@@ -15,7 +15,7 @@ public class BulletController : MonoBehaviour, IPoolable {
 
     private void Update()
     {
-        timer += Time.deltaTime;
+        timer += GameTime.TimeScale;
         if (timer > 3)
         {
             Disable();
@@ -25,7 +25,7 @@ public class BulletController : MonoBehaviour, IPoolable {
 
 	private void FixedUpdate ()
     {
-        rb.MovePosition(transform.position + transform.up * Time.deltaTime * speed);
+        rb.MovePosition(transform.position + transform.up * GameTime.TimeScale * speed);
 	}
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -58,11 +58,11 @@ public class BulletController : MonoBehaviour, IPoolable {
         GetComponent<SpriteRenderer>().sprite = sprite;
     }
 
-    public GOType Type
+    public EntityType Type
     {
         get
         {
-            return GOType.LASER;
+            return EntityType.LASER;
         }
     }
 

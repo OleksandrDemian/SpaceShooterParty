@@ -46,11 +46,11 @@ public class DamagePopUp : MonoBehaviour, IPoolable {
         this.gameObject.SetActive(false);
     }
 
-    public GOType Type
+    public EntityType Type
     {
         get
         {
-            return GOType.DAMAGEPOPUP;
+            return EntityType.DAMAGEPOPUP;
         }
     }
 

@@ -22,7 +22,7 @@ public class Attribute
             Mathf.Clamp(this.value, 0, maxValue);
 
             if (onValueChange != null)
-                onValueChange(value);
+                onValueChange(Value);
         }
     }
 

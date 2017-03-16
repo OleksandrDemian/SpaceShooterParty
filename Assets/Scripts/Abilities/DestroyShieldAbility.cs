@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-    class DestroyShieldAbility : Ability
+class DestroyShieldAbility : Ability
 {
     private int amount;
     private Transform transform;
@@ -13,12 +13,12 @@
 
     public override void Trigger()
     {
-        GameObject laser = GameManager.ObjectPooler.Get(GOType.LASER) as GameObject;
+        GameObject laser = GameManager.ObjectPooler.Get(EntityType.LASER) as GameObject;
         BulletController controller = laser.GetComponent<BulletController>();
         if (controller != null)
         {
             controller.Initialize(transform.position, transform.rotation, new DestroyShield(amount, 5));
-            controller.SetSprite(GameManager.ObjectPooler.GetLaserSkin(2));
+            controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(2));
         }
     }
 }
