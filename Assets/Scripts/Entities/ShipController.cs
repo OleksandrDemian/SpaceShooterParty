@@ -10,6 +10,7 @@ public class ShipController : MonoBehaviour, IDamagable
     private Attribute shield;
 
     private Ability ability;
+    private Vector3 moveDirection = Vector3.zero;
 
     private int rotationTarget = 0;
     private bool engineEnabled;
@@ -40,6 +41,7 @@ public class ShipController : MonoBehaviour, IDamagable
     private void Update()
     {
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotationTarget), rotationSpeed.Value * GameTime.TimeScale);
+        calculateMoveDirection(transform.up * speed.Value);
         GameManager.Instance.CheckPosition(transform);
 
 #if UNITY_EDITOR
@@ -57,31 +59,26 @@ public class ShipController : MonoBehaviour, IDamagable
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameTime.Instance.SetTimeScaleTarget(0.1f);
+            GameTime.Instance.SetTimeScaleTarget(slow ? 0.1f : 1);
+            slow = !slow;
         }
 #endif
     }
 
+    private bool slow = false;
+
     private void FixedUpdate()
     {
-        rb.AddForce(transform.up * speed.Value * GameTime.TimeScale);
-        /*Vector3 t = calculateMoveDirection();
+        //rb.AddForce(transform.up * speed.Value * GameTime.TimeScale);
 
-        rb.MovePosition(transform.position + transform.up * GameTime.TimeScale * speed.Value + t * GameTime.TimeScale);*/
+        rb.MovePosition(transform.position + moveDirection * GameTime.TimeScale);
     }
-
-    /*private Vector3 lastPosition = Vector3.zero;
-    private Vector3 direction = Vector3.zero;
-    private Vector3 calculateMoveDirection()
+    
+    private void calculateMoveDirection(Vector3 dir)
     {
-        //Vector3 cDirection = transform.position - lastPosition;
-        //Debug.Log("CDIR: " + cDirection);
-        //cDirection *= (GameTime.TimeScale * speed.Value);
-        //lastPosition = transform.position;
-        //Debug.Log("Dir: " + direction + ", Up: " + transform.up);
-        direction = Vector3.Lerp(direction, transform.up, GameTime.TimeScale);
-        return direction;
-    }*/
+        moveDirection = Vector3.Lerp(moveDirection, dir, GameTime.TimeScale);
+        Debug.Log(moveDirection);
+    }
 
     public void SetPlayer(Player player)
     {
@@ -90,7 +87,7 @@ public class ShipController : MonoBehaviour, IDamagable
 
     public void SetSpeed(int value)
     {
-        speed = new Attribute(AttributeType.SPEED, value);
+        speed = new Attribute(AttributeType.SPEED, value/100);
     }
 
     public void SetShield(int value)

@@ -1,9 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/*using System.Collections;
+using System.Collections.Generic;*/
 using UnityEngine;
 
 public class GameTime : MonoBehaviour
 {
+    private static float timeModifier = 1f;
+    private float timeScaleTarget = 1f;
+
     public static float TimeScale
     {
         get
@@ -21,19 +24,23 @@ public class GameTime : MonoBehaviour
         private set;
     }
 
-    private static float timeModifier = 1f;
-
     private void Start()
     {
         Instance = this;
     }
 
-    public void SetTimeScaleTarget(float target)
+    private void Update()
     {
-        StartCoroutine(LerpTime(target));
+        timeModifier = Mathf.LerpUnclamped(timeModifier, timeScaleTarget, Time.deltaTime);
     }
 
-    private IEnumerator LerpTime(float targetTimeScale)
+    public void SetTimeScaleTarget(float target)
+    {
+        timeScaleTarget = target;
+        //StartCoroutine(LerpTime(target));
+    }
+
+    /*private IEnumerator LerpTime(float targetTimeScale)
     {
         float speed = Time.deltaTime;
         while (timeModifier != targetTimeScale)
@@ -43,5 +50,5 @@ public class GameTime : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
-    }
+    }*/
 }

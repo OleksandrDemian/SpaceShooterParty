@@ -25,6 +25,12 @@ public class GameManager : MonoBehaviour
         private set;
     }
 
+    public float MatchTime
+    {
+        get;
+        private set;
+    }
+
     //LevelManager
     private Vector2 mapBounds = new Vector2(22, 13);
     private List<Player> players;
@@ -49,6 +55,7 @@ public class GameManager : MonoBehaviour
 
         players = GetPlayers();
         startPoints = GetStartPoints();
+        MatchTime = 0;
 
         for (int i = 0; i < players.Count; i++)
         {
@@ -58,7 +65,7 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(StartDeelay(3));
-        StartCoroutine(MatchTimer(20 + 3));
+        StartCoroutine(MatchTimer(40 + 3));
 	}
 
     private IEnumerator StartDeelay(int seconds)
@@ -111,7 +118,11 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator MatchTimer(float time)
     {
-        yield return new WaitForSeconds(time);
+        while (MatchTime < time)
+        {
+            MatchTime += GameTime.TimeScale;
+            yield return new WaitForEndOfFrame();
+        }
         MatchEnd();
     }
 

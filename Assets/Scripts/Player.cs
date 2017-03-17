@@ -19,6 +19,22 @@ public class Player : MonoBehaviour, IJoystickListener
     public int dead = 0;
     public OnConnectionClose onConnectionClose;
 
+    public ShipController SpaceShip
+    {
+        get
+        {
+            return ship;
+        }
+    }
+
+    public ConnectionReader Connection
+    {
+        get
+        {
+            return reader;
+        }
+    }
+
     private void Start()
     {
         
@@ -94,21 +110,6 @@ public class Player : MonoBehaviour, IJoystickListener
         reader.Write("Dead");
         ship.gameObject.SetActive(false);
         StartCoroutine(Respawn());
-    }
-
-    public ShipController SpaceShip {
-        get
-        {
-            return ship;
-        }
-    }
-
-    public ConnectionReader Connection
-    {
-        get
-        {
-            return reader;
-        }
     }
 
     private IEnumerator Respawn()
