@@ -21,10 +21,10 @@
         switch (abilityType)
         {
             case AbilityType.CIRCLEFIRE:
-                ability = new CircleFire(ship.GetDamage(), abilityLevel, ship.transform);
+                ability = new CircleFire(ship.GetAttribute(AttributeType.DAMAGE), abilityLevel, ship.transform);
                 break;
             case AbilityType.SHIELDRECOVERY:
-                ability = new ShieldRecovery(ship.GetShield(), abilityLevel);
+                ability = new ShieldRecovery(ship.GetAttribute(AttributeType.SHIELD), abilityLevel);
                 break;
             case AbilityType.FREEZEENGINE:
                 ability = new EngineFreezAbility(2, ship.transform);

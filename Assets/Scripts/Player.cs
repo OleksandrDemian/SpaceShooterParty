@@ -109,6 +109,7 @@ public class Player : MonoBehaviour, IJoystickListener
         dead++;
         reader.Write("Dead");
         ship.gameObject.SetActive(false);
+        EnableControll(false);
         StartCoroutine(Respawn());
     }
 
@@ -118,6 +119,7 @@ public class Player : MonoBehaviour, IJoystickListener
         ResetShipPosition();
         ship.gameObject.SetActive(true);
         ship.ResetAttributes();
+        EnableControll(true);
     }
 
     public void ResetShipPosition()

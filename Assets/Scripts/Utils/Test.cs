@@ -14,7 +14,38 @@ public class Test : MonoBehaviour
 
     private void Start()
     {
+        
+    }
 
+    private void AttributeTest()
+    {
+        AttributeModifier mod = new AttributeModifier(ModifierType.ADD, 5);
+        AttributeModifier mult = new AttributeModifier(ModifierType.MULTIPLY, 2);
+        Attribute attr = new Attribute(AttributeType.HEALTH, 15);
+        Debug.Log(attr);
+        attr.AddModifier(mod);
+        Debug.Log(attr);
+        attr.Value -= 5;
+        Debug.Log(attr);
+        attr.ResetValue();
+        Debug.Log(attr);
+        attr.Value += 10;
+        Debug.Log(attr);
+        attr.Value -= 10;
+        Debug.Log(attr);
+        attr.AddModifier(mult);
+        Debug.Log(attr);
+        attr.ResetValue();
+        Debug.Log(attr);
+        attr.Value -= 2;
+        Debug.Log(attr);
+        attr.RemoveModifier(mod);
+        Debug.Log("After remove: " + attr);
+        attr.ResetValue();
+        attr.RemoveModifier(mult);
+        Debug.Log("After remove2: " + attr);
+        attr.ResetDefaultValue();
+        Debug.Log(attr);
     }
 
     private void Update()

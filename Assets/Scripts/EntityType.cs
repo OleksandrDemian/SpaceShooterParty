@@ -3,5 +3,6 @@
     LASER,
     SHIP,
     MISSILE,
-    DAMAGEPOPUP
+    DAMAGEPOPUP,
+    POWERUP
 }

@@ -42,7 +42,7 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
     private void Disable()
     {
         GameManager.ObjectPooler.Add(this);
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void Damage(int amount, OnDead onDead)

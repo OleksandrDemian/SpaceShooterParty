@@ -14,7 +14,7 @@ public class DestroyShield : Damage
         ShipController controller = target.GetComponent<ShipController>();
         if (controller != null)
         {
-            controller.GetShield().Value -= amount;
+            controller.GetAttribute(AttributeType.SHIELD).Value -= amount;
         }
         base.ApplyDamage(target);
     }

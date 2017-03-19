@@ -1,13 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class ShipController : MonoBehaviour, IDamagable
 {
-    private Attribute speed;
+    /*private Attribute speed;
     private Attribute rotationSpeed;
     private Attribute health;
     private Attribute damage;
-    private Attribute shield;
+    private Attribute shield;*/
+    private int speed = 0;
+    private int rotationSpeed = 10;
+    private List<Attribute> attributes = new List<Attribute>();
 
     private Ability ability;
     private Vector3 moveDirection = Vector3.zero;
@@ -25,8 +29,6 @@ public class ShipController : MonoBehaviour, IDamagable
 
         engineTrail = transform.Find("Trail").GetComponent<SpriteRenderer>();
         shieldSprite = transform.Find("Shield").GetComponent<SpriteRenderer>();
-
-        rotationSpeed = new Attribute(AttributeType.ROTATIONSPEED, 10);
 /*
 #if UNITY_EDITOR
         SetDamage(10);
@@ -40,8 +42,8 @@ public class ShipController : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotationTarget), rotationSpeed.Value * GameTime.TimeScale);
-        calculateMoveDirection(transform.up * speed.Value);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotationTarget), rotationSpeed * GameTime.TimeScale);
+        calculateMoveDirection(transform.up * speed);
         GameManager.Instance.CheckPosition(transform);
 
 #if UNITY_EDITOR
@@ -56,16 +58,8 @@ public class ShipController : MonoBehaviour, IDamagable
 
         if (Input.GetKeyDown(KeyCode.W))
             EngineTrigger();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GameTime.Instance.SetTimeScaleTarget(slow ? 0.1f : 1);
-            slow = !slow;
-        }
 #endif
     }
-
-    private bool slow = false;
 
     private void FixedUpdate()
     {
@@ -87,24 +81,26 @@ public class ShipController : MonoBehaviour, IDamagable
 
     public void SetSpeed(int value)
     {
-        speed = new Attribute(AttributeType.SPEED, value/100);
+        attributes.Add(new Attribute(AttributeType.SPEED, value/100));
     }
 
     public void SetShield(int value)
     {
-        shield = new Attribute(AttributeType.SHIELD, value);
+        Attribute shield = new Attribute(AttributeType.SHIELD, value);
         shield.onValueChange = OnShieldValueChange;
+        attributes.Add(shield);
     }
 
     public void SetHealth(int value)
     {
-        health = new Attribute(AttributeType.HEALTH, value);
+        Attribute health = new Attribute(AttributeType.HEALTH, value);
         health.onValueChange = OnHealthValueChange;
+        attributes.Add(health);
     }
 
     public void SetDamage(int value)
     {
-        damage = new Attribute(AttributeType.DAMAGE, value);
+        attributes.Add(new Attribute(AttributeType.DAMAGE, value));
     }
 
     public void SetImage(Sprite sprite)
@@ -118,7 +114,7 @@ public class ShipController : MonoBehaviour, IDamagable
         this.ability = ability;
     }
 
-    public Attribute GetDamage()
+    /*public Attribute GetDamage()
     {
         return damage;
     }
@@ -126,12 +122,27 @@ public class ShipController : MonoBehaviour, IDamagable
     public Attribute GetShield()
     {
         return shield;
+    }*/
+
+    public Attribute GetAttribute(AttributeType type)
+    {
+        for (int i = 0; i < attributes.Count; i++)
+        {
+            if (attributes[i].Type == type)
+                return attributes[i];
+        }
+        return null;
     }
 
     public void Fire()
     {
+        Attribute damage = GetAttribute(AttributeType.DAMAGE);
+        if (damage == null)
+            return;
+
         GameObject bullet = GameManager.ObjectPooler.Get(EntityType.LASER);
         BulletController controller = bullet.GetComponent<BulletController>();
+
         controller.Initialize(transform.position, transform.rotation, new Damage(damage.Value));
         controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
         controller.GetDamage().SetOnDeadCallback(player.Kill);
@@ -159,9 +170,11 @@ public class ShipController : MonoBehaviour, IDamagable
 
     public void ResetAttributes()
     {
-        health.ResetValue();
+        /*health.ResetValue();
         shield.ResetValue();
-        damage.ResetValue();
+        damage.ResetValue();*/
+        for (int i = 0; i < attributes.Count; i++)
+            attributes[i].ResetValue();
         EnableEngine(false);
     }
 
@@ -172,16 +185,19 @@ public class ShipController : MonoBehaviour, IDamagable
 
     private void EnableEngine(bool action)
     {
+        Attribute speedAttr = GetAttribute(AttributeType.SPEED);
         if (action)
-            speed.ResetValue();
+            speedAttr.ResetValue();
         else
-            speed.Value = 0;
+            speedAttr.Value = 0;
 
-        engineTrail.enabled = speed.Value > 0 ? true : false;
+        speed = speedAttr.Value;
+        engineTrail.enabled = speed > 0 ? true : false;
     }
 
     public void Damage(int amount, OnDead onDead)
     {
+        Attribute shield = GetAttribute(AttributeType.SHIELD);
         DamagePopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<DamagePopUp>();
         if (shield.Value > 0)
         {
@@ -190,9 +206,13 @@ public class ShipController : MonoBehaviour, IDamagable
         }
         else
         {
+            Attribute health = GetAttribute(AttributeType.HEALTH);
             health.Value -= amount;
             if (health.Value < 0)
-                onDead(gameObject);
+            {
+                if(onDead != null)
+                    onDead(gameObject);
+            }
             popup.Initialize(transform.position, amount.ToString(), Color.red);
         }
     }

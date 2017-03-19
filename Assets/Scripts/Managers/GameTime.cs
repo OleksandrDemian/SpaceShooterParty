@@ -29,9 +29,17 @@ public class GameTime : MonoBehaviour
         Instance = this;
     }
 
+    //temp
+    private bool slow = false;
+
     private void Update()
     {
         timeModifier = Mathf.LerpUnclamped(timeModifier, timeScaleTarget, Time.deltaTime);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            timeScaleTarget = slow ? 1 : 0.1f;
+            slow = !slow;
+        }
     }
 
     public void SetTimeScaleTarget(float target)

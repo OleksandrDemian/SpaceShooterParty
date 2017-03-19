@@ -55,6 +55,8 @@
      <Compile Include="Assets\Scripts\Attributes\Attribute.cs" />
      <Compile Include="Assets\Scripts\Attributes\AttributeModifier.cs" />
      <Compile Include="Assets\Scripts\Attributes\AttributeType.cs" />
+     <Compile Include="Assets\Scripts\Bonuses\Bonus.cs" />
+     <Compile Include="Assets\Scripts\Bonuses\SlowDownTimeBonus.cs" />
      <Compile Include="Assets\Scripts\Connection\Command.cs" />
      <Compile Include="Assets\Scripts\Connection\ConnectionManager.cs" />
      <Compile Include="Assets\Scripts\Connection\ConnectionReader.cs" />
@@ -77,9 +79,12 @@
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameTime.cs" />
      <Compile Include="Assets\Scripts\Managers\LobbyManager.cs" />
+     <Compile Include="Assets\Scripts\ModifierType.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Podium.cs" />
+     <Compile Include="Assets\Scripts\PowerUp.cs" />
+     <Compile Include="Assets\Scripts\ShipGUI.cs" />
      <Compile Include="Assets\Scripts\ShipInfo.cs" />
      <Compile Include="Assets\Scripts\StarColorController.cs" />
      <Compile Include="Assets\Scripts\Utils\Converter.cs" />
