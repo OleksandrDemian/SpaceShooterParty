@@ -19,6 +19,7 @@ public class Test : MonoBehaviour
 
     private void AttributeTest()
     {
+        //DEBUG EXAMPLE
         AttributeModifier mod = new AttributeModifier(ModifierType.ADD, 5);
         AttributeModifier mult = new AttributeModifier(ModifierType.MULTIPLY, 2);
         Attribute attr = new Attribute(AttributeType.HEALTH, 15);
@@ -80,8 +81,8 @@ public class Test : MonoBehaviour
 
     private void AbilityTest()
     {
-        Attribute damage = new Attribute(AttributeType.DAMAGE, 10);
-        Ability ability = new CircleFire(damage, 5, transform);
-        ability.Trigger();
+        //Attribute damage = new Attribute(AttributeType.DAMAGE, 10);
+        //Ability ability = new CircleFire(damage, 5, transform);
+        //ability.Trigger();
     }
 }

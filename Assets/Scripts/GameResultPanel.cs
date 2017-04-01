@@ -26,7 +26,7 @@ public class GameResultPanel : MonoBehaviour
             Debug.Log("Player: " + players[i].Name);
             GameObject temp = Instantiate(playerInfoPrephab);
             temp.transform.SetParent(FindObjectOfType<Canvas>().transform);
-            temp.GetComponent<Podium>().SetUp(i, players[i].Name);
+            temp.GetComponent<Podium>().SetUp(i, players[i].Name + ": " + players[i].kill);
         }
     }
 }

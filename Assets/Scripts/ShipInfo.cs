@@ -5,8 +5,8 @@
     public int damage;
     public int shield;
     public int speed;
-    public AbilityType abilityType;
     public int abilityLevel;
+    public AbilityType abilityType;
 
     public void InitializeShip(ShipController ship, int color)
     {
@@ -15,13 +15,14 @@
         ship.SetSpeed(speed);
         ship.SetShield(shield);
         ship.SetImage(GameManager.ImagePooler.GetShipSkin((shipSkin * 4) + color));
-
+        ship.GetPlayer().Write("rc" + color);
         Ability ability;
 
         switch (abilityType)
         {
             case AbilityType.CIRCLEFIRE:
-                ability = new CircleFire(ship.GetAttribute(AttributeType.DAMAGE), abilityLevel, ship.transform);
+                //--------------------------ATENTION (abilitylevel for circle fire is always 5)-----------------------------//
+                ability = new CircleFire(ship.GetAttribute(AttributeType.DAMAGE), /*abilityLevel*/ 5, ship);
                 break;
             case AbilityType.SHIELDRECOVERY:
                 ability = new ShieldRecovery(ship.GetAttribute(AttributeType.SHIELD), abilityLevel);
@@ -40,6 +41,6 @@
 
     public override string ToString()
     {
-        return "Ship info: health -> " + health + " damage -> " + damage + " shield -> " + shield + " speed -> " + speed;
+        return "Ship info: health -> " + health + " damage -> " + damage + " shield -> " + shield + " speed -> " + speed + " ability-> " + abilityType.ToString();
     }
 }

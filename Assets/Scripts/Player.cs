@@ -19,6 +19,9 @@ public class Player : MonoBehaviour, IJoystickListener
     public int dead = 0;
     public OnConnectionClose onConnectionClose;
 
+    //TEMP
+    private SocketInputManager input = new SocketInputManager();
+
     public ShipController SpaceShip
     {
         get
@@ -40,16 +43,17 @@ public class Player : MonoBehaviour, IJoystickListener
         
     }
 
+    //TEMP
     private float time = 0f;
     private void Update()
     {
         time += Time.deltaTime;
-        if (time > 1)
+        if (time > 3)
         {
-            Write("p");
-            time = 0;
+            CloseConnection();
         }
         reader.Read();
+        delta += Time.deltaTime;
     }
 
     public void Write(string message) {
@@ -59,7 +63,6 @@ public class Player : MonoBehaviour, IJoystickListener
         }
         catch
         {
-            Debug.Log("Player: " + playerName + " left the game");
             CloseConnection();
         }
     }
@@ -91,6 +94,7 @@ public class Player : MonoBehaviour, IJoystickListener
     public void OnMessageRead(string message)
     {
         //Debug.Log("Message: " + message);
+        time = 0;
         if (message[0] == 'c')
             ReadCommand(message);
         if (message[0] == 'r')
@@ -145,17 +149,27 @@ public class Player : MonoBehaviour, IJoystickListener
         get { return reader.ID; }
     }
 
+    public SocketInputManager Input
+    {
+        get { return input; }
+    }
+
     public void SendRequest(Request request)
     {
         Write(Converter.toString(request));
     }
 
+    //TEMP
+    float delta = 0;
     private void ReadCommand(string message)
     {
         if (!controllEnabled)
             return;
 
-        switch (Converter.toCommand(message[1]))
+        input.ManageInput(message.Substring(1));
+        Debug.Log("Delta: " + delta);
+        delta = 0;
+        /*switch (Converter.toCommand(message[1]))
         {
             case Command.TURNLEFT:
                 ship.TurnLeft();
@@ -172,7 +186,7 @@ public class Player : MonoBehaviour, IJoystickListener
             case Command.ABILITYTRIGGER:
                 ship.AbilityTrigger();
                 break;
-        }
+        }*/
     }
 
     private void ReadRequest(string message)
@@ -212,14 +226,15 @@ public class Player : MonoBehaviour, IJoystickListener
         }
         catch (Exception e)
         {
-            Debug.Log("Ship info generation failed");
+            Debug.Log("Ship generation failed");
             Debug.Log(e.Message);
         }
     }
 
     private void CloseConnection()
     {
-        if(onConnectionClose != null)
+        Debug.Log("Player: " + playerName + " left the game");
+        if (onConnectionClose != null)
             onConnectionClose(this);
 
         if(ship != null)

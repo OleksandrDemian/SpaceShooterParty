@@ -65,12 +65,12 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(StartDeelay(3));
-        StartCoroutine(MatchTimer(40 + 3));
+        StartCoroutine(MatchTimer(60 + 3));
 	}
 
     private IEnumerator StartDeelay(int seconds)
     {
-        GameTime.TimeScale = 0.05f;
+        GameTime.Instance.SetTimeScale(0.05f);
         for (int i = 0; i < seconds; i++)
         {
             yield return new WaitForSeconds(1);

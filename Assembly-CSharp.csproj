@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Connection\ConnectionReader.cs" />
      <Compile Include="Assets\Scripts\Connection\Request.cs" />
      <Compile Include="Assets\Scripts\Connection\Server.cs" />
+     <Compile Include="Assets\Scripts\Connection\SocketInputManager.cs" />
      <Compile Include="Assets\Scripts\Damage.cs" />
      <Compile Include="Assets\Scripts\DamagePopUp.cs" />
      <Compile Include="Assets\Scripts\DestroyShield.cs" />

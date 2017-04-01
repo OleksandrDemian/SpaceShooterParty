@@ -4,11 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class ShipController : MonoBehaviour, IDamagable
 {
-    /*private Attribute speed;
-    private Attribute rotationSpeed;
-    private Attribute health;
-    private Attribute damage;
-    private Attribute shield;*/
     private int speed = 0;
     private int rotationSpeed = 10;
     private List<Attribute> attributes = new List<Attribute>();
@@ -38,6 +33,43 @@ public class ShipController : MonoBehaviour, IDamagable
 #endif
 */
         EnableEngine(false);
+        fireTime = Time.time;
+    }
+
+    //TEMP
+    float fireTime;
+    float abilityTime;
+
+    private void ManageInput()
+    {
+        if (player.Input.GetCommand(Command.FIRE) && Time.time > fireTime + 0.5f)
+        {
+            Fire();
+            fireTime = Time.time;
+        }
+
+        if (player.Input.GetCommand(Command.ENGINETRIGGER))
+        {
+            EngineTrigger();
+            player.Input.RemoveCommand(Command.ENGINETRIGGER);
+        }
+
+        if (player.Input.GetCommand(Command.TURNRIGHT))
+        {
+            TurnRight();
+        }
+
+        if (player.Input.GetCommand(Command.TURNLEFT))
+        {
+            TurnLeft();
+        }
+            
+        if (player.Input.GetCommand(Command.ABILITYTRIGGER) && Time.time > abilityTime + 5)
+        {
+            AbilityTrigger();
+            abilityTime = Time.time;
+            player.Input.RemoveCommand(Command.ABILITYTRIGGER);
+        }
     }
 
     private void Update()
@@ -45,38 +77,51 @@ public class ShipController : MonoBehaviour, IDamagable
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotationTarget), rotationSpeed * GameTime.TimeScale);
         calculateMoveDirection(transform.up * speed);
         GameManager.Instance.CheckPosition(transform);
+        //<-----------------------NEW INPUT SYSTEM---------------------------------------->
+        ManageInput();
+        //<-----------------------      END     ------------------------------------------>
+        /*
+        #if UNITY_EDITOR
+                if (Input.GetKeyDown(KeyCode.A))
+                    TurnLeft();
 
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.A))
-            TurnLeft();
+                if (Input.GetKeyDown(KeyCode.D))
+                    TurnRight();
 
-        if (Input.GetKeyDown(KeyCode.D))
-            TurnRight();
+                if (Input.GetKeyDown(KeyCode.F))
+                    Fire();
 
-        if (Input.GetKeyDown(KeyCode.F))
-            Fire();
-
-        if (Input.GetKeyDown(KeyCode.W))
-            EngineTrigger();
-#endif
+                if (Input.GetKeyDown(KeyCode.W))
+                    EngineTrigger();
+        #endif
+        */
     }
 
     private void FixedUpdate()
     {
-        //rb.AddForce(transform.up * speed.Value * GameTime.TimeScale);
-
         rb.MovePosition(transform.position + moveDirection * GameTime.TimeScale);
     }
     
     private void calculateMoveDirection(Vector3 dir)
     {
         moveDirection = Vector3.Lerp(moveDirection, dir, GameTime.TimeScale);
-        Debug.Log(moveDirection);
+    }
+
+    //UNUSED
+    public void AddAttrubute(AttributeType type, int value)
+    {
+        Attribute attribute = new Attribute(type, value);
+        attributes.Add(attribute);
     }
 
     public void SetPlayer(Player player)
     {
         this.player = player;
+    }
+
+    public Player GetPlayer()
+    {
+        return player;
     }
 
     public void SetSpeed(int value)
@@ -114,16 +159,6 @@ public class ShipController : MonoBehaviour, IDamagable
         this.ability = ability;
     }
 
-    /*public Attribute GetDamage()
-    {
-        return damage;
-    }
-
-    public Attribute GetShield()
-    {
-        return shield;
-    }*/
-
     public Attribute GetAttribute(AttributeType type)
     {
         for (int i = 0; i < attributes.Count; i++)
@@ -155,27 +190,27 @@ public class ShipController : MonoBehaviour, IDamagable
 
     public void TurnRight()
     {
-        rotationTarget -= 30;
+        rotationTarget -= 3;
     }
 
     public void TurnLeft()
     {
-        rotationTarget += 30;
+        rotationTarget += 3;
     }
 
-    public void EngineTrigger() {
+    public void EngineTrigger()
+    {
         engineEnabled = !engineEnabled;
         EnableEngine(engineEnabled);
     }
 
     public void ResetAttributes()
     {
-        /*health.ResetValue();
-        shield.ResetValue();
-        damage.ResetValue();*/
         for (int i = 0; i < attributes.Count; i++)
             attributes[i].ResetValue();
         EnableEngine(false);
+        moveDirection = Vector3.zero;
+
     }
 
     public void SetRotationTarget(int rotationTarget)

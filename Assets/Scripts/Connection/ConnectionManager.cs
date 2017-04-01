@@ -7,6 +7,7 @@ public class ConnectionManager : MonoBehaviour
     private GameObject playerPrefab;
     private Server server;
     private List<Player> players = new List<Player>();
+    private float lastConnectionCheck = 0f;
 
     public static ConnectionManager Instance
     {
@@ -33,7 +34,20 @@ public class ConnectionManager : MonoBehaviour
 	private void Update ()
     {
         server.AddNewConnection();
+        if (Time.time > lastConnectionCheck + 2)
+        {
+            CheckConnections();
+            lastConnectionCheck = 0f;
+        }
 	}
+
+    private void CheckConnections()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].Write("0");
+        }
+    }
 
     private void OnConnectionClose(Player player)
     {

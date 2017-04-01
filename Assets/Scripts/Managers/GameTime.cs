@@ -48,6 +48,13 @@ public class GameTime : MonoBehaviour
         //StartCoroutine(LerpTime(target));
     }
 
+    public void SetTimeScale(float target)
+    {
+        timeScaleTarget = target;
+        timeModifier = target;
+        //StartCoroutine(LerpTime(target));
+    }
+
     /*private IEnumerator LerpTime(float targetTimeScale)
     {
         float speed = Time.deltaTime;
