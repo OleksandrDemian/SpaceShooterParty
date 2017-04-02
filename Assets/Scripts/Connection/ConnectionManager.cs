@@ -37,7 +37,7 @@ public class ConnectionManager : MonoBehaviour
         if (Time.time > lastConnectionCheck + 2)
         {
             CheckConnections();
-            lastConnectionCheck = 0f;
+            lastConnectionCheck = Time.time;
         }
 	}
 
@@ -45,7 +45,7 @@ public class ConnectionManager : MonoBehaviour
     {
         for (int i = 0; i < players.Count; i++)
         {
-            players[i].Write("0");
+            players[i].Write("");
         }
     }
 

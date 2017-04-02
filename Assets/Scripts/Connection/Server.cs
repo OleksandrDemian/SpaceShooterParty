@@ -6,6 +6,12 @@ using UnityEngine;
 
 class Server
 {
+    public static Server Instance
+    {
+        get;
+        private set;
+    }
+
     private TcpListener server;
     private bool acceptConnection = true;
     private List<ConnectionReader> connections = new List<ConnectionReader>();
@@ -15,6 +21,7 @@ class Server
 
     public Server(int port)
     {
+        Instance = this;
         server = new TcpListener(IPAddress.Any, port);
         server.Start();
         Thread runThread = new Thread(new ThreadStart(Run));
@@ -72,5 +79,10 @@ class Server
             }
         }
         return "";
+    }
+
+    public void Stop()
+    {
+        server.Stop();
     }
 }

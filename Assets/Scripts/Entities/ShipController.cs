@@ -210,7 +210,7 @@ public class ShipController : MonoBehaviour, IDamagable
             attributes[i].ResetValue();
         EnableEngine(false);
         moveDirection = Vector3.zero;
-
+        rotationTarget = (int)transform.rotation.eulerAngles.z;
     }
 
     public void SetRotationTarget(int rotationTarget)

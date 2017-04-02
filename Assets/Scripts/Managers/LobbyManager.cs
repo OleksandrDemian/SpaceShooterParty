@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class LobbyManager : MonoBehaviour
@@ -10,6 +10,7 @@ public class LobbyManager : MonoBehaviour
     [SerializeField]
     private Text ipText;
     private List<string> names = new List<string>();
+
     public static LobbyManager Instance
     {
         get;
@@ -41,8 +42,12 @@ public class LobbyManager : MonoBehaviour
 
     public void StartGame()
     {
-        if(names.Count != 0)
-            SceneManager.LoadScene("Game");
+        if (names.Count != 0)
+        {
+            SceneLoader.LoadScene("Game");
+            Server.Instance.Stop();
+            //SceneManager.LoadScene("Game");
+        }
     }
 
     private void UpdateNames()

@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     private Vector2 mapBounds = new Vector2(22, 13);
     private List<Player> players;
     private Transform[] startPoints;
+    private const int MATCH_DURATION = 90; //JAVA syntax (maybe)
 
     //LevelManager
     public void CheckPosition(Transform transform)
@@ -65,7 +66,7 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(StartDeelay(3));
-        StartCoroutine(MatchTimer(60 + 3));
+        StartCoroutine(MatchTimer(MATCH_DURATION + 3));
 	}
 
     private IEnumerator StartDeelay(int seconds)
@@ -104,6 +105,13 @@ public class GameManager : MonoBehaviour
         }
 
         return temp;
+    }
+
+    public void LoadLobbyScreen()
+    {
+        foreach (Player p in players)
+            Destroy(p.gameObject);
+        SceneLoader.LoadScene("Lobby");
     }
 
     private Transform[] GetStartPoints(){
