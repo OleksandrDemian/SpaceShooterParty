@@ -13,6 +13,8 @@ public class ObjectPool : MonoBehaviour
     private GameObject laserPrephab;
     [SerializeField]
     private GameObject damagePopUpPrephab;
+    [SerializeField]
+    private GameObject asteroidPref;
 
     private void Awake() {
         allObjcets = new List<IPoolable>();

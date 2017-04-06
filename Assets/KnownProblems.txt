@@ -3,10 +3,11 @@
 - PopUpText first time animation does't work properly - d
 - Rmove connections if not enabled - d
 - Shield recovery doesn't work properly - d
-- Respawn rotation is wrong (target rotation?) - n
+- Respawn rotation is wrong (target rotation?) - d
 - Result panel order - d
 - AttributeModifiers - d
 - Power-Up - n
-- ShipGUI started (I don't know if I need it)
+- ShipGUI started (I don't know if I need it) - n
 - Bonuses - n
 - Circle fire: kill doesn't working with abilities - c
+- GameInfo can be better! - n

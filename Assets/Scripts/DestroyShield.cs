@@ -2,11 +2,11 @@
 
 public class DestroyShield : Damage
 {
-    private int amount;
+    //private int amount;
 
-    public DestroyShield(int amount, int damage) : base(damage)
+    public DestroyShield(int damage) : base(damage)
     {
-        this.amount = amount;
+        //this.amount = amount;
     }
 
     public override void ApplyDamage(GameObject target)
@@ -14,7 +14,8 @@ public class DestroyShield : Damage
         ShipController controller = target.GetComponent<ShipController>();
         if (controller != null)
         {
-            controller.GetAttribute(AttributeType.SHIELD).Value -= amount;
+            controller.GetAttribute(AttributeType.SHIELD).Value = 0;
+            PopUp.ShowText(target.transform.position, "Shield destroyed", Color.red);
         }
         base.ApplyDamage(target);
     }

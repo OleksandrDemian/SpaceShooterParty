@@ -1,11 +1,12 @@
-﻿/*using System.Collections;
-using System.Collections.Generic;*/
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GameTime : MonoBehaviour
 {
     private static float timeModifier = 1f;
     private float timeScaleTarget = 1f;
+    private static float time = 0;
+    private List<Timer> timers = new List<Timer>();
 
     public static float TimeScale
     {
@@ -24,22 +25,25 @@ public class GameTime : MonoBehaviour
         private set;
     }
 
+    //GetTime not Time perche Time esiste di già in TimeScale.get{}
+    public static float GetTime()
+    {
+        return time;
+    }
+
     private void Start()
     {
         Instance = this;
     }
 
     //temp
-    private bool slow = false;
+    //private bool slow = false;
 
     private void Update()
     {
         timeModifier = Mathf.LerpUnclamped(timeModifier, timeScaleTarget, Time.deltaTime);
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            timeScaleTarget = slow ? 1 : 0.1f;
-            slow = !slow;
-        }
+        time += TimeScale;
+        CheckTimers();
     }
 
     public void SetTimeScaleTarget(float target)
@@ -48,11 +52,27 @@ public class GameTime : MonoBehaviour
         //StartCoroutine(LerpTime(target));
     }
 
+    public void AddTimer(Timer timer)
+    {
+        timers.Add(timer);
+    }
+
     public void SetTimeScale(float target)
     {
         timeScaleTarget = target;
         timeModifier = target;
         //StartCoroutine(LerpTime(target));
+    }
+    
+    private void CheckTimers()
+    {
+        for (int i = timers.Count - 1; i >= 0; i--)
+        {
+            if (timers[i].Check(time))
+            {
+                timers.Remove(timers[i]);
+            }
+        }
     }
 
     /*private IEnumerator LerpTime(float targetTimeScale)

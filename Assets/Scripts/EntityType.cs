@@ -4,5 +4,6 @@
     SHIP,
     MISSILE,
     DAMAGEPOPUP,
-    POWERUP
+    POWERUP,
+    HIT
 }

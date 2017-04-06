@@ -2,12 +2,13 @@
 
 class DestroyShieldAbility : Ability
 {
-    private int amount;
+    //AMOUNT is unused!
+    //private int amount;
     private Transform transform;
 
     public DestroyShieldAbility(int amount, Transform transform)
     {
-        this.amount = amount;
+        //this.amount = amount;
         this.transform = transform;
     }
 
@@ -17,7 +18,7 @@ class DestroyShieldAbility : Ability
         BulletController controller = laser.GetComponent<BulletController>();
         if (controller != null)
         {
-            controller.Initialize(transform.position, transform.rotation, new DestroyShield(amount, 5));
+            controller.Initialize(transform.position, transform.rotation, new DestroyShield(5));
             controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(2));
         }
     }

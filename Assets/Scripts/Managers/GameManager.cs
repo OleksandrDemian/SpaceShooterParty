@@ -25,26 +25,32 @@ public class GameManager : MonoBehaviour
         private set;
     }
 
-    public float MatchTime
-    {
-        get;
-        private set;
-    }
-
     //LevelManager
     private Vector2 mapBounds = new Vector2(22, 13);
     private List<Player> players;
     private Transform[] startPoints;
-    private const int MATCH_DURATION = 90; //JAVA syntax (maybe)
+    private int MATCH_DURATION = 90; //JAVA syntax (maybe)
+    private GameInfo gameInfo;
 
     //LevelManager
     public void CheckPosition(Transform transform)
     {
         Vector3 position = transform.position;
         if (Mathf.Abs(transform.position.x) > mapBounds.x)
-            position.x *= -1;
+        {
+            if (position.x > 0)
+                position.x = -mapBounds.x;
+            else
+                position.x = mapBounds.x;
+        }
+            
         if (Mathf.Abs(transform.position.y) > mapBounds.y)
-            position.y *= -1;
+        {
+            if (position.y > 0)
+                position.y = -mapBounds.y;
+            else
+                position.y = mapBounds.y;
+        }
         transform.position = position;
     }
 
@@ -54,9 +60,14 @@ public class GameManager : MonoBehaviour
         ObjectPooler = GetComponent<ObjectPool>();
         ImagePooler = GetComponent<ImagePool>();
 
+        gameInfo = GameInfo.Instance;
         players = GetPlayers();
         startPoints = GetStartPoints();
-        MatchTime = 0;
+        //MatchTime = gameInfo.gameTime;
+        MATCH_DURATION = gameInfo.gameTime;
+        //Debug.Log("Time: " + MatchTime + " <> " + gameInfo.gameTime);
+        if (!gameInfo.enableAsteroids)
+            GetComponent<AsteroidsGenerator>().enabled = false;
 
         for (int i = 0; i < players.Count; i++)
         {
@@ -65,11 +76,24 @@ public class GameManager : MonoBehaviour
             players[i].EnableControll(false);
         }
 
-        StartCoroutine(StartDeelay(3));
-        StartCoroutine(MatchTimer(MATCH_DURATION + 3));
-	}
+        //StartCoroutine(StartDeelay(3));
+        //StartCoroutine(MatchTimer(MATCH_DURATION + 3));
+        StartMatch ();
+    }
 
-    private IEnumerator StartDeelay(int seconds)
+    private void StartMatch()
+    {
+        GameTime.Instance.SetTimeScale(0.05f);
+        GameTime.Instance.SetTimeScaleTarget(1);
+        GameTime.Instance.AddTimer(new Timer(MATCH_DURATION, MatchEnd));
+        Debug.Log("Durtion: " + MATCH_DURATION);
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].EnableControll(true);
+        }
+    }
+
+    /*private IEnumerator StartDeelay(int seconds)
     {
         GameTime.Instance.SetTimeScale(0.05f);
         for (int i = 0; i < seconds; i++)
@@ -82,18 +106,18 @@ public class GameManager : MonoBehaviour
             players[i].EnableControll(true);
         }
         GameTime.Instance.SetTimeScaleTarget(1);
-    }
+    }*/
 	
 	private void Update ()
     {
 
 	}
 
-    private void OnGUI()
+    /*private void OnGUI()
     {
         for(int i = 0; i < players.Count; i++)
             GUI.Label(new Rect(10, 10 + (20 * i), 150, 20), (players[i].Name + " -> " + players[i].kill + ": " + players[i].dead));
-    }
+    }*/
 
     public List<Player> GetPlayers()
     {
@@ -124,7 +148,7 @@ public class GameManager : MonoBehaviour
         return pointsTransform;
     }
 
-    private IEnumerator MatchTimer(float time)
+    /*private IEnumerator MatchTimer(float time)
     {
         while (MatchTime < time)
         {
@@ -132,13 +156,13 @@ public class GameManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         MatchEnd();
-    }
+    }*/
 
     private void MatchEnd()
     {
         foreach (Player player in players)
         {
-            player.Write(Converter.toString(Request.ADDPOINT));
+            //player.Write(Converter.toString(Request.ADDPOINT));
             player.Write(Converter.toString(Request.MATCHEND));
             Debug.Log("Send to: " + player.Name + " -> " + Converter.toString(Request.ADDPOINT));
         }

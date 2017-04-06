@@ -80,21 +80,6 @@ public class ShipController : MonoBehaviour, IDamagable
         //<-----------------------NEW INPUT SYSTEM---------------------------------------->
         ManageInput();
         //<-----------------------      END     ------------------------------------------>
-        /*
-        #if UNITY_EDITOR
-                if (Input.GetKeyDown(KeyCode.A))
-                    TurnLeft();
-
-                if (Input.GetKeyDown(KeyCode.D))
-                    TurnRight();
-
-                if (Input.GetKeyDown(KeyCode.F))
-                    Fire();
-
-                if (Input.GetKeyDown(KeyCode.W))
-                    EngineTrigger();
-        #endif
-        */
     }
 
     private void FixedUpdate()
@@ -108,7 +93,7 @@ public class ShipController : MonoBehaviour, IDamagable
     }
 
     //UNUSED
-    public void AddAttrubute(AttributeType type, int value)
+    public void AddAttribute(AttributeType type, int value)
     {
         Attribute attribute = new Attribute(type, value);
         attributes.Add(attribute);
@@ -233,11 +218,11 @@ public class ShipController : MonoBehaviour, IDamagable
     public void Damage(int amount, OnDead onDead)
     {
         Attribute shield = GetAttribute(AttributeType.SHIELD);
-        DamagePopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<DamagePopUp>();
+        
         if (shield.Value > 0)
         {
             shield.Value--;
-            popup.Initialize(transform.position, "1", Color.blue);
+            PopUp.ShowText(transform.position, "1", Color.blue);
         }
         else
         {
@@ -248,7 +233,7 @@ public class ShipController : MonoBehaviour, IDamagable
                 if(onDead != null)
                     onDead(gameObject);
             }
-            popup.Initialize(transform.position, amount.ToString(), Color.red);
+            PopUp.ShowText(transform.position, amount.ToString(), Color.red);
         }
     }
 

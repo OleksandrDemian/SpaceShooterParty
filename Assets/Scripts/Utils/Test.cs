@@ -75,7 +75,7 @@ public class Test : MonoBehaviour
     private void TextPopUpTest()
     {
         GameObject test = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP);
-        DamagePopUp dpu = test.GetComponent<DamagePopUp>();
+        PopUp dpu = test.GetComponent<PopUp>();
         dpu.Initialize(new Vector3(Random.Range(-5, 5), 0, 0), Random.Range(0, 10).ToString(), Color.green);
     }
 

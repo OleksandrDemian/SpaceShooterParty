@@ -9,11 +9,15 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
     private Rigidbody2D rb;
 
     void Start () {
-        health = new Attribute(AttributeType.HEALTH, 50);
+        health = new Attribute(AttributeType.HEALTH, 50 + Random.Range(-10, 10));
         health.onValueChange = OnHealthChanged;
 
         rb = GetComponent<Rigidbody2D>();
         direction = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
+
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        sprite.sprite = GameManager.ImagePooler.GetAsteroidSkin();
+
         speed = Random.Range(1, 5);
         direction.Normalize();
 	}
@@ -48,7 +52,7 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
     public void Damage(int amount, OnDead onDead)
     {
         health.Value -= amount;
-        DamagePopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<DamagePopUp>();
+        PopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
         popup.Initialize(transform.position, amount.ToString(), Color.white);
         if(onDead != null && health.Value < 0)
             onDead(gameObject);

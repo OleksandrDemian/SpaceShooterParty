@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class DamagePopUp : MonoBehaviour, IPoolable {
+public class PopUp : MonoBehaviour, IPoolable {
 
     private Text text;
     private Color targetColor;
@@ -10,6 +10,12 @@ public class DamagePopUp : MonoBehaviour, IPoolable {
     {
         text = GetComponent<Text>();
         this.transform.SetParent(FindObjectOfType<Canvas>().transform);
+    }
+
+    public static void ShowText(Vector3 position, string message, Color color)
+    {
+        PopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
+        popup.Initialize(position, message, color);
     }
 
     public void Initialize(Vector3 position, string message, Color color)

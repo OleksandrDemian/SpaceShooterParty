@@ -51,9 +51,10 @@ public class Player : MonoBehaviour, IJoystickListener
         if (time > 3)
         {
             CloseConnection();
+            return;
         }
         reader.Read();
-        delta += Time.deltaTime;
+        //delta += Time.deltaTime;
     }
 
     public void Write(string message) {
@@ -160,33 +161,15 @@ public class Player : MonoBehaviour, IJoystickListener
     }
 
     //TEMP
-    float delta = 0;
+    //float delta = 0;
     private void ReadCommand(string message)
     {
         if (!controllEnabled)
             return;
 
         input.ManageInput(message.Substring(1));
-        Debug.Log("Delta: " + delta);
-        delta = 0;
-        /*switch (Converter.toCommand(message[1]))
-        {
-            case Command.TURNLEFT:
-                ship.TurnLeft();
-                break;
-            case Command.TURNRIGHT:
-                ship.TurnRight();
-                break;
-            case Command.FIRE:
-                ship.Fire();
-                break;
-            case Command.ENGINETRIGGER:
-                ship.EngineTrigger();
-                break;
-            case Command.ABILITYTRIGGER:
-                ship.AbilityTrigger();
-                break;
-        }*/
+        //Debug.Log("Delta: " + delta);
+        //delta = 0;
     }
 
     private void ReadRequest(string message)

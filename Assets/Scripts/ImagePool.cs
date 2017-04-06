@@ -8,6 +8,8 @@ public class ImagePool : MonoBehaviour
     private Sprite[] shipSkins;
     [SerializeField]
     private Sprite[] laserSkins;
+    [SerializeField]
+    private Sprite[] asteroidsSkin;
 
     public Sprite GetPositionImage(int position)
     {
@@ -29,5 +31,18 @@ public class ImagePool : MonoBehaviour
         if (index >= laserSkins.Length)
             index = 0;
         return laserSkins[index];
+    }
+
+    public Sprite GetAsteroidSkin(int index)
+    {
+        if (index >= asteroidsSkin.Length)
+            index = 0;
+        return asteroidsSkin[index];
+    }
+
+    public Sprite GetAsteroidSkin()
+    {
+        int rand = Random.Range(0, asteroidsSkin.Length);
+        return asteroidsSkin[rand];
     }
 }
