@@ -15,7 +15,7 @@ public class DestroyShield : Damage
         if (controller != null)
         {
             controller.GetAttribute(AttributeType.SHIELD).Value = 0;
-            PopUp.ShowText(target.transform.position, "Shield destroyed", Color.red);
+            //PopUp.ShowText(target.transform.position, "Shield destroyed", 0.5f, Color.red);
         }
         base.ApplyDamage(target);
     }

@@ -18,6 +18,7 @@ class CircleFire : Ability
 
     public override void Trigger()
     {
+        PopUp.ShowText(shipParent.transform.position, "Circle fire");
         int delta = 360 / qta;
         int angle = (int)shipParent.transform.rotation.eulerAngles.z;
         for (int i = 0; i < qta; i++) {

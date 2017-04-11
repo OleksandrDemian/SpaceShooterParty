@@ -25,10 +25,10 @@
                 ability = new CircleFire(ship.GetAttribute(AttributeType.DAMAGE), /*abilityLevel*/ 5, ship);
                 break;
             case AbilityType.SHIELDRECOVERY:
-                ability = new ShieldRecovery(ship.GetAttribute(AttributeType.SHIELD), abilityLevel);
+                ability = new ShieldRecovery(ship.GetAttribute(AttributeType.SHIELD), 3);
                 break;
             case AbilityType.FREEZEENGINE:
-                ability = new EngineFreezAbility(2, ship.transform);
+                ability = new DisableControllAbility(3, ship.transform);
                 break;
             case AbilityType.DESTROYSHIELD:
                 ability = new DestroyShieldAbility(2, ship.transform);

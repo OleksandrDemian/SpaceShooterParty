@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public delegate void OnDead(GameObject go);
+public delegate void OnDead(GameObject target);
 
 public class Damage
 {

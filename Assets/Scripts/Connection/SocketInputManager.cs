@@ -22,4 +22,9 @@ public class SocketInputManager {
     {
         commands.Remove(command);
     }
+
+    public void ClearCommands()
+    {
+        commands.Clear();
+    }
 }

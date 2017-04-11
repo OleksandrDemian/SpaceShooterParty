@@ -79,7 +79,7 @@ public class Player : MonoBehaviour, IJoystickListener
         Debug.Log("Ship: " + shipInfo.ToString());
         shipInfo.InitializeShip(ship, shipNumber);
         ResetShipPosition();
-        onConnectionClose = null;
+        //onConnectionClose = null;
     }
 
     public void SetRespawnPoint(Transform point)
@@ -90,6 +90,9 @@ public class Player : MonoBehaviour, IJoystickListener
     public void EnableControll(bool action)
     {
         controllEnabled = action;
+
+        if (!controllEnabled)
+            input.ClearCommands();
     }
 
     public void OnMessageRead(string message)
@@ -136,7 +139,8 @@ public class Player : MonoBehaviour, IJoystickListener
     public void Kill(GameObject killed)
     {
         Debug.Log(Name + " killed " + killed.name);
-        kill++;
+        if(killed.GetComponent<ShipController>() != null)
+            kill++;
         //reader.Write("Kill");
     }
 

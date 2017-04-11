@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public delegate void OnValueChange(int value);
+public delegate void OnValueChange(int value, int oldValue);
 
 public class Attribute
 {
@@ -25,13 +25,14 @@ public class Attribute
         }
         set
         {
+            int old = this.value;
             this.value = value;
 
             if (this.value > maxValue)
                 this.value = maxValue;
 
             if (onValueChange != null)
-                onValueChange(Value);
+                onValueChange(Value, old);
         }
         /*get {
             int finalValue = value;
@@ -54,7 +55,7 @@ public class Attribute
 
     public void ResetValue()
     {
-        Value = maxValue;
+        value = maxValue;
     }
 
     public void ResetDefaultValue()
@@ -74,10 +75,12 @@ public class Attribute
 
     public void AddModifier(AttributeModifier modifier)
     {
+        int old = Value;
         modifiers.Add(modifier);
-        if (onValueChange != null)
-            onValueChange(Value);
         CalculateValue();
+
+        if (onValueChange != null)
+            onValueChange(Value, old);
     }
 
     public void RemoveModifier(AttributeModifier modifier)

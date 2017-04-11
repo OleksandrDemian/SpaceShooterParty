@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-//using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(ObjectPool))]
 public class LobbyManager : MonoBehaviour
 {
     [SerializeField]
@@ -42,11 +42,16 @@ public class LobbyManager : MonoBehaviour
 
     public void StartGame()
     {
-        if (names.Count != 0)
+        //Count must be > 1!!!!!
+        if (names.Count > 0)
         {
-            SceneLoader.LoadScene("Game");
             Server.Instance.Stop();
+            SceneLoader.LoadScene("Game");
             //SceneManager.LoadScene("Game");
+        }
+        else
+        {
+            PopUp.ShowText(new Vector3(0, -8, 0), "There must be at minimum 2 players", 1);
         }
     }
 

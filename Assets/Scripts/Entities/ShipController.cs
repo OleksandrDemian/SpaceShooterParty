@@ -109,6 +109,7 @@ public class ShipController : MonoBehaviour, IDamagable
         return player;
     }
 
+    //SAME METHOD
     public void SetSpeed(int value)
     {
         attributes.Add(new Attribute(AttributeType.SPEED, value/100));
@@ -132,6 +133,7 @@ public class ShipController : MonoBehaviour, IDamagable
     {
         attributes.Add(new Attribute(AttributeType.DAMAGE, value));
     }
+    //END SAME METHOD
 
     public void SetImage(Sprite sprite)
     {
@@ -222,7 +224,7 @@ public class ShipController : MonoBehaviour, IDamagable
         if (shield.Value > 0)
         {
             shield.Value--;
-            PopUp.ShowText(transform.position, "1", Color.blue);
+            //PopUp.ShowText(transform.position, "1", 0, Color.blue);
         }
         else
         {
@@ -233,24 +235,41 @@ public class ShipController : MonoBehaviour, IDamagable
                 if(onDead != null)
                     onDead(gameObject);
             }
-            PopUp.ShowText(transform.position, amount.ToString(), Color.red);
+            //PopUp.ShowText(transform.position, amount.ToString(), 0, Color.red);
         }
     }
 
-    public void DisableControll(float time) {
-        player.Write(Converter.toString(Request.DISABLECONTROLLER) + time);
+    /*
+    public void DisableControll() {
+        //player.Write(Converter.toString(Request.DISABLECONTROLLER) + time);
+        player.EnableControll(false);
     }
+    */
 
-    private void OnHealthValueChange(int value)
+    private void OnHealthValueChange(int value, int oldValue)
     {
+        int delta = value - oldValue;
+
+        if(delta < 0)
+            PopUp.ShowText(transform.position, "Health: " + delta, 0, Color.red);
+        else
+            PopUp.ShowText(transform.position, "Health: " + delta, 0, Color.white);
+
         if (value < 0)
         {
             player.Death();
         }
     }
 
-    private void OnShieldValueChange(int value)
+    private void OnShieldValueChange(int value, int oldValue)
     {
+        int delta = value - oldValue;
+
+        if (delta < 0)
+            PopUp.ShowText(transform.position, "Shield: " + delta, 0, Color.blue, PopUpAnimation.LEFT);
+        else
+            PopUp.ShowText(transform.position, "Shield: " + delta, 0, Color.white, PopUpAnimation.RIGHT);
+
         if (value < 1)
             shieldSprite.enabled = false;
         else

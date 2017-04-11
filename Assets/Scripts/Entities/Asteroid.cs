@@ -37,7 +37,7 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
             damagable.Damage(10 + Random.Range(-5, 15), null);
     }
 
-    public void OnHealthChanged(int value) {
+    public void OnHealthChanged(int value, int oldValue) {
         if (value < 0) {
             Disable();
         }
@@ -52,8 +52,10 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
     public void Damage(int amount, OnDead onDead)
     {
         health.Value -= amount;
-        PopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
-        popup.Initialize(transform.position, amount.ToString(), Color.white);
+        /*PopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
+        popup.Initialize(transform.position, amount.ToString(), Color.white);*/
+        PopUp.ShowText(transform.position, amount.ToString(), 0.5f);
+
         if(onDead != null && health.Value < 0)
             onDead(gameObject);
     }

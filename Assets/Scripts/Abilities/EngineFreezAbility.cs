@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-class EngineFreezAbility : Ability
+public class DisableControllAbility : Ability
 {
     private float time;
     private Transform transform;
 
-    public EngineFreezAbility(float time, Transform transform)
+    public DisableControllAbility(float time, Transform transform)
     {
         this.time = time;
         this.transform = transform;
@@ -13,10 +13,11 @@ class EngineFreezAbility : Ability
 
     public override void Trigger()
     {
+        PopUp.ShowText(transform.position, "Disable controll");
         GameObject laser = GameManager.ObjectPooler.Get(EntityType.LASER) as GameObject;
         BulletController controller = laser.GetComponent<BulletController>();
         if (controller != null) {
-            controller.Initialize(transform.position, transform.rotation, new FreezeEngine(2, time));
+            controller.Initialize(transform.position, transform.rotation, new DisableControll(2, time));
             controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(1));
         }
     }

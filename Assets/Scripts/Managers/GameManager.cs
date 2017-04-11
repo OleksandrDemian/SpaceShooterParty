@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ObjectPool))]
 [RequireComponent(typeof(ImagePool))]
 [RequireComponent(typeof(GameTime))]
+[RequireComponent(typeof(MatchCountdown))]
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance
@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     private Transform[] startPoints;
     private int MATCH_DURATION = 90; //JAVA syntax (maybe)
     private GameInfo gameInfo;
+    private MatchCountdown countdown;
 
     //LevelManager
     public void CheckPosition(Transform transform)
@@ -65,20 +66,30 @@ public class GameManager : MonoBehaviour
         startPoints = GetStartPoints();
         //MatchTime = gameInfo.gameTime;
         MATCH_DURATION = gameInfo.gameTime;
+
+        countdown = GetComponent<MatchCountdown>();
+        countdown.SetMatchTime(MATCH_DURATION);
+        countdown.ShowText("Match started", 5);
+
         //Debug.Log("Time: " + MatchTime + " <> " + gameInfo.gameTime);
-        if (!gameInfo.enableAsteroids)
-            GetComponent<AsteroidsGenerator>().enabled = false;
+        GetComponent<AsteroidsGenerator>().enabled = gameInfo.enableAsteroids;
 
         for (int i = 0; i < players.Count; i++)
         {
             players[i].SetRespawnPoint(startPoints[i]);
             players[i].InitializeShip(i);
-            players[i].EnableControll(false);
+            players[i].onConnectionClose = OnPlayerConnectionClose;
         }
 
         //StartCoroutine(StartDeelay(3));
         //StartCoroutine(MatchTimer(MATCH_DURATION + 3));
         StartMatch ();
+    }
+
+    private void OnPlayerConnectionClose(Player player)
+    {
+        //Check how match players there are!
+        countdown.ShowText(player.Name + " left!", 4);
     }
 
     private void StartMatch()
@@ -166,6 +177,8 @@ public class GameManager : MonoBehaviour
             player.Write(Converter.toString(Request.MATCHEND));
             Debug.Log("Send to: " + player.Name + " -> " + Converter.toString(Request.ADDPOINT));
         }
+        countdown.SetText("Match ended");
+        countdown.enabled = false;
         GameTime.Instance.SetTimeScaleTarget(0.04f);
         OpenMatchResult();
     }

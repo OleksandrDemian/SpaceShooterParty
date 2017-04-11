@@ -1,4 +1,8 @@
-﻿- FreezeEngine ability does't work - n
+﻿- c -> to controll
+- d -> done
+- n -> not done
+
+- FreezeEngine ability does't work - d
 - Missile does't work - n
 - PopUpText first time animation does't work properly - d
 - Rmove connections if not enabled - d
@@ -11,3 +15,6 @@
 - Bonuses - n
 - Circle fire: kill doesn't working with abilities - c
 - GameInfo can be better! - n
+- FreezeEngine not tested - n
+- DestroyShield not tested - n
+- Rotation wrong (?) - c

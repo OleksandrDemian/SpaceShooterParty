@@ -74,9 +74,10 @@ public class Test : MonoBehaviour
 
     private void TextPopUpTest()
     {
-        GameObject test = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP);
-        PopUp dpu = test.GetComponent<PopUp>();
-        dpu.Initialize(new Vector3(Random.Range(-5, 5), 0, 0), Random.Range(0, 10).ToString(), Color.green);
+        //GameObject test = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP);
+        /*PopUp dpu = test.GetComponent<PopUp>();
+        dpu.Initialize(new Vector3(Random.Range(-5, 5), 0, 0), Random.Range(0, 10).ToString(), Color.green);*/
+        PopUp.ShowText(new Vector3(Random.Range(-5, 5), 0, 0), Random.Range(0, 10).ToString(), 0.5f, Color.green);
     }
 
     private void AbilityTest()
