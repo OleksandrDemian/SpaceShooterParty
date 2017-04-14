@@ -57,6 +57,11 @@ public class GameTime : MonoBehaviour
         timers.Add(timer);
     }
 
+    public void RemoveTimer(Timer timer)
+    {
+        timers.Remove(timer);
+    }
+
     public void SetTimeScale(float target)
     {
         timeScaleTarget = target;

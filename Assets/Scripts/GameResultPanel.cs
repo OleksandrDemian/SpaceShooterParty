@@ -9,13 +9,9 @@ public class GameResultPanel : MonoBehaviour
     [SerializeField]
     private GameObject lobbyButton;
 
-    private void Start()
-    {
-    }
+    private void Start() { }
 
-    private void Update()
-    {
-    }
+    private void Update() { }
 
     public void Show(Player[] players)
     {

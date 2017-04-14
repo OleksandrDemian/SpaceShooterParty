@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class BulletController : MonoBehaviour, IPoolable {
+public class Laser : MonoBehaviour, IPoolable {
 
     private Damage damage;
     private Rigidbody2D rb;
@@ -31,6 +31,8 @@ public class BulletController : MonoBehaviour, IPoolable {
     private void OnTriggerEnter2D(Collider2D collider)
     {
         damage.ApplyDamage(collider.gameObject);
+        LaserTrigger effect = GameManager.ObjectPooler.Get<LaserTrigger>();
+        effect.Initialize(transform.position);
         Disable();
     }
 
@@ -58,15 +60,7 @@ public class BulletController : MonoBehaviour, IPoolable {
         GetComponent<SpriteRenderer>().sprite = sprite;
     }
 
-    public EntityType Type
-    {
-        get
-        {
-            return EntityType.LASER;
-        }
-    }
-
-    public GameObject Get
+    public GameObject GetGameObject
     {
         get
         {

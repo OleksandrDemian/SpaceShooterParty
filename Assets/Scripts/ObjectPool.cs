@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    private List<IPoolable> allObjcets;
+    [SerializeField]
+    private GameObject[] prefs;
 
+    private List<IPoolable> poolable;
+
+    /*
     [SerializeField]
     private GameObject shipPrephab;
     [SerializeField]
@@ -13,6 +17,7 @@ public class ObjectPool : MonoBehaviour
     private GameObject laserPrephab;
     [SerializeField]
     private GameObject damagePopUpPrephab;
+    */
 
     public static ObjectPool Instance
     {
@@ -21,24 +26,54 @@ public class ObjectPool : MonoBehaviour
     }
 
     private void Awake() {
-        allObjcets = new List<IPoolable>();
+        poolable = new List<IPoolable>();
         Instance = this;
     }
 
     public void Add(IPoolable obj)
     {
-        allObjcets.Add(obj);
+        poolable.Add(obj);
     }
 
+    public T Get<T>()
+    {
+        //Debug.Log("Request: " + typeof(T));
+        for (int i = 0; i < poolable.Count; i++)
+        {
+            if(poolable[i] is T)
+            {
+                IPoolable go = poolable[i];
+                go.GetGameObject.SetActive(true);
+                //GameObject go = poolable[i].GetGameObject;
+                //go.SetActive(true);
+                poolable.Remove(go);
+                //Debug.Log("Had!");
+                return (T)go;
+            }
+        }
+
+        for (int i = 0; i < prefs.Length; i++)
+        {
+            if (prefs[i].GetComponent<T>() != null)
+            {
+                GameObject instance = Instantiate(prefs[i]);
+                //Debug.Log("Created!");
+                return instance.GetComponent<T>();
+            }
+        }
+        return default(T);
+    }
+    
+    /*
     public GameObject Get(EntityType type)
     {
-        for (int i = 0; i < allObjcets.Count; i++)
+        for (int i = 0; i < poolable.Count; i++)
         {
-            if (allObjcets[i].Type == type)
+            if (poolable[i].Type == type)
             {
-                GameObject go = allObjcets[i].Get;
+                GameObject go = poolable[i].Get;
                 go.SetActive(true);
-                allObjcets.Remove(allObjcets[i]);
+                poolable.Remove(poolable[i]);
                 return go;
             }
         }
@@ -55,4 +90,5 @@ public class ObjectPool : MonoBehaviour
         }
         return null;
     }
+    */
 }

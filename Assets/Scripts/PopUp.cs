@@ -22,25 +22,25 @@ public class PopUp : MonoBehaviour, IPoolable {
 
     public static void ShowText(Vector3 position, string message, float time, Color color, PopUpAnimation animation)
     {
-        PopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
+        PopUp popup = GameManager.ObjectPooler.Get<PopUp>();
         popup.Initialize(position, message, time, color, animation);
     }
 
     public static void ShowText(Vector3 position, string message, float time, Color color)
     {
-        PopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
+        PopUp popup = GameManager.ObjectPooler.Get<PopUp>();
         popup.Initialize(position, message, time, color, PopUpAnimation.UP);
     }
 
     public static void ShowText(Vector3 position, string message, float time)
     {
-        PopUp popup = ObjectPool.Instance.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
+        PopUp popup = ObjectPool.Instance.Get<PopUp>();
         popup.Initialize(position, message, time, Color.white, PopUpAnimation.UP);
     }
 
     public static void ShowText(Vector3 position, string message)
     {
-        PopUp popup = ObjectPool.Instance.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
+        PopUp popup = ObjectPool.Instance.Get<PopUp>();
         popup.Initialize(position, message, 0, Color.white, PopUpAnimation.UP);
     }
 
@@ -95,15 +95,7 @@ public class PopUp : MonoBehaviour, IPoolable {
         this.gameObject.SetActive(false);
     }
 
-    public EntityType Type
-    {
-        get
-        {
-            return EntityType.DAMAGEPOPUP;
-        }
-    }
-
-    public GameObject Get
+    public GameObject GetGameObject
     {
         get
         {

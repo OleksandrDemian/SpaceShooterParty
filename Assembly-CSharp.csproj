@@ -49,7 +49,9 @@
      <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
      <Compile Include="Assets\Scripts\Abilities\AbilityType.cs" />
      <Compile Include="Assets\Scripts\Abilities\CircleFire.cs" />
+     <Compile Include="Assets\Scripts\Abilities\DestroyShield.cs" />
      <Compile Include="Assets\Scripts\Abilities\DestroyShieldAbility.cs" />
+     <Compile Include="Assets\Scripts\Abilities\DisableControll.cs" />
      <Compile Include="Assets\Scripts\Abilities\EngineFreezAbility.cs" />
      <Compile Include="Assets\Scripts\Abilities\ShieldRecovery.cs" />
      <Compile Include="Assets\Scripts\AsteroidsGenerator.cs" />
@@ -65,10 +67,8 @@
      <Compile Include="Assets\Scripts\Connection\Server.cs" />
      <Compile Include="Assets\Scripts\Connection\SocketInputManager.cs" />
      <Compile Include="Assets\Scripts\Damage.cs" />
-     <Compile Include="Assets\Scripts\DestroyShield.cs" />
-     <Compile Include="Assets\Scripts\DisableControll.cs" />
      <Compile Include="Assets\Scripts\Entities\Asteroid.cs" />
-     <Compile Include="Assets\Scripts\Entities\BulletController.cs" />
+     <Compile Include="Assets\Scripts\Entities\Laser.cs" />
      <Compile Include="Assets\Scripts\Entities\Missile.cs" />
      <Compile Include="Assets\Scripts\Entities\ShipController.cs" />
      <Compile Include="Assets\Scripts\EntityType.cs" />
@@ -79,6 +79,7 @@
      <Compile Include="Assets\Scripts\Interfaces\IDamagable.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IJoystickListener.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IPoolable.cs" />
+     <Compile Include="Assets\Scripts\LaserTrigger.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameTime.cs" />
      <Compile Include="Assets\Scripts\Managers\LobbyManager.cs" />
@@ -96,6 +97,7 @@
      <Compile Include="Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Scripts\Utils\Converter.cs" />
      <Compile Include="Assets\Scripts\Utils\Test.cs" />
+     <None Include="Assets\Audio\Lasers\Source.txt" />
      <None Include="Assets\KnownProblems.txt" />
      <None Include="Assets\Audio\Ships\readme.txt" />
  <Reference Include="UnityEngine.UI">

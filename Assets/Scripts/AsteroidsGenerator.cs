@@ -12,14 +12,15 @@ public class AsteroidsGenerator : MonoBehaviour {
         if (Time.time > generate)
         {
             GenerateAsteroid();
-            generate += Random.Range(5, 15);
+            generate += Random.Range(5, 10);
         }
 	}
 
     private void GenerateAsteroid()
     {
-        GameObject asteroid = GameManager.ObjectPooler.Get(EntityType.ASTEROID);
-        Vector3 position = new Vector3(50, 50, 0);
-        asteroid.transform.position = position;
+        //GameObject asteroid = GameManager.ObjectPooler.Get(EntityType.ASTEROID);
+        //GameObject asteroid = GameManager.ObjectPooler.Get<Asteroid>() as GameObject;
+        Asteroid asteroid = GameManager.ObjectPooler.Get<Asteroid>();
+        asteroid.Initialize();
     }
 }

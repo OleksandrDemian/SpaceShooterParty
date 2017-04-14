@@ -8,6 +8,7 @@
 
     public int gameTime = 60;
     public bool enableAsteroids = true;
+    public bool shieldsDisabled = false;
     //public bool oneShotMode = false;
 
     public GameInfo()

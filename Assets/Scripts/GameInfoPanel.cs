@@ -12,10 +12,13 @@ public class GameInfoPanel : MonoBehaviour {
         info = new GameInfo();
         timeSlider = transform.FindChild("TimeSlider").GetComponent<Slider>();
         txtGameTime = transform.FindChild("GameTime").GetComponent<Text>();
+
         Toggle asteroids = transform.FindChild("Asteroids").GetComponent<Toggle>();
-        
+        Toggle shields = transform.FindChild("Shields").GetComponent<Toggle>();
+
         timeSlider.onValueChanged.AddListener(OnSliderValueChange);
         asteroids.onValueChanged.AddListener(OnAsteroidBoolValueChange);
+        shields.onValueChanged.AddListener(OnShieldsBoolValueChange);
     }
 
     private void OnSliderValueChange(float value)
@@ -28,5 +31,10 @@ public class GameInfoPanel : MonoBehaviour {
     {
         info.enableAsteroids = value;
     }
-	
+
+    private void OnShieldsBoolValueChange(bool value)
+    {
+        info.shieldsDisabled = value;
+    }
+
 }

@@ -18,3 +18,7 @@
 - FreezeEngine not tested - n
 - DestroyShield not tested - n
 - Rotation wrong (?) - c
+- Match end when there are less that two players - d
+- Asteroid generation(seams that asteroid generator generate two asteroids at time) - c
+- Show result is called twice - d
+- GameManager->MatchEnd() Player->ClearInput doesn't work - n

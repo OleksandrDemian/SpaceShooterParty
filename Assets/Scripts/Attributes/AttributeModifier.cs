@@ -20,8 +20,8 @@
 
     public void Apply(ref int value)
     {
-        value += Value;
-        /*switch (Type)
+        //value += Value;
+        switch (Type)
         {
             case ModifierType.ADD:
                 value += Value;
@@ -29,6 +29,6 @@
             case ModifierType.MULTIPLY:
                 value *= Value;
                 return;
-        }*/
+        }
     }
 }

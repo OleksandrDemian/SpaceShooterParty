@@ -34,6 +34,11 @@ public class ShipController : MonoBehaviour, IDamagable
 */
         EnableEngine(false);
         fireTime = Time.time;
+
+        if (GameInfo.Instance.shieldsDisabled)
+        {
+            GetAttribute(AttributeType.SHIELD).AddModifier(new AttributeModifier(ModifierType.MULTIPLY, 0));
+        }
     }
 
     //TEMP
@@ -75,7 +80,7 @@ public class ShipController : MonoBehaviour, IDamagable
     private void Update()
     {
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotationTarget), rotationSpeed * GameTime.TimeScale);
-        calculateMoveDirection(transform.up * speed);
+        CalculateMoveDirection(transform.up * speed);
         GameManager.Instance.CheckPosition(transform);
         //<-----------------------NEW INPUT SYSTEM---------------------------------------->
         ManageInput();
@@ -87,7 +92,7 @@ public class ShipController : MonoBehaviour, IDamagable
         rb.MovePosition(transform.position + moveDirection * GameTime.TimeScale);
     }
     
-    private void calculateMoveDirection(Vector3 dir)
+    private void CalculateMoveDirection(Vector3 dir)
     {
         moveDirection = Vector3.Lerp(moveDirection, dir, GameTime.TimeScale);
     }
@@ -137,7 +142,8 @@ public class ShipController : MonoBehaviour, IDamagable
 
     public void SetImage(Sprite sprite)
     {
-        Debug.Log(sprite.name);
+        //Debug.Log(sprite.name);
+        //Set space ship's skin
         transform.Find("Ship").GetComponent<SpriteRenderer>().sprite = sprite;
     }
 
@@ -162,8 +168,9 @@ public class ShipController : MonoBehaviour, IDamagable
         if (damage == null)
             return;
 
-        GameObject bullet = GameManager.ObjectPooler.Get(EntityType.LASER);
-        BulletController controller = bullet.GetComponent<BulletController>();
+        //GameObject bullet = GameManager.ObjectPooler.Get(EntityType.LASER);
+        //GameObject bullet = GameManager.ObjectPooler.Get<Laser>();
+        Laser controller = GameManager.ObjectPooler.Get<Laser>();
 
         controller.Initialize(transform.position, transform.rotation, new Damage(damage.Value));
         controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));

@@ -9,17 +9,8 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
     private Rigidbody2D rb;
 
     void Start () {
-        health = new Attribute(AttributeType.HEALTH, 50 + Random.Range(-10, 10));
-        health.onValueChange = OnHealthChanged;
-
         rb = GetComponent<Rigidbody2D>();
-        direction = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
-
-        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
-        sprite.sprite = GameManager.ImagePooler.GetAsteroidSkin();
-
-        speed = Random.Range(1, 5);
-        direction.Normalize();
+        Initialize();
 	}
 	
 	void FixedUpdate () {
@@ -37,10 +28,33 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
             damagable.Damage(10 + Random.Range(-5, 15), null);
     }
 
-    public void OnHealthChanged(int value, int oldValue) {
+    private void OnHealthChanged(int value, int oldValue) {
         if (value < 0) {
             Disable();
         }
+    }
+
+    /// <summary>
+    /// This method is used to initialize the asteroid
+    /// </summary>
+    public void Initialize()
+    {
+        transform.position = new Vector3(50, 50, 0);
+
+        direction = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
+        direction.Normalize();
+
+        float size = 1 + Random.Range(-0.2f, 0.5f);
+        transform.localScale = Vector3.one;
+        transform.localScale *= size;
+
+        health = new Attribute(AttributeType.HEALTH, (int)((70 + Random.Range(-10, 10)) * size));
+        health.onValueChange = OnHealthChanged;
+
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        sprite.sprite = GameManager.ImagePooler.GetAsteroidSkin();
+
+        speed = Random.Range(1, 5);
     }
 
     private void Disable()
@@ -49,6 +63,11 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// It is used for damaging the asteroid
+    /// </summary>
+    /// <param name="amount">amount of damage</param>
+    /// <param name="onDead">a function called when the asteroid is destroed</param>
     public void Damage(int amount, OnDead onDead)
     {
         health.Value -= amount;
@@ -60,15 +79,7 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
             onDead(gameObject);
     }
 
-    public EntityType Type
-    {
-        get
-        {
-            return EntityType.ASTEROID;
-        }
-    }
-
-    public GameObject Get
+    public GameObject GetGameObject
     {
         get
         {

@@ -70,7 +70,7 @@ public class Player : MonoBehaviour, IJoystickListener
 
     public void InitializeShip(int shipNumber)
     {
-        ship = GameManager.ObjectPooler.Get(EntityType.SHIP).GetComponent<ShipController>();
+        ship = GameManager.ObjectPooler.Get<ShipController>().GetComponent<ShipController>();
         ship.SetPlayer(this);
 
         if (shipInfo == null)
@@ -220,12 +220,12 @@ public class Player : MonoBehaviour, IJoystickListener
 
     private void CloseConnection()
     {
+        enabled = false;
         Debug.Log("Player: " + playerName + " left the game");
         if (onConnectionClose != null)
             onConnectionClose(this);
 
         if(ship != null)
             ship.gameObject.SetActive(false);        
-        enabled = false;
     }
 }

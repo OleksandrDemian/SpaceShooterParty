@@ -15,19 +15,11 @@ public class PowerUp : MonoBehaviour, IPoolable
         bonuses.Clear();
     }
 
-    public GameObject Get
+    public GameObject GetGameObject
     {
         get
         {
             return gameObject;
-        }
-    }
-
-    public EntityType Type
-    {
-        get
-        {
-            return EntityType.POWERUP;
         }
     }
 

@@ -24,8 +24,9 @@ class DestroyShieldAbility : Ability
         }*/
 
         PopUp.ShowText(transform.position, "Destroy shield");
-        GameObject laser = GameManager.ObjectPooler.Get(EntityType.LASER) as GameObject;
-        BulletController controller = laser.GetComponent<BulletController>();
+        //GameObject laser = GameManager.ObjectPooler.Get(EntityType.LASER) as GameObject;
+        //GameObject laser = GameManager.ObjectPooler.Get<Laser>() as GameObject;
+        Laser controller = GameManager.ObjectPooler.Get<Laser>();
         if (controller != null)
         {
             controller.Initialize(transform.position, transform.rotation, new DestroyShield(3));

@@ -34,28 +34,11 @@ public class Attribute
             if (onValueChange != null)
                 onValueChange(Value, old);
         }
-        /*get {
-            int finalValue = value;
-            foreach (AttributeModifier modifier in modifiers)
-            {
-                modifier.Apply(ref finalValue);
-            }
-            return finalValue;
-        }*/
-        /*private set {
-            this.value = value;
-            //Mathf.Clamp(this.value, 0, maxValue);
-            if (this.value > maxValue)
-                this.value = maxValue;
-
-            if (onValueChange != null)
-                onValueChange(Value);
-        }*/
     }
 
     public void ResetValue()
     {
-        value = maxValue;
+        Value = maxValue;
     }
 
     public void ResetDefaultValue()
@@ -107,7 +90,7 @@ public class Attribute
 
         int finalValue = defaultValue;
         int add = 0;
-        int mult = 0;
+        int mult = 1;
 
         foreach (AttributeModifier modifier in modifiers)
         {
@@ -124,41 +107,11 @@ public class Attribute
         }
 
         finalValue += add;
-        if (mult != 0)
-            finalValue *= mult;
+        //if (mult != 0)
+        finalValue *= mult;
         
 
         maxValue = finalValue;
         Value = (currentValuePercent * maxValue) / 100;
     }
-    /*public void Add(int value)
-    {
-        this.value += value;
-        if (this.value > maxValue)
-            this.value = maxValue;
-
-        if (onValueChange != null)
-            onValueChange(Value);
-    }
-
-    public void Substract(int value)
-    {
-        this.value -= value;
-
-        if (onValueChange != null)
-            onValueChange(Value);
-    }*/
-
-    
-
-    /*public void Set(int value)
-    {
-        this.value = value;
-
-        if (this.value > maxValue)
-            this.value = maxValue;
-
-        if (onValueChange != null)
-            onValueChange(Value);
-    }*/
 }
