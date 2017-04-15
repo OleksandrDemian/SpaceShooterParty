@@ -48,14 +48,49 @@ public class Player : MonoBehaviour, IJoystickListener
     private void Update()
     {
         time += Time.deltaTime;
-        if (time > 3)
+        if (time > 2)
         {
             CloseConnection();
             return;
         }
         reader.Read();
+
+        //Controll ship here
+        ControllShip();
         //delta += Time.deltaTime;
     }
+
+    //<------------------------------------------->
+    private void ControllShip()
+    {
+        if (input.GetCommand(Command.FIRE))
+        {
+            ship.Fire();
+        }
+
+        if (input.GetCommand(Command.TURNRIGHT))
+        {
+            ship.TurnRight();
+        }
+
+        if (input.GetCommand(Command.TURNLEFT))
+        {
+            ship.TurnLeft();
+        }
+
+        if (input.GetCommand(Command.ENGINETRIGGER))
+        {
+            ship.EngineTrigger();
+            input.RemoveCommand(Command.ENGINETRIGGER);
+        }
+
+        if (input.GetCommand(Command.ABILITYTRIGGER))
+        {
+            ship.AbilityTrigger();
+            input.RemoveCommand(Command.ABILITYTRIGGER);
+        }
+    }
+    //<------------------------------------------->
 
     public void Write(string message) {
         try

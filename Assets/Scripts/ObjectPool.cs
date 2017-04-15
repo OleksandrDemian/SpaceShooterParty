@@ -61,7 +61,7 @@ public class ObjectPool : MonoBehaviour
                 return instance.GetComponent<T>();
             }
         }
-        return default(T);
+        throw new System.Exception("There is no " + typeof(T));
     }
     
     /*

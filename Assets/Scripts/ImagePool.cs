@@ -15,6 +15,7 @@ public class ImagePool : MonoBehaviour
     {
         if (position >= positionImages.Length)
             position = 0;
+        //throw new System.Exception("There is no numbers");
         return positionImages[position];
     }
 
@@ -23,6 +24,7 @@ public class ImagePool : MonoBehaviour
         Debug.Log(index);
         if (index > 15)
             return shipSkins[16];
+        //throw new System.Exception("There is no ship skins");
         return shipSkins[index];
     }
 
@@ -30,6 +32,7 @@ public class ImagePool : MonoBehaviour
     {
         if (index >= laserSkins.Length)
             index = 0;
+        //throw new System.Exception("There is no laser skins");
         return laserSkins[index];
     }
 
@@ -37,6 +40,7 @@ public class ImagePool : MonoBehaviour
     {
         if (index >= asteroidsSkin.Length)
             index = 0;
+        //throw new System.Exception("There is no asteroid skins");
         return asteroidsSkin[index];
     }
 

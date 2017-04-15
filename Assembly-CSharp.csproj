@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Attributes\Attribute.cs" />
      <Compile Include="Assets\Scripts\Attributes\AttributeModifier.cs" />
      <Compile Include="Assets\Scripts\Attributes\AttributeType.cs" />
+     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Bonuses\Bonus.cs" />
      <Compile Include="Assets\Scripts\Bonuses\SlowDownTimeBonus.cs" />
      <Compile Include="Assets\Scripts\Connection\Command.cs" />
@@ -79,6 +80,7 @@
      <Compile Include="Assets\Scripts\Interfaces\IDamagable.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IJoystickListener.cs" />
      <Compile Include="Assets\Scripts\Interfaces\IPoolable.cs" />
+     <Compile Include="Assets\Scripts\KeyBoardPlayer.cs" />
      <Compile Include="Assets\Scripts\LaserTrigger.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameTime.cs" />

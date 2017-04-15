@@ -2,6 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(AudioManager))]
 public class ShipController : MonoBehaviour, IDamagable
 {
     private int speed = 0;
@@ -19,21 +20,22 @@ public class ShipController : MonoBehaviour, IDamagable
     private SpriteRenderer engineTrail;
     private SpriteRenderer shieldSprite;
 
+    private AudioManager audioManager;
+
+    //TEMP
+    private float lastFireTime;
+    private float lastAbilityTime;
+
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
+        audioManager = GetComponent<AudioManager>();
 
         engineTrail = transform.Find("Trail").GetComponent<SpriteRenderer>();
         shieldSprite = transform.Find("Shield").GetComponent<SpriteRenderer>();
-/*
-#if UNITY_EDITOR
-        SetDamage(10);
-        SetHealth(20);
-        SetShield(3);
-        SetSpeed(500);
-#endif
-*/
+
         EnableEngine(false);
-        fireTime = Time.time;
+        lastFireTime = GameTime.GetTime();
+        lastAbilityTime = GameTime.GetTime();
 
         if (GameInfo.Instance.shieldsDisabled)
         {
@@ -41,10 +43,7 @@ public class ShipController : MonoBehaviour, IDamagable
         }
     }
 
-    //TEMP
-    float fireTime;
-    float abilityTime;
-
+    /*
     private void ManageInput()
     {
         if (player.Input.GetCommand(Command.FIRE) && Time.time > fireTime + 0.5f)
@@ -76,6 +75,7 @@ public class ShipController : MonoBehaviour, IDamagable
             player.Input.RemoveCommand(Command.ABILITYTRIGGER);
         }
     }
+    */
 
     private void Update()
     {
@@ -83,7 +83,7 @@ public class ShipController : MonoBehaviour, IDamagable
         CalculateMoveDirection(transform.up * speed);
         GameManager.Instance.CheckPosition(transform);
         //<-----------------------NEW INPUT SYSTEM---------------------------------------->
-        ManageInput();
+        //ManageInput();
         //<-----------------------      END     ------------------------------------------>
     }
 
@@ -164,6 +164,9 @@ public class ShipController : MonoBehaviour, IDamagable
 
     public void Fire()
     {
+        if (GameTime.GetTime() < lastFireTime + 0.5f)
+            return;
+
         Attribute damage = GetAttribute(AttributeType.DAMAGE);
         if (damage == null)
             return;
@@ -175,11 +178,17 @@ public class ShipController : MonoBehaviour, IDamagable
         controller.Initialize(transform.position, transform.rotation, new Damage(damage.Value));
         controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
         controller.GetDamage().SetOnDeadCallback(player.Kill);
+        audioManager.PlayAudio("Laser");
+        lastFireTime = GameTime.GetTime();
     }
 
     public void AbilityTrigger()
     {
+        if (GameTime.GetTime() < lastAbilityTime + 5)
+            return;
+
         ability.Trigger();
+        lastAbilityTime = GameTime.GetTime();
     }
 
     public void TurnRight()

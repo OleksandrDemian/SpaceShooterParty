@@ -22,3 +22,4 @@
 - Asteroid generation(seams that asteroid generator generate two asteroids at time) - c
 - Show result is called twice - d
 - GameManager->MatchEnd() Player->ClearInput doesn't work - n
+- Rewiew AudioManager(there is just one clip) - n
