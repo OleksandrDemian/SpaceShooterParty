@@ -15,11 +15,12 @@
 - Bonuses - n
 - Circle fire: kill doesn't working with abilities - c
 - GameInfo can be better! - n
-- FreezeEngine not tested - n
-- DestroyShield not tested - n
+- FreezeEngine not tested - c
+- DestroyShield not tested - c
 - Rotation wrong (?) - c
 - Match end when there are less that two players - d
 - Asteroid generation(seams that asteroid generator generate two asteroids at time) - c
 - Show result is called twice - d
 - GameManager->MatchEnd() Player->ClearInput doesn't work - n
 - Rewiew AudioManager(there is just one clip) - n
+- Server is running also when game is turned off - n

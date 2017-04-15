@@ -122,6 +122,20 @@ public class Player : MonoBehaviour, IJoystickListener
         respawnPoint = point;
     }
 
+    public void OnShipValueChange(AttributeType type, int value)
+    {
+        switch (type)
+        {
+            case AttributeType.HEALTH:
+                Write("ih" + value);
+                break;
+
+            case AttributeType.SHIELD:
+                Write("is" + value);
+                break;
+        }
+    }
+
     public void EnableControll(bool action)
     {
         controllEnabled = action;

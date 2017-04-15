@@ -265,6 +265,7 @@ public class ShipController : MonoBehaviour, IDamagable
     private void OnHealthValueChange(int value, int oldValue)
     {
         int delta = value - oldValue;
+        player.OnShipValueChange(AttributeType.HEALTH, value);
 
         if(delta < 0)
             PopUp.ShowText(transform.position, "Health: " + delta, 0, Color.red);
@@ -280,6 +281,7 @@ public class ShipController : MonoBehaviour, IDamagable
     private void OnShieldValueChange(int value, int oldValue)
     {
         int delta = value - oldValue;
+        player.OnShipValueChange(AttributeType.SHIELD, value);
 
         if (delta < 0)
             PopUp.ShowText(transform.position, "Shield: " + delta, 0, Color.blue, PopUpAnimation.LEFT);
