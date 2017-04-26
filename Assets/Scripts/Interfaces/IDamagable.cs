@@ -1,3 +1,3 @@
 ﻿public interface IDamagable {
-    void Damage(int amount, OnDead callback);
+    void Damage(int amount, ShipController ship);
 }

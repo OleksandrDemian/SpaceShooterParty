@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Effect used after laser hit something
+/// </summary>
 public class LaserTrigger : MonoBehaviour, IPoolable {
-
-    void Start ()
-    {
-
-    }
 	
 	void Update ()
     {

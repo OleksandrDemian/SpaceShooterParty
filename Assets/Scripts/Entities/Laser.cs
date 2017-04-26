@@ -30,6 +30,9 @@ public class Laser : MonoBehaviour, IPoolable {
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
+        if (collider.tag == "Bonus")
+            return;
+
         damage.ApplyDamage(collider.gameObject);
         LaserTrigger effect = GameManager.ObjectPooler.Get<LaserTrigger>();
         effect.Initialize(transform.position);

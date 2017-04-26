@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 
-public class AsteroidsGenerator : MonoBehaviour {
-
+public class AsteroidsGenerator : MonoBehaviour
+{
     private float generate = 5;
 
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	
-	void Update () {
+	void Update ()
+    {
         if (Time.time > generate)
         {
             GenerateAsteroid();

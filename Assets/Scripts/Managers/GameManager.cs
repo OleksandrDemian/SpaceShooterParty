@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     private Vector2 mapBounds = new Vector2(22, 13);
     private List<Player> players;
     private Transform[] startPoints;
-    private int MATCH_DURATION = 90; //JAVA syntax (maybe)
+    private int MATCH_DURATION = 60; //JAVA syntax (maybe)
     private GameInfo gameInfo;
     private MatchCountdown countdown;
     private Timer matchTimer;
@@ -60,6 +60,12 @@ public class GameManager : MonoBehaviour
 
 	private void Start ()
     {
+        //NEW STUFF
+        mapBounds = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 0));
+        mapBounds.x += 1;
+        mapBounds.y += 1;
+        //NED NEW STUFF
+
         Instance = this;
         ObjectPooler = GetComponent<ObjectPool>();
         ImagePooler = GetComponent<ImagePool>();
@@ -76,7 +82,8 @@ public class GameManager : MonoBehaviour
 
         //Debug.Log("Time: " + MatchTime + " <> " + gameInfo.gameTime);
         GetComponent<AsteroidsGenerator>().enabled = gameInfo.enableAsteroids;
-
+        GetComponent<BonusGenerator>().enabled = gameInfo.enableBonuses;
+        //Debug.Log("Bonuses: " + gameInfo.enableBonuses);
         for (int i = 0; i < players.Count; i++)
         {
             players[i].SetRespawnPoint(startPoints[i]);

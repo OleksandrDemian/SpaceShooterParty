@@ -68,15 +68,12 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
     /// </summary>
     /// <param name="amount">amount of damage</param>
     /// <param name="onDead">a function called when the asteroid is destroed</param>
-    public void Damage(int amount, OnDead onDead)
+    public void Damage(int amount, ShipController controller)
     {
         health.Value -= amount;
         /*PopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
         popup.Initialize(transform.position, amount.ToString(), Color.white);*/
         PopUp.ShowText(transform.position, amount.ToString(), 0.5f);
-
-        if(onDead != null && health.Value < 0)
-            onDead(gameObject);
     }
 
     public GameObject GetGameObject

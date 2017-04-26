@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
 
-public delegate void OnDead(GameObject target);
-
 public class Damage
 {
     private int damage;
-    private OnDead onDead;
+    private ShipController parent;
 
     public Damage(int damage)
     {
         this.damage = damage;
     }
 
-    public void SetOnDeadCallback(OnDead onDead)
+    public void SetParentShip(ShipController parent)
     {
-        this.onDead = onDead;
+        this.parent = parent;
     }
 
     public virtual void ApplyDamage(GameObject target)
@@ -22,7 +20,7 @@ public class Damage
         IDamagable damagable = target.GetComponent<IDamagable>();
         if (damagable != null)
         {
-            damagable.Damage(damage, onDead);
+            damagable.Damage(damage, parent);
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class ShipController : MonoBehaviour, IDamagable
 {
     private int speed = 0;
-    private int rotationSpeed = 10;
+    private int rotationSpeed = 4;
     private List<Attribute> attributes = new List<Attribute>();
 
     private Ability ability;
@@ -43,48 +43,11 @@ public class ShipController : MonoBehaviour, IDamagable
         }
     }
 
-    /*
-    private void ManageInput()
-    {
-        if (player.Input.GetCommand(Command.FIRE) && Time.time > fireTime + 0.5f)
-        {
-            Fire();
-            fireTime = Time.time;
-        }
-
-        if (player.Input.GetCommand(Command.ENGINETRIGGER))
-        {
-            EngineTrigger();
-            player.Input.RemoveCommand(Command.ENGINETRIGGER);
-        }
-
-        if (player.Input.GetCommand(Command.TURNRIGHT))
-        {
-            TurnRight();
-        }
-
-        if (player.Input.GetCommand(Command.TURNLEFT))
-        {
-            TurnLeft();
-        }
-            
-        if (player.Input.GetCommand(Command.ABILITYTRIGGER) && Time.time > abilityTime + 5)
-        {
-            AbilityTrigger();
-            abilityTime = Time.time;
-            player.Input.RemoveCommand(Command.ABILITYTRIGGER);
-        }
-    }
-    */
-
     private void Update()
     {
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotationTarget), rotationSpeed * GameTime.TimeScale);
         CalculateMoveDirection(transform.up * speed);
         GameManager.Instance.CheckPosition(transform);
-        //<-----------------------NEW INPUT SYSTEM---------------------------------------->
-        //ManageInput();
-        //<-----------------------      END     ------------------------------------------>
     }
 
     private void FixedUpdate()
@@ -171,13 +134,11 @@ public class ShipController : MonoBehaviour, IDamagable
         if (damage == null)
             return;
 
-        //GameObject bullet = GameManager.ObjectPooler.Get(EntityType.LASER);
-        //GameObject bullet = GameManager.ObjectPooler.Get<Laser>();
         Laser controller = GameManager.ObjectPooler.Get<Laser>();
 
         controller.Initialize(transform.position, transform.rotation, new Damage(damage.Value));
         controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
-        controller.GetDamage().SetOnDeadCallback(player.Kill);
+        controller.GetDamage().SetParentShip(this);
         audioManager.PlayAudio("Laser");
         lastFireTime = GameTime.GetTime();
     }
@@ -233,7 +194,7 @@ public class ShipController : MonoBehaviour, IDamagable
         engineTrail.enabled = speed > 0 ? true : false;
     }
 
-    public void Damage(int amount, OnDead onDead)
+    public void Damage(int amount, ShipController ship)
     {
         Attribute shield = GetAttribute(AttributeType.SHIELD);
         
@@ -248,8 +209,8 @@ public class ShipController : MonoBehaviour, IDamagable
             health.Value -= amount;
             if (health.Value < 0)
             {
-                if(onDead != null)
-                    onDead(gameObject);
+                if(ship != null)
+                    ship.GetPlayer().Kill(gameObject);
             }
             //PopUp.ShowText(transform.position, amount.ToString(), 0, Color.red);
         }

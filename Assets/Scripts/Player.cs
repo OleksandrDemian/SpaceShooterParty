@@ -146,7 +146,6 @@ public class Player : MonoBehaviour, IJoystickListener
 
     public void OnMessageRead(string message)
     {
-        //Debug.Log("Message: " + message);
         time = 0;
         if (message[0] == 'c')
             ReadCommand(message);
@@ -188,9 +187,7 @@ public class Player : MonoBehaviour, IJoystickListener
     public void Kill(GameObject killed)
     {
         Debug.Log(Name + " killed " + killed.name);
-        if(killed.GetComponent<ShipController>() != null)
-            kill++;
-        //reader.Write("Kill");
+        kill++;
     }
 
     public string Name
