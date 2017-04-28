@@ -2,7 +2,7 @@
 
 public class BonusGenerator : MonoBehaviour
 {
-    private float generate = 20;
+    private float generate = 10;
 
     private void Start()
     {
@@ -25,6 +25,7 @@ public class BonusGenerator : MonoBehaviour
         int y = Random.Range(0, 13);
         bonus.transform.position = new Vector2(x, y);
         bonus.AddBonus(GetRandomBonus());
+        //bonus.EnableFollowing(true);
     }
 
     private Bonus GetRandomBonus()

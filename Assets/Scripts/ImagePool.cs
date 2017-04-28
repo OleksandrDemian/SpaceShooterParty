@@ -10,6 +10,15 @@ public class ImagePool : MonoBehaviour
     private Sprite[] laserSkins;
     [SerializeField]
     private Sprite[] asteroidsSkin;
+    [SerializeField]
+    private Sprite[] powerUpSkins;
+
+    public Sprite GetPowerUpSkin(int index)
+    {
+        if (index >= powerUpSkins.Length)
+            index = 0;
+        return powerUpSkins[index];
+    }
 
     public Sprite GetPositionImage(int position)
     {

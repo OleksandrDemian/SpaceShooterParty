@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
     {
         //NEW STUFF
         mapBounds = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 0));
-        mapBounds.x += 1;
-        mapBounds.y += 1;
+        mapBounds.x += 0.5f;
+        mapBounds.y += 0.5f;
         //NED NEW STUFF
 
         Instance = this;
@@ -96,11 +96,13 @@ public class GameManager : MonoBehaviour
         StartMatch ();
     }
 
+    //PLAYERS COUNT < 2!!!!!
     private void OnPlayerConnectionClose(Player player)
     {
         //Check how match players there are!
         countdown.ShowText(player.Name + " left!", 4);
         Debug.Log("Players: " + EnabledPlayersCount);
+        //PLAYERS COUNT < 2!!!!!
         if (EnabledPlayersCount < 1)
         {
             GameTime.Instance.RemoveTimer(matchTimer);
