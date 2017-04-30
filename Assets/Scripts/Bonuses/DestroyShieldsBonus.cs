@@ -3,20 +3,43 @@ using UnityEngine;
 
 public class DestroyShieldsBonus : Bonus
 {
+    private bool itSelf = false;
+
+    public DestroyShieldsBonus()
+    {
+        itSelf = false;
+    }
+
+    public DestroyShieldsBonus(bool itSelf)
+    {
+        this.itSelf = itSelf;
+    }
+
     public override void Trigger(GameObject target)
     {
-        PopUp.ShowText(target.transform.position, "Destroy enemies shields");
         ShipController controller = target.GetComponent<ShipController>();
         if (controller == null)
             return;
 
-        List<Player> players = GameManager.Instance.GetPlayers();
-        for (int i = 0; i < players.Count; i++)
+        if (itSelf)
         {
-            if (players[i] == controller.GetPlayer())
-                continue;
+            PopUp.ShowText(target.transform.position, "Destroy shields", 1);
 
-            players[i].SpaceShip.GetAttribute(AttributeType.SHIELD).Value = 0;
+            controller.GetAttribute(AttributeType.SHIELD).Value = 0;
         }
+        else
+        {
+            PopUp.ShowText(target.transform.position, "Destroy enemies shields", 1);
+
+            List<Player> players = GameManager.Instance.GetPlayers();
+            for (int i = 0; i < players.Count; i++)
+            {
+                if (players[i] == controller.GetPlayer())
+                    continue;
+
+                players[i].SpaceShip.GetAttribute(AttributeType.SHIELD).Value = 0;
+            }
+        }
+        
     }
 }

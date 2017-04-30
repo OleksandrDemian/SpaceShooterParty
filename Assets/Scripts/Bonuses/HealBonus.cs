@@ -9,7 +9,7 @@ public class HealBonus : Bonus
         if (controller == null)
             return;
 
-        PopUp.ShowText(target.transform.position, "Heal", 0, Color.white, PopUpAnimation.RIGHT);
+        PopUp.ShowText(target.transform.position, "Heal", 1, Color.white, PopUpAnimation.RIGHT);
         controller.GetAttribute(AttributeType.HEALTH).ResetValue();
     }
 }

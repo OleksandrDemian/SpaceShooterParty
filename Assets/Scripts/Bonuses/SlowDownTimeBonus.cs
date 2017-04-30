@@ -4,7 +4,7 @@ class SlowDownTimeBonus : Bonus
 {
     public override void Trigger(GameObject target)
     {
-        PopUp.ShowText(target.transform.position, "Slow down time!");
+        PopUp.ShowText(target.transform.position, "Slow down time!", 1);
 
         GameTime gt = GameTime.Instance;
 

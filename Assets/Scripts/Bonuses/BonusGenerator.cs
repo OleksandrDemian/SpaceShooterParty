@@ -1,55 +1,66 @@
 ﻿using UnityEngine;
 
-public class BonusGenerator : MonoBehaviour
+public class BonusGenerator
 {
-    private float generate = 10;
-
-    private void Start()
+    public BonusGenerator()
     {
-        generate = Random.Range(20, 40);
-    }
-
-    private void Update()
-    {
-        if (Time.time > generate)
-        {
-            GenerateBonus();
-            generate += Random.Range(20, 40);
-        }
+        GameTime.Instance.AddTimer(new Timer(Random.Range(15, 25), delegate () { GenerateBonus(); }));
     }
 
     private void GenerateBonus()
     {
         PowerUp bonus = ObjectPool.Instance.Get<PowerUp>();
-        int x = Random.Range(0, 22);
-        int y = Random.Range(0, 13);
+        Vector2 bounds = GameManager.Instance.MapBounds - Vector2.one;
+
+        int x = Random.Range((int)-bounds.x, (int)bounds.x);
+        int y = Random.Range((int)-bounds.y, (int)bounds.y);
+
+        Debug.Log("Position: " + x + " " + y);
         bonus.transform.position = new Vector2(x, y);
-        bonus.AddBonus(GetRandomBonus());
-        //bonus.EnableFollowing(true);
+
+        bool negative = false;
+        bonus.AddBonus(GetRandomBonus(ref negative));
+
+        bonus.EnableFollowing(negative);
+        GameTime.Instance.AddTimer(new Timer(Random.Range(15, 30), delegate () { GenerateBonus(); }));
     }
 
-    private Bonus GetRandomBonus()
+    private Bonus GetRandomBonus(ref bool negative)
     {
         int rand = Random.Range(0, 9);
 
         switch (rand)
         {
             case 1:
+                negative = false;
                 return new LevelUpBonus();
 
             case 2:
+                negative = false;
                 return new CircleFireBonus();
 
             case 3:
+                negative = false;
                 return new HealBonus();
 
             case 4:
-                return new DoubleDamageBonus();
+                negative = false;
+                return new MultiplyDamageBonus(2);
 
             case 5:
+                negative = false;
                 return new DestroyShieldsBonus();
 
+            case 6:
+                negative = true;
+                return new DestroyShieldsBonus(true);
+
+            case 7:
+                negative = false;
+                return new MultiplyDamageBonus(3);
+
             default:
+                negative = false;
                 return new SlowDownTimeBonus();
         }
     }

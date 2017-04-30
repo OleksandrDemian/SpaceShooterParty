@@ -26,7 +26,13 @@ public class GameManager : MonoBehaviour
     }
 
     //LevelManager
-    private Vector2 mapBounds = new Vector2(22, 13);
+    
+    public Vector2 MapBounds
+    {
+        get;
+        private set;
+    }
+
     private List<Player> players;
     private Transform[] startPoints;
     private int MATCH_DURATION = 60; //JAVA syntax (maybe)
@@ -35,25 +41,26 @@ public class GameManager : MonoBehaviour
     private Timer matchTimer;
     //TEMP
     private bool matchEnded = false;
+    BonusGenerator generator;
 
     //LevelManager
     public void CheckPosition(Transform transform)
     {
         Vector3 position = transform.position;
-        if (Mathf.Abs(transform.position.x) > mapBounds.x)
+        if (Mathf.Abs(transform.position.x) > MapBounds.x)
         {
             if (position.x > 0)
-                position.x = -mapBounds.x;
+                position.x = -MapBounds.x;
             else
-                position.x = mapBounds.x;
+                position.x = MapBounds.x;
         }
             
-        if (Mathf.Abs(transform.position.y) > mapBounds.y)
+        if (Mathf.Abs(transform.position.y) > MapBounds.y)
         {
             if (position.y > 0)
-                position.y = -mapBounds.y;
+                position.y = -MapBounds.y;
             else
-                position.y = mapBounds.y;
+                position.y = MapBounds.y;
         }
         transform.position = position;
     }
@@ -61,9 +68,8 @@ public class GameManager : MonoBehaviour
 	private void Start ()
     {
         //NEW STUFF
-        mapBounds = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 0));
-        mapBounds.x += 0.5f;
-        mapBounds.y += 0.5f;
+        MapBounds = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 0));
+        MapBounds += new Vector2(.5f, .5f);
         //NED NEW STUFF
 
         Instance = this;
@@ -82,7 +88,12 @@ public class GameManager : MonoBehaviour
 
         //Debug.Log("Time: " + MatchTime + " <> " + gameInfo.gameTime);
         GetComponent<AsteroidsGenerator>().enabled = gameInfo.enableAsteroids;
-        GetComponent<BonusGenerator>().enabled = gameInfo.enableBonuses;
+
+        if (gameInfo.enableBonuses)
+        {
+            generator = new BonusGenerator();
+        }
+
         //Debug.Log("Bonuses: " + gameInfo.enableBonuses);
         for (int i = 0; i < players.Count; i++)
         {
@@ -91,8 +102,6 @@ public class GameManager : MonoBehaviour
             players[i].onConnectionClose = OnPlayerConnectionClose;
         }
 
-        //StartCoroutine(StartDeelay(3));
-        //StartCoroutine(MatchTimer(MATCH_DURATION + 3));
         StartMatch ();
     }
 
@@ -138,32 +147,11 @@ public class GameManager : MonoBehaviour
             players[i].EnableControll(true);
         }
     }
-
-    /*private IEnumerator StartDeelay(int seconds)
-    {
-        GameTime.Instance.SetTimeScale(0.05f);
-        for (int i = 0; i < seconds; i++)
-        {
-            yield return new WaitForSeconds(1);
-            Debug.Log(seconds - i);
-        }
-        for (int i = 0; i < players.Count; i++)
-        {
-            players[i].EnableControll(true);
-        }
-        GameTime.Instance.SetTimeScaleTarget(1);
-    }*/
 	
 	private void Update ()
     {
 
 	}
-
-    /*private void OnGUI()
-    {
-        for(int i = 0; i < players.Count; i++)
-            GUI.Label(new Rect(10, 10 + (20 * i), 150, 20), (players[i].Name + " -> " + players[i].kill + ": " + players[i].dead));
-    }*/
 
     public List<Player> GetPlayers()
     {
@@ -194,16 +182,6 @@ public class GameManager : MonoBehaviour
         SceneLoader.LoadScene("Lobby");
     }
 
-    /*private IEnumerator MatchTimer(float time)
-    {
-        while (MatchTime < time)
-        {
-            MatchTime += GameTime.TimeScale;
-            yield return new WaitForEndOfFrame();
-        }
-        MatchEnd();
-    }*/
-
     private void MatchEnd()
     {
         if (matchEnded)
@@ -211,9 +189,9 @@ public class GameManager : MonoBehaviour
 
         foreach (Player player in players)
         {
+            player.Input.ClearCommands();
             //player.Write(Converter.toString(Request.ADDPOINT));
             player.Write(Converter.toString(Request.MATCHEND));
-            player.Input.ClearCommands();
             Debug.Log("Send to: " + player.Name + " -> " + Converter.toString(Request.ADDPOINT));
         }
         countdown.SetText("Match ended");

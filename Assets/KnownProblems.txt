@@ -2,6 +2,8 @@
 - d -> done
 - n -> not done
 
+- More life - n
+
 - FreezeEngine ability does't work - d
 - Missile does't work - n
 - PopUpText first time animation does't work properly - d

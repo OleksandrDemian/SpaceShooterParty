@@ -63,9 +63,9 @@
      <Compile Include="Assets\Scripts\Bonuses\BonusGenerator.cs" />
      <Compile Include="Assets\Scripts\Bonuses\CircleFireBonus.cs" />
      <Compile Include="Assets\Scripts\Bonuses\DestroyShieldsBonus.cs" />
-     <Compile Include="Assets\Scripts\Bonuses\DoubleDamageBonus.cs" />
      <Compile Include="Assets\Scripts\Bonuses\HealBonus.cs" />
      <Compile Include="Assets\Scripts\Bonuses\LevelUpBonus.cs" />
+     <Compile Include="Assets\Scripts\Bonuses\MultiplyDamageBonus.cs" />
      <Compile Include="Assets\Scripts\Bonuses\SlowDownTimeBonus.cs" />
      <Compile Include="Assets\Scripts\Connection\Command.cs" />
      <Compile Include="Assets\Scripts\Connection\ConnectionManager.cs" />

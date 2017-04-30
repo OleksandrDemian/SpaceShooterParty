@@ -7,7 +7,7 @@ public class LevelUpBonus : Bonus
         ShipController controller = target.GetComponent<ShipController>();
         if (controller == null)
             return;
-        PopUp.ShowText(target.transform.position, "Level UP!");
+        PopUp.ShowText(target.transform.position, "Level UP!", 1);
         controller.GetPlayer().Write(Converter.toString(Request.ADDPOINT));
     }
 }
