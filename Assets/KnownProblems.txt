@@ -12,17 +12,17 @@
 - Respawn rotation is wrong (target rotation?) - d
 - Result panel order - d
 - AttributeModifiers - d
-- Power-Up - n
+- Power-Up - d
 - ShipGUI started (I don't know if I need it) - n
-- Bonuses - n
+- Bonuses - d
 - Circle fire: kill doesn't working with abilities - c
 - GameInfo can be better! - n
-- FreezeEngine not tested - c
-- DestroyShield not tested - c
-- Rotation wrong (?) - c
+- FreezeEngine not tested - d
+- DestroyShield not tested - d
+- Rotation wrong (?) - d : (at the start is wrong(?))
 - Match end when there are less that two players - d
 - Asteroid generation(seams that asteroid generator generate two asteroids at time) - c
 - Show result is called twice - d
 - GameManager->MatchEnd() Player->ClearInput doesn't work - n
 - Rewiew AudioManager(there is just one clip) - n
-- Server is running also when game is turned off - n
+- Server is running also when game is turned off - c

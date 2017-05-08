@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     private Timer matchTimer;
     //TEMP
     private bool matchEnded = false;
-    BonusGenerator generator;
+    private BonusGenerator bonusGenerator;
 
     //LevelManager
     public void CheckPosition(Transform transform)
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
 
         if (gameInfo.enableBonuses)
         {
-            generator = new BonusGenerator();
+            bonusGenerator = new BonusGenerator();
         }
 
         //Debug.Log("Bonuses: " + gameInfo.enableBonuses);
@@ -109,10 +109,10 @@ public class GameManager : MonoBehaviour
     private void OnPlayerConnectionClose(Player player)
     {
         //Check how match players there are!
-        countdown.ShowText(player.Name + " left!", 4);
+        countdown.ShowText(player.Name + " left!", 3);
         Debug.Log("Players: " + EnabledPlayersCount);
         //PLAYERS COUNT < 2!!!!!
-        if (EnabledPlayersCount < 1)
+        if (EnabledPlayersCount < 2)
         {
             GameTime.Instance.RemoveTimer(matchTimer);
             MatchEnd();
@@ -147,11 +147,6 @@ public class GameManager : MonoBehaviour
             players[i].EnableControll(true);
         }
     }
-	
-	private void Update ()
-    {
-
-	}
 
     public List<Player> GetPlayers()
     {
@@ -194,8 +189,10 @@ public class GameManager : MonoBehaviour
             player.Write(Converter.toString(Request.MATCHEND));
             Debug.Log("Send to: " + player.Name + " -> " + Converter.toString(Request.ADDPOINT));
         }
+
         countdown.SetText("Match ended");
         countdown.enabled = false;
+
         GameTime.Instance.SetTimeScaleTarget(0.04f);
         matchEnded = true;
         OpenMatchResult();
@@ -203,7 +200,6 @@ public class GameManager : MonoBehaviour
 
     private void OpenMatchResult()
     {
-        Debug.Log("Show result");
         GameResultPanel result = FindObjectOfType<GameResultPanel>();
         result.Show(players.ToArray());
     }

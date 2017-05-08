@@ -30,11 +30,8 @@ class CircleFire : Ability
     private void Shoot(int direction)
     {
         Quaternion rotation = Quaternion.Euler(0, 0, direction);
-        //GameObject laser = GameManager.ObjectPooler.Get(EntityType.LASER) as GameObject;
-        //GameObject laser = GameManager.ObjectPooler.Get<Laser>() as GameObject;
         Laser bullet = GameManager.ObjectPooler.Get<Laser>();
         bullet.Initialize(shipParent.transform.position, rotation, new Damage(damage.Value));
-        //KNOWN_PROBLEM
         bullet.GetDamage().SetParentShip(shipParent);
     }
 }

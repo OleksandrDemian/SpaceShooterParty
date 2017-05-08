@@ -3,11 +3,6 @@
 public class AsteroidsGenerator : MonoBehaviour
 {
     private float generate = 5;
-
-	void Start ()
-    {
-		
-	}
 	
 	void Update ()
     {

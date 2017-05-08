@@ -5,12 +5,9 @@ public class MatchCountdown : MonoBehaviour {
 
     [SerializeField]
     private Text timerTxt;
+
     private float matchTime = 90;
     private bool countdown = true;
-
-	void Start () {
-		
-	}
 	
 	void Update () {
         matchTime -= GameTime.TimeScale;

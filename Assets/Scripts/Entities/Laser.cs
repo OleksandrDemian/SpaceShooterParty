@@ -6,7 +6,7 @@ public class Laser : MonoBehaviour, IPoolable {
     private Damage damage;
     private Rigidbody2D rb;
     private float timer = 0f;
-    private int speed = 10;
+    private int speed = 25;
 
     private void Start ()
     {
@@ -16,7 +16,7 @@ public class Laser : MonoBehaviour, IPoolable {
     private void Update()
     {
         timer += GameTime.TimeScale;
-        if (timer > 3)
+        if (timer > 1)
         {
             Disable();
         }

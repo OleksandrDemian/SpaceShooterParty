@@ -24,6 +24,7 @@ class Server
         Instance = this;
         server = new TcpListener(IPAddress.Any, port);
         server.Start();
+
         Thread runThread = new Thread(new ThreadStart(Run));
         runThread.Start();
     }
@@ -84,5 +85,6 @@ class Server
     public void Stop()
     {
         server.Stop();
+        Debug.Log("Server stoped!");
     }
 }

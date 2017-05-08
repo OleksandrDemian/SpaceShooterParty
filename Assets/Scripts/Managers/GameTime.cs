@@ -36,12 +36,9 @@ public class GameTime : MonoBehaviour
         Instance = this;
     }
 
-    //temp
-    //private bool slow = false;
-
     private void Update()
     {
-        timeModifier = Mathf.LerpUnclamped(timeModifier, timeScaleTarget, Time.deltaTime);
+        timeModifier = Mathf.LerpUnclamped(timeModifier, timeScaleTarget, Time.deltaTime*4);
         time += TimeScale;
         CheckTimers();
     }
@@ -66,7 +63,6 @@ public class GameTime : MonoBehaviour
     {
         timeScaleTarget = target;
         timeModifier = target;
-        //StartCoroutine(LerpTime(target));
     }
     
     private void CheckTimers()
@@ -79,16 +75,4 @@ public class GameTime : MonoBehaviour
             }
         }
     }
-
-    /*private IEnumerator LerpTime(float targetTimeScale)
-    {
-        float speed = Time.deltaTime;
-        while (timeModifier != targetTimeScale)
-        {
-            timeModifier = Mathf.LerpUnclamped(timeModifier, targetTimeScale, speed);
-            speed += Time.deltaTime/4;
-
-            yield return new WaitForEndOfFrame();
-        }
-    }*/
 }

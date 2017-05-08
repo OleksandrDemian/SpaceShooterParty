@@ -6,9 +6,12 @@ using System.Collections.Generic;
 public class LobbyManager : MonoBehaviour
 {
     [SerializeField]
+    private Transform popUpPosition;
+    [SerializeField]
     private Text[] playersNames;
     [SerializeField]
     private Text ipText;
+
     private List<string> names = new List<string>();
 
     public static LobbyManager Instance
@@ -47,12 +50,28 @@ public class LobbyManager : MonoBehaviour
         {
             Server.Instance.Stop();
             SceneLoader.LoadScene("Game");
-            //SceneManager.LoadScene("Game");
         }
         else
         {
-            PopUp.ShowText(new Vector3(0, -8, 0), "There must be at minimum 2 players", 1);
+            Vector3 position;
+            if (popUpPosition != null)
+            {
+                position = popUpPosition.position;
+            }
+            else
+            {
+                Debug.Log("There is no indicator of popUp's position");
+                position = new Vector3(0, -8, 0);
+            }
+
+            PopUp.ShowText(position, "There must be at minimum 2 players", 1);
         }
+    }
+
+    public void ExitGame()
+    {
+        Server.Instance.Stop();
+        Application.Quit();
     }
 
     private void UpdateNames()

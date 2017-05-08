@@ -127,7 +127,7 @@ public class ShipController : MonoBehaviour, IDamagable
 
     public void Fire()
     {
-        if (GameTime.GetTime() < lastFireTime + 0.5f)
+        if (GameTime.GetTime() < lastFireTime + 0.3f)
             return;
 
         Attribute damage = GetAttribute(AttributeType.DAMAGE);
@@ -145,7 +145,7 @@ public class ShipController : MonoBehaviour, IDamagable
 
     public void AbilityTrigger()
     {
-        if (GameTime.GetTime() < lastAbilityTime + 5)
+        if (GameTime.GetTime() < lastAbilityTime + 3)
             return;
 
         ability.Trigger();

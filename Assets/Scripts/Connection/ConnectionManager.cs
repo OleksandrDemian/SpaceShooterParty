@@ -49,6 +49,11 @@ public class ConnectionManager : MonoBehaviour
         }
     }
 
+    void OnApplicationQuit()
+    {
+        server.Stop();
+    }
+
     private void OnConnectionClose(Player player)
     {
         players.Remove(player);
