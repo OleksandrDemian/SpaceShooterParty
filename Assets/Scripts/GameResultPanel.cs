@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GameResultPanel : MonoBehaviour
@@ -15,13 +14,11 @@ public class GameResultPanel : MonoBehaviour
 
     public void Show(Player[] players)
     {
-        Array.Sort(players, (y, x) => x.kill.CompareTo(y.kill));
-
+        Transform canvasParent = GameObject.Find("ShowResultCanvas").transform;
         int i;
         for (i = 0; i < players.Length; i++) {
-            Debug.Log("Player: " + players[i].Name);
             GameObject temp = Instantiate(playerInfoPrephab);
-            temp.transform.SetParent(FindObjectOfType<Canvas>().transform);
+            temp.transform.SetParent(canvasParent);
             temp.GetComponent<Podium>().SetUp(i, players[i].Name + ": " + players[i].kill);
         }
 

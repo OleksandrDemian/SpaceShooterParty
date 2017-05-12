@@ -1,4 +1,14 @@
-﻿public class GameInfo {
+﻿public class GameInfo
+{
+    private int gameTime = 60;
+    private bool enableAsteroids = true;
+    private bool enableShields = true;
+    private bool enableBonuses = true;
+
+    public GameInfo()
+    {
+        Instance = this;
+    }
 
     public static GameInfo Instance
     {
@@ -6,16 +16,51 @@
         private set;
     }
 
-    public int gameTime = 60;
-    public bool enableAsteroids = true;
-    public bool shieldsDisabled = false;
-    public bool enableBonuses = true;
-    //public bool oneShotMode = false;
-
-    public GameInfo()
+    public int MatchTime
     {
-        Instance = this;
+        get
+        {
+            return gameTime;
+        }
+        set
+        {
+            gameTime = value;
+        }
     }
 
-    
+    public bool AsteroidsEnabled
+    {
+        get
+        {
+            return enableAsteroids;
+        }
+        set
+        {
+            enableAsteroids = value;
+        }
+    }
+
+    public bool ShieldsEnabled
+    {
+        get
+        {
+            return enableShields;
+        }
+        set
+        {
+            enableShields = value;
+        }
+    }
+
+    public bool BonusesEnbled
+    {
+        get
+        {
+            return enableBonuses;
+        }
+        set
+        {
+            enableBonuses = value;
+        }
+    }
 }

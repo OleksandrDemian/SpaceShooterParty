@@ -27,7 +27,7 @@ public class BonusGenerator
 
     private Bonus GetRandomBonus(ref bool negative)
     {
-        int rand = Random.Range(0, 9);
+        int rand = Random.Range(0, 10);
 
         switch (rand)
         {
@@ -37,7 +37,7 @@ public class BonusGenerator
 
             case 2:
                 negative = false;
-                return new CircleFireBonus();
+                return new SlowDownTimeBonus();
 
             case 3:
                 negative = false;
@@ -59,9 +59,13 @@ public class BonusGenerator
                 negative = false;
                 return new MultiplyDamageBonus(3);
 
+            case 8:
+                negative = false;
+                return new CircleFireBonus(4);
+
             default:
                 negative = false;
-                return new SlowDownTimeBonus();
+                return new CircleFireBonus();
         }
     }
 }

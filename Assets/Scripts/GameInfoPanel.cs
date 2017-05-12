@@ -26,22 +26,22 @@ public class GameInfoPanel : MonoBehaviour {
     private void OnSliderValueChange(float value)
     {
         txtGameTime.text = "Game time: " + value + " seconds";
-        info.gameTime = (int)value;
+        info.MatchTime = (int)value;
     }
 
     private void OnAsteroidBoolValueChange(bool value)
     {
-        info.enableAsteroids = value;
+        info.AsteroidsEnabled = value;
     }
 
     private void OnShieldsBoolValueChange(bool value)
     {
-        info.shieldsDisabled = value;
+        info.ShieldsEnabled = !value;
     }
 
     private void OnBonusBoolValueChange(bool value)
     {
-        info.enableBonuses = value;
+        info.BonusesEnbled = value;
     }
 
 }

@@ -266,6 +266,9 @@ public class Player : MonoBehaviour, IJoystickListener
 
     private void CloseConnection()
     {
+        if (!enabled)
+            return;
+
         enabled = false;
         Debug.Log("Player: " + playerName + " left the game");
         if (onConnectionClose != null)

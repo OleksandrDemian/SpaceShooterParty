@@ -16,7 +16,7 @@
 - ShipGUI started (I don't know if I need it) - n
 - Bonuses - d
 - Circle fire: kill doesn't working with abilities - c
-- GameInfo can be better! - n
+- GameInfo can be better! - d
 - FreezeEngine not tested - d
 - DestroyShield not tested - d
 - Rotation wrong (?) - d : (at the start is wrong(?))
@@ -26,3 +26,4 @@
 - GameManager->MatchEnd() Player->ClearInput doesn't work - n
 - Rewiew AudioManager(there is just one clip) - n
 - Server is running also when game is turned off - c
+- Joystick background color is inverted(Red -> Yellow) - n

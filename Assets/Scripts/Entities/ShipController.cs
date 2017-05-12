@@ -37,7 +37,7 @@ public class ShipController : MonoBehaviour, IDamagable
         lastFireTime = GameTime.GetTime();
         lastAbilityTime = GameTime.GetTime();
 
-        if (GameInfo.Instance.shieldsDisabled)
+        if (!GameInfo.Instance.ShieldsEnabled)
         {
             GetAttribute(AttributeType.SHIELD).AddModifier(new AttributeModifier(ModifierType.MULTIPLY, 0));
         }
@@ -103,11 +103,13 @@ public class ShipController : MonoBehaviour, IDamagable
     }
     //END SAME METHOD
 
-    public void SetImage(Sprite sprite)
+    public void SetImage(Sprite sprite, int number)
     {
         //Debug.Log(sprite.name);
         //Set space ship's skin
-        transform.Find("Ship").GetComponent<SpriteRenderer>().sprite = sprite;
+        SpriteRenderer ren = transform.Find("Ship").GetComponent<SpriteRenderer>();
+        ren.sortingOrder = number;
+        ren.sprite = sprite;
     }
 
     public void SetAbility(Ability ability)
@@ -253,5 +255,11 @@ public class ShipController : MonoBehaviour, IDamagable
             shieldSprite.enabled = false;
         else
             shieldSprite.enabled = true;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collider)
+    {
+        if(collider.transform.tag == "Player")
+            Physics2D.IgnoreCollision(collider.transform.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
 }

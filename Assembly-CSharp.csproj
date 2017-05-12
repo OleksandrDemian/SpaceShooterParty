@@ -102,6 +102,7 @@
      <Compile Include="Assets\Scripts\ShipGUI.cs" />
      <Compile Include="Assets\Scripts\ShipInfo.cs" />
      <Compile Include="Assets\Scripts\StarColorController.cs" />
+     <Compile Include="Assets\Scripts\TimePanelController.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Scripts\Utils\Converter.cs" />
      <Compile Include="Assets\Scripts\Utils\Test.cs" />

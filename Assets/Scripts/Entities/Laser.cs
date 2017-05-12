@@ -6,7 +6,7 @@ public class Laser : MonoBehaviour, IPoolable {
     private Damage damage;
     private Rigidbody2D rb;
     private float timer = 0f;
-    private int speed = 25;
+    private int speed = 15;
 
     private void Start ()
     {
@@ -16,7 +16,7 @@ public class Laser : MonoBehaviour, IPoolable {
     private void Update()
     {
         timer += GameTime.TimeScale;
-        if (timer > 1)
+        if (timer > 2)
         {
             Disable();
         }
@@ -30,7 +30,7 @@ public class Laser : MonoBehaviour, IPoolable {
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.tag == "Bonus")
+        if (collider.tag == "IgnoreLasers")
             return;
 
         damage.ApplyDamage(collider.gameObject);

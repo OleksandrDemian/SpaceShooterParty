@@ -1,24 +1,35 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
-public class MatchCountdown : MonoBehaviour {
+public class MatchCountdown : MonoBehaviour
+{
+    public static MatchCountdown Instance
+    {
+        get;
+        private set;
+    }
 
     [SerializeField]
     private Text timerTxt;
-
     private float matchTime = 90;
     private bool countdown = true;
-	
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
 	void Update () {
         matchTime -= GameTime.TimeScale;
-        if(countdown)
-            timerTxt.text = "Time left: " + (int)matchTime;
+        if (countdown)
+            if(timerTxt != null)
+                timerTxt.text = ((int)matchTime).ToString();
 	}
 
     public void SetMatchTime(float value)
     {
         matchTime = value;
-        timerTxt.text = "Time left: " + value;
+        timerTxt.text = value.ToString();
     }
 
     public void SetText(string text)
@@ -29,6 +40,9 @@ public class MatchCountdown : MonoBehaviour {
 
     public void ShowText(string text, float time)
     {
+        if (!this.enabled)
+            return;
+
         timerTxt.text = text;
         EnableCountdown(false);
         GameTime.Instance.AddTimer(new Timer(time, delegate()

@@ -69,8 +69,8 @@ public class GameManager : MonoBehaviour
     {
         //NEW STUFF
         MapBounds = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 0));
-        MapBounds += new Vector2(.5f, .5f);
-        //NED NEW STUFF
+        MapBounds += new Vector2(.3f, .3f);
+        //END NEW STUFF
 
         Instance = this;
         ObjectPooler = GetComponent<ObjectPool>();
@@ -80,16 +80,16 @@ public class GameManager : MonoBehaviour
         players = GetPlayers();
         startPoints = GetStartPoints();
         //MatchTime = gameInfo.gameTime;
-        MATCH_DURATION = gameInfo.gameTime;
+        MATCH_DURATION = gameInfo.MatchTime;
 
-        countdown = GetComponent<MatchCountdown>();
+        countdown = MatchCountdown.Instance;
         countdown.SetMatchTime(MATCH_DURATION);
         countdown.ShowText("Match started", 3);
 
         //Debug.Log("Time: " + MatchTime + " <> " + gameInfo.gameTime);
-        GetComponent<AsteroidsGenerator>().enabled = gameInfo.enableAsteroids;
+        GetComponent<AsteroidsGenerator>().enabled = gameInfo.AsteroidsEnabled;
 
-        if (gameInfo.enableBonuses)
+        if (gameInfo.BonusesEnbled)
         {
             bonusGenerator = new BonusGenerator();
         }
@@ -126,7 +126,6 @@ public class GameManager : MonoBehaviour
             int counter = 0;
             for (int i = 0; i < players.Count; i++)
             {
-                Debug.Log("Player " + players[i].Name + " enabled: " + players[i].enabled);
                 if (players[i].enabled)
                     counter++;
             }
@@ -182,12 +181,12 @@ public class GameManager : MonoBehaviour
         if (matchEnded)
             return;
 
+        OpenMatchResult();
+
         foreach (Player player in players)
         {
             player.Input.ClearCommands();
-            //player.Write(Converter.toString(Request.ADDPOINT));
             player.Write(Converter.toString(Request.MATCHEND));
-            Debug.Log("Send to: " + player.Name + " -> " + Converter.toString(Request.ADDPOINT));
         }
 
         countdown.SetText("Match ended");
@@ -195,12 +194,15 @@ public class GameManager : MonoBehaviour
 
         GameTime.Instance.SetTimeScaleTarget(0.04f);
         matchEnded = true;
-        OpenMatchResult();
     }
 
     private void OpenMatchResult()
     {
         GameResultPanel result = FindObjectOfType<GameResultPanel>();
-        result.Show(players.ToArray());
+        Player[] playersOrderedList = players.ToArray();
+
+        players[0].Write(Converter.toString(Request.ADDPOINT));
+        System.Array.Sort(playersOrderedList, (y, x) => x.kill.CompareTo(y.kill));
+        result.Show(playersOrderedList);
     }
 }
