@@ -236,6 +236,11 @@ public class Player : MonoBehaviour, IJoystickListener
             case Request.SHIPINFO:
                 GetShipInfo(message.Substring(2));
                 break;
+            case Request.STARTGAME:
+                if (LobbyManager.Instance == null)
+                    return;
+                LobbyManager.Instance.StartGame();
+                break;
         }
     }
 

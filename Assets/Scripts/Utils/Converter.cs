@@ -31,6 +31,8 @@
                 return Request.ADDPOINT;
             case 'm':
                 return Request.MATCHEND;
+            case 'g':
+                return Request.STARTGAME;
         }
         return Request.NONE;
     }

@@ -39,7 +39,7 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
     /// </summary>
     public void Initialize()
     {
-        transform.position = new Vector3(50, 50, 0);
+        transform.position = new Vector3(GameManager.Instance.MapBounds.x, GameManager.Instance.MapBounds.y, 0);
 
         direction = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
         direction.Normalize();

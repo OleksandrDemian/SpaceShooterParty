@@ -67,11 +67,6 @@ public class GameManager : MonoBehaviour
 
 	private void Start ()
     {
-        //NEW STUFF
-        MapBounds = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 0));
-        MapBounds += new Vector2(.3f, .3f);
-        //END NEW STUFF
-
         Instance = this;
         ObjectPooler = GetComponent<ObjectPool>();
         ImagePooler = GetComponent<ImagePool>();
@@ -81,6 +76,12 @@ public class GameManager : MonoBehaviour
         startPoints = GetStartPoints();
         //MatchTime = gameInfo.gameTime;
         MATCH_DURATION = gameInfo.MatchTime;
+
+        //NEW STUFF
+        Camera.main.orthographicSize = gameInfo.MapSize;
+        MapBounds = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 0));
+        MapBounds += new Vector2(.3f, .3f);
+        //END NEW STUFF
 
         countdown = MatchCountdown.Instance;
         countdown.SetMatchTime(MATCH_DURATION);

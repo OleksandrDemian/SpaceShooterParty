@@ -1,6 +1,7 @@
 ﻿public class GameInfo
 {
     private int gameTime = 60;
+    private int mapSize = 11;
     private bool enableAsteroids = true;
     private bool enableShields = true;
     private bool enableBonuses = true;
@@ -25,6 +26,18 @@
         set
         {
             gameTime = value;
+        }
+    }
+
+    public int MapSize
+    {
+        get
+        {
+            return mapSize;
+        }
+        set
+        {
+            mapSize = value;
         }
     }
 
