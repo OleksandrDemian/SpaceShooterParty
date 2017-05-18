@@ -16,7 +16,7 @@ public class DisableControllAbility : Ability
         PopUp.ShowText(transform.position, "Disable controll");
         Laser controller = GameManager.ObjectPooler.Get<Laser>();
         if (controller != null) {
-            controller.Initialize(transform.position, transform.rotation, new DisableControll(2, time));
+            controller.Initialize(transform.position, transform.rotation, new DisableControll(8, time));
             controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(1));
         }
     }

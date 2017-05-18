@@ -32,6 +32,7 @@ class CircleFire : Ability
         Quaternion rotation = Quaternion.Euler(0, 0, direction);
         Laser bullet = GameManager.ObjectPooler.Get<Laser>();
         bullet.Initialize(shipParent.transform.position, rotation, new Damage(damage.Value));
+        bullet.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
         bullet.GetDamage().SetParentShip(shipParent);
     }
 }
