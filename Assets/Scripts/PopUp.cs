@@ -17,7 +17,13 @@ public class PopUp : MonoBehaviour, IPoolable {
 
     private void Start()
     {
-        this.transform.SetParent(FindObjectOfType<Canvas>().transform);
+        Transform canvas = GameObject.FindGameObjectWithTag("GameCanvas").transform;
+        if (canvas == null)
+        {
+            throw new System.Exception("There is no game canvas!");
+        }
+
+        transform.SetParent(canvas);
     }
 
     public static void ShowText(Vector3 position, string message, float time, Color color, PopUpAnimation animation)

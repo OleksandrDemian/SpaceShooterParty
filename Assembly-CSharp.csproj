@@ -95,6 +95,7 @@
      <Compile Include="Assets\Scripts\MatchCountdown.cs" />
      <Compile Include="Assets\Scripts\ModifierType.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
+     <Compile Include="Assets\Scripts\PauseScreen.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Podium.cs" />
      <Compile Include="Assets\Scripts\PopUp.cs" />

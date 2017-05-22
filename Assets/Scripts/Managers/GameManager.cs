@@ -103,6 +103,19 @@ public class GameManager : MonoBehaviour
             players[i].onConnectionClose = OnPlayerConnectionClose;
         }
 
+        if (PauseScreen.Instance != null)
+        {
+            PauseScreen.Instance.AddOnPauseEvent(delegate ()
+            {
+                GameTime.Instance.SetTimeScale(0.05f);
+            });
+
+            PauseScreen.Instance.AddOnResumeEvent(delegate ()
+            {
+                GameTime.Instance.SetTimeScale(1f);
+            });
+        }
+
         StartMatch ();
     }
 
@@ -202,7 +215,9 @@ public class GameManager : MonoBehaviour
         GameResultPanel result = FindObjectOfType<GameResultPanel>();
         Player[] playersOrderedList = players.ToArray();
 
-        players[0].Write(Converter.toString(Request.ADDPOINT));
+        if(players[0].kill > 4)
+            players[0].Write(Converter.toString(Request.ADDPOINT));
+
         System.Array.Sort(playersOrderedList, (y, x) => x.kill.CompareTo(y.kill));
         result.Show(playersOrderedList);
     }

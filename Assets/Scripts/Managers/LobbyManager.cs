@@ -45,8 +45,12 @@ public class LobbyManager : MonoBehaviour
 
     public void StartGame()
     {
+        int min = 1;
+#if UNITY_EDITOR
+        min = 0;
+#endif
         //Count must be > 1!!!!!
-        if (names.Count > 0)
+        if (names.Count > min)
         {
             Server.Instance.Stop();
             SceneLoader.LoadScene("Game");
@@ -64,7 +68,7 @@ public class LobbyManager : MonoBehaviour
                 position = new Vector3(0, -8, 0);
             }
 
-            PopUp.ShowText(position, "There must be at minimum 2 players", 1);
+            PopUp.ShowText(position, "There must be at least 2 players", 1);
         }
     }
 

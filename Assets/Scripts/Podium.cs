@@ -12,7 +12,7 @@ public class Podium : MonoBehaviour
     {
         imgPosition.sprite = GameManager.ImagePooler.GetPositionImage(position);
         txtName.text = name;
-        GetComponent<RectTransform>().localPosition = new Vector2(0, 100 - (40*position));
+        GetComponent<RectTransform>().localPosition = new Vector2(0, 100 - (60*position));
     }
 
 }
