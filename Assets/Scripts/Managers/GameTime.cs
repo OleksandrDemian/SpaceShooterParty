@@ -38,7 +38,7 @@ public class GameTime : MonoBehaviour
 
     private void Update()
     {
-        timeModifier = Mathf.LerpUnclamped(timeModifier, timeScaleTarget, Time.deltaTime*4);
+        timeModifier = Mathf.LerpUnclamped(timeModifier, timeScaleTarget, Time.deltaTime * 2);
         time += TimeScale;
         CheckTimers();
     }

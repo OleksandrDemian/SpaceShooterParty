@@ -52,7 +52,7 @@
      <Compile Include="Assets\Scripts\Abilities\DestroyShield.cs" />
      <Compile Include="Assets\Scripts\Abilities\DestroyShieldAbility.cs" />
      <Compile Include="Assets\Scripts\Abilities\DisableControll.cs" />
-     <Compile Include="Assets\Scripts\Abilities\EngineFreezAbility.cs" />
+     <Compile Include="Assets\Scripts\Abilities\DisableControllAbility.cs" />
      <Compile Include="Assets\Scripts\Abilities\ShieldRecovery.cs" />
      <Compile Include="Assets\Scripts\AsteroidsGenerator.cs" />
      <Compile Include="Assets\Scripts\Attributes\Attribute.cs" />

@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, IJoystickListener
 
     private Transform respawnPoint;
 
-    private string playerName = "Commander";
+    private string playerName = "Nameless";
     public int kill = 0;
     public int dead = 0;
     public OnConnectionClose onConnectionClose;
@@ -166,16 +166,25 @@ public class Player : MonoBehaviour, IJoystickListener
         reader.Write("Dead");
         ship.gameObject.SetActive(false);
         EnableControll(false);
-        StartCoroutine(Respawn());
+        //StartCoroutine(Respawn());
+        GameTime.Instance.AddTimer(new Timer(3, delegate()
+        {
+            Respawn();
+        }));
     }
 
-    private IEnumerator Respawn()
+    private void Respawn()
     {
-        yield return new WaitForSeconds(3);
+        //yield return new WaitForSeconds(3);
         ResetShipPosition();
         ship.gameObject.SetActive(true);
         ship.ResetAttributes();
         EnableControll(true);
+        ship.EnableCollider(false);
+        GameTime.Instance.AddTimer(new Timer(3, delegate()
+        {
+            ship.EnableCollider(true);
+        }));
     }
 
     public void ResetShipPosition()

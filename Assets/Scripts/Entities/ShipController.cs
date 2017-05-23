@@ -97,6 +97,15 @@ public class ShipController : MonoBehaviour, IDamagable
         attributes.Add(health);
     }
 
+    public void EnableCollider(bool action)
+    {
+        Collider2D col = GetComponent<Collider2D>();
+        if (col == null)
+            return;
+
+        col.enabled = action;
+    }
+
     public void SetDamage(int value)
     {
         attributes.Add(new Attribute(AttributeType.DAMAGE, value));
@@ -211,7 +220,7 @@ public class ShipController : MonoBehaviour, IDamagable
             health.Value -= amount;
             if (health.Value < 0)
             {
-                if(ship != null)
+                if(ship != null && ship != this)
                     ship.GetPlayer().Kill(gameObject);
             }
             //PopUp.ShowText(transform.position, amount.ToString(), 0, Color.red);

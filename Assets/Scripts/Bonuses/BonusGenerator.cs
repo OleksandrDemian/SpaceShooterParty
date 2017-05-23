@@ -2,9 +2,14 @@
 
 public class BonusGenerator
 {
+    [SerializeField]
+    private int minDelay = 10;
+    [SerializeField]
+    private int maxDelay = 20;
+
     public BonusGenerator()
     {
-        GameTime.Instance.AddTimer(new Timer(Random.Range(15, 25), delegate () { GenerateBonus(); }));
+        GameTime.Instance.AddTimer(new Timer(Random.Range(minDelay, maxDelay), delegate () { GenerateBonus(); }));
     }
 
     private void GenerateBonus()
@@ -22,12 +27,12 @@ public class BonusGenerator
         bonus.AddBonus(GetRandomBonus(ref negative));
 
         bonus.EnableFollowing(negative);
-        GameTime.Instance.AddTimer(new Timer(Random.Range(15, 30), delegate () { GenerateBonus(); }));
+        GameTime.Instance.AddTimer(new Timer(Random.Range(minDelay, maxDelay), delegate () { GenerateBonus(); }));
     }
 
     private Bonus GetRandomBonus(ref bool negative)
     {
-        int rand = Random.Range(0, 10);
+        int rand = Random.Range(0, 14);
 
         switch (rand)
         {
@@ -62,6 +67,18 @@ public class BonusGenerator
             case 8:
                 negative = false;
                 return new CircleFireBonus(4);
+
+            case 9:
+                negative = false;
+                return new DestroyShieldsBonus(false);
+
+            case 10:
+                negative = true;
+                return new HealBonus(-20);
+
+            case 11:
+                negative = false;
+                return new SlowDownTimeBonus(1.3f);
 
             default:
                 negative = false;

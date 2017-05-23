@@ -2,14 +2,29 @@
 
 class SlowDownTimeBonus : Bonus
 {
+    private float target = 0.2f;
+
+    public SlowDownTimeBonus()
+    {
+        target = 0.2f;
+    }
+
+    public SlowDownTimeBonus(float target)
+    {
+        this.target = target;
+    }
+
     public override void Trigger(GameObject target)
     {
-        PopUp.ShowText(target.transform.position, "Slow down time!", 1);
+        if(this.target < 1)
+            PopUp.ShowText(target.transform.position, "Slow down time!", 1);
+        else
+            PopUp.ShowText(target.transform.position, "Speed up time!", 1);
 
         GameTime gt = GameTime.Instance;
 
-        gt.SetTimeScaleTarget(0.2f);
-        gt.AddTimer(new Timer(3, delegate() {
+        gt.SetTimeScaleTarget(this.target);
+        gt.AddTimer(new Timer(5 * this.target, delegate() {
             gt.SetTimeScaleTarget(1);
         }));
     }

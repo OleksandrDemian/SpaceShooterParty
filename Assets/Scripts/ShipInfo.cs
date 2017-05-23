@@ -28,7 +28,7 @@
                 ability = new ShieldRecovery(ship.GetAttribute(AttributeType.SHIELD), 3);
                 break;
             case AbilityType.FREEZEENGINE:
-                ability = new DisableControllAbility(3, ship.transform);
+                ability = new DisableControllAbility(4, ship.transform);
                 break;
             case AbilityType.DESTROYSHIELD:
                 ability = new DestroyShieldAbility(2, ship.transform);
