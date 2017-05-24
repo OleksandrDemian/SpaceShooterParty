@@ -3,10 +3,11 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(AudioManager))]
-public class ShipController : MonoBehaviour, IDamagable
+public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 {
     private int speed = 0;
     private int rotationSpeed = 4;
+    private bool isUndead = false;
     private List<Attribute> attributes = new List<Attribute>();
 
     private Ability ability;
@@ -103,6 +104,7 @@ public class ShipController : MonoBehaviour, IDamagable
         if (col == null)
             return;
 
+        isUndead = !action;
         col.enabled = action;
     }
 
@@ -225,6 +227,17 @@ public class ShipController : MonoBehaviour, IDamagable
             }
             //PopUp.ShowText(transform.position, amount.ToString(), 0, Color.red);
         }
+    }
+
+    public void Attract(Vector3 toPosition)
+    {
+        if (isUndead)
+            return;
+
+        Vector3 direction = toPosition - transform.position;
+        float distance = Vector3.Distance(transform.position, toPosition);
+        Vector3 temp = (direction.normalized) / distance * 25;
+        CalculateMoveDirection(temp);
     }
 
     /*

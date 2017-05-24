@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         {
             PauseScreen.Instance.AddOnPauseEvent(delegate ()
             {
-                GameTime.Instance.SetTimeScale(0.05f);
+                GameTime.Instance.SetTimeScale(0.01f);
             });
 
             PauseScreen.Instance.AddOnResumeEvent(delegate ()

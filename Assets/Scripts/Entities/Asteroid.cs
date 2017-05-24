@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Asteroid : MonoBehaviour, IPoolable, IDamagable
+public class Asteroid : MonoBehaviour, IPoolable, IDamagable, IBlackHoleAttractable
 {
     private Attribute health;
 
@@ -74,6 +74,13 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable
         /*PopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
         popup.Initialize(transform.position, amount.ToString(), Color.white);*/
         PopUp.ShowText(transform.position, amount.ToString(), 0.5f);
+    }
+
+    public void Attract(Vector3 toPosition)
+    {
+        Vector3 direction = toPosition - transform.position;
+        float distance = Vector3.Distance(transform.position, toPosition);
+        this.direction = Vector2.Lerp(this.direction, direction.normalized / distance * 25, GameTime.TimeScale);
     }
 
     public GameObject GetGameObject

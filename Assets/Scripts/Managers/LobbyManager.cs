@@ -47,7 +47,7 @@ public class LobbyManager : MonoBehaviour
     {
         int min = 1;
 #if UNITY_EDITOR
-        min = 0;
+        min = -1;
 #endif
         //Count must be > 1!!!!!
         if (names.Count > min)

@@ -24,7 +24,7 @@ class SlowDownTimeBonus : Bonus
         GameTime gt = GameTime.Instance;
 
         gt.SetTimeScaleTarget(this.target);
-        gt.AddTimer(new Timer(5 * this.target, delegate() {
+        gt.AddTimer(new Timer(6 * this.target, delegate() {
             gt.SetTimeScaleTarget(1);
         }));
     }

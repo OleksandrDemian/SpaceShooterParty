@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Laser : MonoBehaviour, IPoolable {
-
+public class Laser : MonoBehaviour, IPoolable, IBlackHoleAttractable
+{
     private Damage damage;
     private Rigidbody2D rb;
     private float timer = 0f;
@@ -61,6 +61,14 @@ public class Laser : MonoBehaviour, IPoolable {
     public void SetSprite(Sprite sprite)
     {
         GetComponent<SpriteRenderer>().sprite = sprite;
+    }
+
+    public void Attract(Vector3 toPosition)
+    {
+        Vector3 direction = toPosition - transform.position;
+        float distance = Vector3.Distance(transform.position, toPosition);
+
+        transform.position += (direction.normalized * GameTime.TimeScale) / distance * 25;
     }
 
     public GameObject GetGameObject

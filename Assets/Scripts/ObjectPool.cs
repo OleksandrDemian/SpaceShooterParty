@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void OnObjectCreate(GameObject go);
+
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] prefs;
     private List<IPoolable> poolable;
+
+    private event OnObjectCreate onObjectCreate;
 
     /// <summary>
     /// Current instance of ObjectPool
@@ -14,6 +18,16 @@ public class ObjectPool : MonoBehaviour
     {
         get;
         private set;
+    }
+
+    public void AddOnObjectCreateListener(OnObjectCreate listener)
+    {
+        onObjectCreate += listener;
+    }
+
+    public void RemoveOnObjectCreateListener(OnObjectCreate listener)
+    {
+        onObjectCreate -= listener;
     }
 
     /// <summary>
@@ -48,6 +62,8 @@ public class ObjectPool : MonoBehaviour
                 IPoolable go = poolable[i];
                 go.GetGameObject.SetActive(true);
                 poolable.Remove(go);
+                if (onObjectCreate != null)
+                    onObjectCreate(go.GetGameObject);
                 return (T)go;
             }
         }
@@ -59,6 +75,8 @@ public class ObjectPool : MonoBehaviour
             if (prefs[i].GetComponent<T>() != null)
             {
                 GameObject instance = Instantiate(prefs[i]);
+                if (onObjectCreate != null)
+                    onObjectCreate(instance);
                 return instance.GetComponent<T>();
             }
         }
