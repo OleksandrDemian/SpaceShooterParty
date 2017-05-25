@@ -58,9 +58,9 @@ public class Test : MonoBehaviour
     private void Trigger()
     {
         //AbilityTest();
-        //BonusTest();
-        BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
-        bh.Initialize(Vector3.zero);
+        BonusTest();
+        /*BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
+        bh.Initialize(Vector3.zero);*/
         /*PowerUp b = ObjectPool.Instance.Get<PowerUp>();
         b.AddBonus(new SlowDownTimeBonus(1.8f));
         b.transform.position = Vector2.zero;*/
@@ -81,16 +81,11 @@ public class Test : MonoBehaviour
     private void BonusTest()
     {
         PowerUp bonus = ObjectPool.Instance.Get<PowerUp>();
-        Vector2 bounds = GameManager.Instance.MapBounds - Vector2.one;
 
-        int x = Random.Range((int)-bounds.x, (int)bounds.x);
-        int y = Random.Range((int)-bounds.y, (int)bounds.y);
+        bonus.transform.position = Vector2.zero;
 
-        Debug.Log("Position: " + x + " " + y);
-        bonus.transform.position = new Vector2(x, y);
-
-        bool negative = true;
-        bonus.AddBonus(new DestroyShieldsBonus(true));
+        bool negative = false;
+        bonus.AddBonus(new CircleFireBonus(8));
 
         bonus.EnableFollowing(negative);
     }

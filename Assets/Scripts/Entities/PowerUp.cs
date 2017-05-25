@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class PowerUp : MonoBehaviour, IPoolable
 {
@@ -8,6 +9,8 @@ public class PowerUp : MonoBehaviour, IPoolable
     private Transform target;
     private bool followTarget = false;
     private float lastTargetCheck = 0;
+
+    private Animation anim;
 
     private void Update()
     {
@@ -23,6 +26,16 @@ public class PowerUp : MonoBehaviour, IPoolable
             lastTargetCheck = GameTime.GetTime();
             GetTarget();
         }
+    }
+
+    private void OnEnable()
+    {
+        if (anim == null)
+        {
+            anim = GetComponent<Animation>();
+        }
+
+        anim.Play("FadeIn");
     }
 
     public void EnableFollowing(bool action)
@@ -89,8 +102,20 @@ public class PowerUp : MonoBehaviour, IPoolable
 
     private void Disable()
     {
+        GetComponent<Collider2D>().enabled = false;
+        followTarget = false;
+        StartCoroutine(DisableWait());
+    }
+
+    private IEnumerator DisableWait()
+    {
+        anim.Play("FadeOut");
+        while (anim.isPlaying)
+            yield return new WaitForEndOfFrame();
+
         ClearBonuses();
         GameManager.ObjectPooler.Add(this);
+        GetComponent<Collider2D>().enabled = true;
         gameObject.SetActive(false);
     }
 }

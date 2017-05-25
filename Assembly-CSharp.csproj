@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\Bonuses\BonusGenerator.cs" />
      <Compile Include="Assets\Scripts\Bonuses\CircleFireBonus.cs" />
      <Compile Include="Assets\Scripts\Bonuses\DestroyShieldsBonus.cs" />
+     <Compile Include="Assets\Scripts\Bonuses\GenericBonus.cs" />
      <Compile Include="Assets\Scripts\Bonuses\HealBonus.cs" />
      <Compile Include="Assets\Scripts\Bonuses\LevelUpBonus.cs" />
      <Compile Include="Assets\Scripts\Bonuses\MultiplyDamageBonus.cs" />
@@ -104,16 +105,12 @@
      <Compile Include="Assets\Scripts\ShipGUI.cs" />
      <Compile Include="Assets\Scripts\ShipInfo.cs" />
      <Compile Include="Assets\Scripts\StarColorController.cs" />
-     <Compile Include="Assets\Scripts\TimePanelController.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Scripts\Utils\Converter.cs" />
      <Compile Include="Assets\Scripts\Utils\Test.cs" />
      <None Include="Assets\Audio\Lasers\Source.txt" />
      <None Include="Assets\KnownProblems.txt" />
      <None Include="Assets\Audio\Ships\readme.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -128,9 +125,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>

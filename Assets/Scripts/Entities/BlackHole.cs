@@ -11,17 +11,6 @@ public class BlackHole : MonoBehaviour, IPoolable
 {
     private List<IBlackHoleAttractable> subjected;
     private Animation anim;
-
-    private void Start ()
-    {
-        anim = GetComponent<Animation>();
-        AnimationEvent ev = new AnimationEvent();
-
-        ev.time = anim.GetClip("FadeOut").length;
-        ev.functionName = "Disable";
-
-        anim.GetClip("FadeOut").AddEvent(ev);
-    }
 	
 	private void Update ()
     {
@@ -50,10 +39,12 @@ public class BlackHole : MonoBehaviour, IPoolable
     {
         transform.localScale = Vector2.zero;
 
-        anim = GetComponent<Animation>();
         transform.position = position;
         ObjectPool.Instance.AddOnObjectCreateListener(NewObjectCreated);
         subjected = new List<IBlackHoleAttractable>();
+
+        if (anim == null)
+            anim = GetComponent<Animation>();
 
         anim.Play("FadeIn");
 

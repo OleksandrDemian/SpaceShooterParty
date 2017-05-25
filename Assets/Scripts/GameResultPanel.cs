@@ -15,6 +15,10 @@ public class GameResultPanel : MonoBehaviour
     public void Show(Player[] players)
     {
         Transform canvasParent = GameObject.FindGameObjectWithTag("GameCanvas").transform;
+        GameObject backPanel = transform.FindChild("Panel").gameObject;
+
+        backPanel.SetActive(true);
+
         if (canvasParent == null)
             throw new System.Exception("There is no game canvas!");
 

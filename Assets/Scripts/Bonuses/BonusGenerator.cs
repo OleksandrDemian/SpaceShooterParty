@@ -80,6 +80,19 @@ public class BonusGenerator
                 negative = false;
                 return new SlowDownTimeBonus(1.3f);
 
+            case 12:
+                negative = false;
+                return new GenericBonus(delegate(GameObject target)
+                {
+                    Vector3 position = target.transform.position;
+                    PopUp.ShowText(position, "Black hole", 2);
+                    GameTime.Instance.AddTimer(new Timer(3, delegate()
+                    {
+                        BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
+                        bh.Initialize(position);
+                    }));
+                });
+
             default:
                 negative = false;
                 return new CircleFireBonus();

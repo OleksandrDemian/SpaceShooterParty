@@ -215,9 +215,10 @@ public class GameManager : MonoBehaviour
         GameResultPanel result = FindObjectOfType<GameResultPanel>();
         Player[] playersOrderedList = players.ToArray();
 
-        if(players[0].kill > 4)
+        
+        if(players.Count > 0 && players[0].kill > 4)
             players[0].Write(Converter.toString(Request.ADDPOINT));
-
+        
         System.Array.Sort(playersOrderedList, (y, x) => x.kill.CompareTo(y.kill));
         result.Show(playersOrderedList);
     }

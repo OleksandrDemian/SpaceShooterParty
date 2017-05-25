@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -22,6 +23,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
     private SpriteRenderer shieldSprite;
 
     private AudioManager audioManager;
+    private Animation anim;
 
     //TEMP
     private float lastFireTime;
@@ -30,6 +32,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
         audioManager = GetComponent<AudioManager>();
+        anim = GetComponent<Animation>();
 
         engineTrail = transform.Find("Trail").GetComponent<SpriteRenderer>();
         shieldSprite = transform.Find("Shield").GetComponent<SpriteRenderer>();
@@ -103,6 +106,9 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         Collider2D col = GetComponent<Collider2D>();
         if (col == null)
             return;
+
+        if (!action)
+            anim.Play("FadeIn");
 
         isUndead = !action;
         col.enabled = action;
