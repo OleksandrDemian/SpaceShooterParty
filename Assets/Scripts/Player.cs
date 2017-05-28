@@ -111,6 +111,7 @@ public class Player : MonoBehaviour, IJoystickListener
         Debug.Log("Ship: " + shipInfo.ToString());
         shipInfo.InitializeShip(ship, shipNumber);
         ResetShipPosition();
+        ship.SetRotationTarget((int)respawnPoint.rotation.eulerAngles.z);
         //onConnectionClose = null;
     }
 

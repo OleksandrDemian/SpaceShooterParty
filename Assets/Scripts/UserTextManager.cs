@@ -6,7 +6,7 @@ public class UserTextManager : MonoBehaviour
     private Text text;
     private Animation anim;
 
-	private void Start ()
+	private void Awake ()
     {
         text = GetComponentInChildren<Text>();
         anim = GetComponent<Animation>();

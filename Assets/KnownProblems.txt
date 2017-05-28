@@ -19,9 +19,9 @@
 - GameInfo can be better! - d
 - FreezeEngine not tested - d
 - DestroyShield not tested - d
-- Rotation wrong (?) - d : (at the start is wrong(?))
+- Rotation wrong (?) - d : (at the start is wrong(?) - d)
 - Match end when there are less that two players - d
-- Asteroid generation(seams that asteroid generator generate two asteroids at time) - c
+- Asteroid generation(asteroids generator generate two asteroids at time) - d
 - Show result is called twice - d
 - GameManager->MatchEnd() Player->ClearInput doesn't work - n
 - Rewiew AudioManager(there is just one clip) - n

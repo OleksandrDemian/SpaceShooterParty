@@ -9,7 +9,7 @@ public class AsteroidsGenerator : MonoBehaviour
         if (Time.time > generate)
         {
             GenerateAsteroid();
-            generate += Random.Range(5, 10);
+            generate = Time.time + Random.Range(5, 10);
         }
 	}
 

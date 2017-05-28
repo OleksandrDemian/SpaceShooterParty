@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
 
             PauseScreen.Instance.AddOnResumeEvent(delegate ()
             {
-                GameTime.Instance.SetTimeScale(1f);
+                GameTime.Instance.SetTimeScaleTarget(1f);
             });
         }
 

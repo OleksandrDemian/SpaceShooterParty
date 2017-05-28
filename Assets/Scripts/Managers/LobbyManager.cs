@@ -24,6 +24,7 @@ public class LobbyManager : MonoBehaviour
     {
         Instance = this;
         ipText.text = "IP: " + Server.GetLocalIPAddress();
+        UpdateNames();
 	}
 	
 	void Update ()
@@ -80,6 +81,12 @@ public class LobbyManager : MonoBehaviour
 
     private void UpdateNames()
     {
+        if (names.Count < 1)
+        {
+            playersNames[0].SetUserName("There is no players");
+            return;
+        }
+
         for (int i = 0; i < playersNames.Length; i++)
         {
             playersNames[i].SetUserName((i < names.Count) ? names[i] : "");

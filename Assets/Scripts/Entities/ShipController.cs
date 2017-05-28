@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -173,12 +172,12 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 
     public void TurnRight()
     {
-        rotationTarget -= (int)(200 * GameTime.TimeScale);
+        rotationTarget -= 3;
     }
 
     public void TurnLeft()
     {
-        rotationTarget += (int)(200 * GameTime.TimeScale);
+        rotationTarget += 3;
     }
 
     public void EngineTrigger()

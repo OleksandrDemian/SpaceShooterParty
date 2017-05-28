@@ -36,6 +36,7 @@ public class GameInfoPanel : MonoBehaviour
 
     private void OnSliderTimeValueChange(float value)
     {
+        value *= 30;
         txtGameTime.text = "Game time: " + value + " seconds";
         info.MatchTime = (int)value;
     }
