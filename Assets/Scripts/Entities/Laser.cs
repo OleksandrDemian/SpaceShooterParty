@@ -65,10 +65,12 @@ public class Laser : MonoBehaviour, IPoolable, IBlackHoleAttractable
 
     public void Attract(Vector3 toPosition)
     {
+        //return;
+
         Vector3 direction = toPosition - transform.position;
         float distance = Vector3.Distance(transform.position, toPosition);
 
-        transform.position += (direction.normalized * GameTime.TimeScale) / distance * 25;
+        transform.up = Vector3.Slerp(transform.up, direction, (GameTime.TimeScale * 2) / distance);
     }
 
     public GameObject GetGameObject

@@ -17,6 +17,7 @@ public class Player : MonoBehaviour, IJoystickListener
     public int kill = 0;
     public int dead = 0;
     public OnConnectionClose onConnectionClose;
+    private float timeToDisconect = 2f;
 
     //TEMP
     private SocketInputManager input = new SocketInputManager();
@@ -42,12 +43,10 @@ public class Player : MonoBehaviour, IJoystickListener
         
     }
 
-    //TEMP
-    private float time = 0f;
     private void Update()
     {
-        time += Time.deltaTime;
-        if (time > 2)
+        timeToDisconect -= Time.deltaTime;
+        if (timeToDisconect < 0)
         {
             CloseConnection();
             return;
@@ -56,7 +55,6 @@ public class Player : MonoBehaviour, IJoystickListener
 
         //Controll ship here
         ControllShip();
-        //delta += Time.deltaTime;
     }
 
     //<------------------------------------------->
@@ -145,7 +143,7 @@ public class Player : MonoBehaviour, IJoystickListener
 
     public void OnMessageRead(string message)
     {
-        time = 0;
+        timeToDisconect = 2;
         if (message[0] == 'c')
             ReadCommand(message);
         if (message[0] == 'r')
@@ -241,13 +239,19 @@ public class Player : MonoBehaviour, IJoystickListener
                 playerName = message.Substring(2);
                 LobbyManager.Instance.AddName(name);
                 break;
+
             case Request.SHIPINFO:
                 GetShipInfo(message.Substring(2));
                 break;
+
             case Request.STARTGAME:
                 if (LobbyManager.Instance == null)
                     return;
                 LobbyManager.Instance.StartGame();
+                break;
+
+            case Request.PAUSE:
+                PauseScreen.Instance.PauseTrigger();
                 break;
         }
     }

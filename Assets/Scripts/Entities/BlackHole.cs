@@ -48,7 +48,7 @@ public class BlackHole : MonoBehaviour, IPoolable
 
         anim.Play("FadeIn");
 
-        GameTime.Instance.AddTimer(new Timer(5, delegate()
+        GameTime.Instance.AddTimer(new Timer(7, delegate()
         {
             StartCoroutine(DisableWait());
         }));

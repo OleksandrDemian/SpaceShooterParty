@@ -173,12 +173,12 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 
     public void TurnRight()
     {
-        rotationTarget -= 3;
+        rotationTarget -= (int)(200 * GameTime.TimeScale);
     }
 
     public void TurnLeft()
     {
-        rotationTarget += 3;
+        rotationTarget += (int)(200 * GameTime.TimeScale);
     }
 
     public void EngineTrigger()
@@ -263,8 +263,13 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         else
             PopUp.ShowText(transform.position, "Health: " + delta, 0, Color.white);
 
-        if (value < 0)
+        if (value < 1)
         {
+#if UNITY_EDITOR
+            ExplosionManager manager = ObjectPool.Instance.Get<ExplosionManager>();
+            manager.Initialize(transform.position);
+#endif
+
             player.Death();
         }
     }

@@ -8,7 +8,7 @@ public class LobbyManager : MonoBehaviour
     [SerializeField]
     private Transform popUpPosition;
     [SerializeField]
-    private Text[] playersNames;
+    private UserTextManager[] playersNames;
     [SerializeField]
     private Text ipText;
 
@@ -82,7 +82,7 @@ public class LobbyManager : MonoBehaviour
     {
         for (int i = 0; i < playersNames.Length; i++)
         {
-            playersNames[i].text = (i < names.Count ? names[i] : "Empty");
+            playersNames[i].SetUserName((i < names.Count) ? names[i] : "");
         }
     }
 }

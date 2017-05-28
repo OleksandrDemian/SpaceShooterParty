@@ -82,6 +82,8 @@
      <Compile Include="Assets\Scripts\Entities\PowerUp.cs" />
      <Compile Include="Assets\Scripts\Entities\ShipController.cs" />
      <Compile Include="Assets\Scripts\EntityType.cs" />
+     <Compile Include="Assets\Scripts\ExplosionManager.cs" />
+     <Compile Include="Assets\Scripts\ExplosionParticle.cs" />
      <Compile Include="Assets\Scripts\GameInfo.cs" />
      <Compile Include="Assets\Scripts\GameInfoPanel.cs" />
      <Compile Include="Assets\Scripts\GameResultPanel.cs" />
@@ -94,6 +96,7 @@
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameTime.cs" />
      <Compile Include="Assets\Scripts\Managers\LobbyManager.cs" />
+     <Compile Include="Assets\Scripts\MapManager.cs" />
      <Compile Include="Assets\Scripts\MatchCountdown.cs" />
      <Compile Include="Assets\Scripts\ModifierType.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
@@ -106,6 +109,7 @@
      <Compile Include="Assets\Scripts\ShipInfo.cs" />
      <Compile Include="Assets\Scripts\StarColorController.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
+     <Compile Include="Assets\Scripts\UserTextManager.cs" />
      <Compile Include="Assets\Scripts\Utils\Converter.cs" />
      <Compile Include="Assets\Scripts\Utils\Test.cs" />
      <None Include="Assets\Audio\Lasers\Source.txt" />

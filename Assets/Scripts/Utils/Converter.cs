@@ -33,6 +33,8 @@
                 return Request.MATCHEND;
             case 'g':
                 return Request.STARTGAME;
+            case 'q':
+                return Request.PAUSE;
         }
         return Request.NONE;
     }

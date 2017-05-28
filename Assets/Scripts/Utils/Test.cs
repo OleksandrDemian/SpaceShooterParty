@@ -58,7 +58,9 @@ public class Test : MonoBehaviour
     private void Trigger()
     {
         //AbilityTest();
-        BonusTest();
+        //BonusTest();
+        ExplosionManager manager = ObjectPool.Instance.Get<ExplosionManager>();
+        manager.Initialize(Vector3.zero);
         /*BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
         bh.Initialize(Vector3.zero);*/
         /*PowerUp b = ObjectPool.Instance.Get<PowerUp>();
@@ -85,8 +87,43 @@ public class Test : MonoBehaviour
         bonus.transform.position = Vector2.zero;
 
         bool negative = false;
-        bonus.AddBonus(new CircleFireBonus(8));
+        /*
+        bonus.AddBonus(new GenericBonus(delegate (GameObject target)
+        {
+            Player player = target.GetComponent<ShipController>().GetPlayer();
+            if (player == null)
+                return;
 
+            PopUp.ShowText(target.transform.position, "Disable players", 1);
+            System.Collections.Generic.List<Player> players = GameManager.Instance.GetPlayers();
+            players.Remove(player);
+
+            for (int i = 0; i < players.Count; i++)
+            {
+                players[i].EnableControll(false);
+            }
+
+            GameTime.Instance.AddTimer(new Timer(5, delegate ()
+            {
+                for (int i = 0; i < players.Count; i++)
+                {
+                    players[i].EnableControll(true);
+                }
+            }));
+        }));
+        */
+        
+        bonus.AddBonus(new GenericBonus(delegate (GameObject target)
+        {
+            Vector3 position = target.transform.position;
+            PopUp.ShowText(position, "Black hole", 2);
+            GameTime.Instance.AddTimer(new Timer(3, delegate ()
+            {
+                BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
+                bh.Initialize(position);
+            }));
+        }));
+        
         bonus.EnableFollowing(negative);
     }
 

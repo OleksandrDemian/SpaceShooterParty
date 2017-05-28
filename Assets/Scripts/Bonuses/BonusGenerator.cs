@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class BonusGenerator
 {
@@ -90,6 +91,32 @@ public class BonusGenerator
                     {
                         BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
                         bh.Initialize(position);
+                    }));
+                });
+
+            case 13:
+                negative = false;
+                return new GenericBonus(delegate(GameObject target)
+                {
+                    Player player = target.GetComponent<ShipController>().GetPlayer();
+                    if (player == null)
+                        return;
+
+                    PopUp.ShowText(target.transform.position, "Disable players", 1);
+                    List<Player> players = GameManager.Instance.GetPlayers();
+                    players.Remove(player);
+
+                    for (int i = 0; i < players.Count; i++)
+                    {
+                        players[i].EnableControll(false);
+                    }
+
+                    GameTime.Instance.AddTimer(new Timer(5, delegate()
+                    {
+                        for (int i = 0; i < players.Count; i++)
+                        {
+                            players[i].EnableControll(true);
+                        }
                     }));
                 });
 
