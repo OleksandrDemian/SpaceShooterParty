@@ -58,9 +58,9 @@ public class Test : MonoBehaviour
     private void Trigger()
     {
         //AbilityTest();
-        //BonusTest();
-        ExplosionManager manager = ObjectPool.Instance.Get<ExplosionManager>();
-        manager.Initialize(Vector3.zero);
+        BonusTest();
+        /*ExplosionManager manager = ObjectPool.Instance.Get<ExplosionManager>();
+        manager.Initialize(Vector3.zero);*/
         /*BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
         bh.Initialize(Vector3.zero);*/
         /*PowerUp b = ObjectPool.Instance.Get<PowerUp>();
@@ -120,6 +120,9 @@ public class Test : MonoBehaviour
             GameTime.Instance.AddTimer(new Timer(3, delegate ()
             {
                 BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
+                ShipController player = target.GetComponent<ShipController>();
+                if (player != null)
+                    bh.SetOnDamageListener(player.DamageListener);
                 bh.Initialize(position);
             }));
         }));

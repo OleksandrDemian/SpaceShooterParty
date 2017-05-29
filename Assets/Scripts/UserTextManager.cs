@@ -11,11 +11,14 @@ public class UserTextManager : MonoBehaviour
         text = GetComponentInChildren<Text>();
         anim = GetComponent<Animation>();
 
-        transform.localScale = Vector3.zero;
+        transform.localScale = Vector3.one;
 	}
 
     public void SetUserName(string name)
-    {        
+    {
+        /*if (name == text.text)
+            return;
+            
         if (name == "")
         {
             if (transform.localScale != Vector3.zero)
@@ -26,6 +29,8 @@ public class UserTextManager : MonoBehaviour
             text.text = name;
             //if (transform.position != Vector3.one)
             anim.Play("FadeIn", PlayMode.StopAll);
-        }
+        }*/
+
+        text.text = name;
     }
 }

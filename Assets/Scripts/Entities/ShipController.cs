@@ -156,9 +156,18 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 
         controller.Initialize(transform.position, transform.rotation, new Damage(damage.Value));
         controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
-        controller.GetDamage().SetParentShip(this);
+        controller.GetDamage().SetDamageListener(DamageListener);
         audioManager.PlayAudio("Laser");
         lastFireTime = GameTime.GetTime();
+    }
+
+    public void DamageListener(DamageEvents result, GameObject target)
+    {
+        if (result == DamageEvents.KILL)
+        {
+            if(target != gameObject)
+                player.Kill(target);
+        }
     }
 
     public void AbilityTrigger()
@@ -212,7 +221,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         engineTrail.enabled = speed > 0 ? true : false;
     }
 
-    public void Damage(int amount, ShipController ship)
+    public void Damage(int amount, OnDamage listener)
     {
         Attribute shield = GetAttribute(AttributeType.SHIELD);
         
@@ -225,10 +234,16 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         {
             Attribute health = GetAttribute(AttributeType.HEALTH);
             health.Value -= amount;
-            if (health.Value < 0)
+            if (listener == null)
+                return;
+
+            if (health.Value < 1)
             {
-                if(ship != null && ship != this)
-                    ship.GetPlayer().Kill(gameObject);
+                listener(DamageEvents.KILL, gameObject);
+            }
+            else
+            {
+                listener(DamageEvents.HIT, gameObject);
             }
             //PopUp.ShowText(transform.position, amount.ToString(), 0, Color.red);
         }

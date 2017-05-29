@@ -190,7 +190,15 @@ public class GameManager : MonoBehaviour
         SceneLoader.LoadScene("Lobby");
     }
 
-    private void MatchEnd()
+    private void OnGUI()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            GUI.Label(new Rect(10, 15 + (15 * i), 100, 20), players[i].Name + ": " + players[i].kill);
+        }
+    }
+
+    public void MatchEnd()
     {
         if (matchEnded)
             return;

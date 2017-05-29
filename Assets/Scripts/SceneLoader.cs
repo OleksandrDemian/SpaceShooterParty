@@ -43,19 +43,24 @@ public class SceneLoader : MonoBehaviour
 
         Image image = GetComponent<Image>();
         Text text = GetComponentInChildren<Text>();
-        Color color = image.color;
+        Color colorI = image.color;
+        Color colorT = text.color;
 
-        while (color.a != target)
+        while (colorI.a != target)
         {
-            color.a = Mathf.MoveTowards (color.a, target, Time.deltaTime * 5);
-            image.color = color;
-            text.color = color;
+            colorI.a = Mathf.MoveTowards (colorI.a, target, Time.deltaTime * 5);
+            colorT.a = Mathf.MoveTowards(colorT.a, target, Time.deltaTime * 5);
+            image.color = colorI;
+            text.color = colorT;
             yield return new WaitForEndOfFrame();
         }
+
+        yield return new WaitForSeconds(1);
 
         if (f != null)
             f();
 
-        gameObject.SetActive(false);
+        if(target == 0)
+            gameObject.SetActive(false);
     }
 }

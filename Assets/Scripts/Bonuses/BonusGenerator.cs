@@ -90,6 +90,9 @@ public class BonusGenerator
                     GameTime.Instance.AddTimer(new Timer(3, delegate()
                     {
                         BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
+                        ShipController player = target.GetComponent<ShipController>();
+                        if(player != null)
+                            bh.SetOnDamageListener(player.DamageListener);
                         bh.Initialize(position);
                     }));
                 });

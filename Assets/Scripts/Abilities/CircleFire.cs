@@ -33,6 +33,6 @@ class CircleFire : Ability
         Laser bullet = GameManager.ObjectPooler.Get<Laser>();
         bullet.Initialize(shipParent.transform.position, rotation, new Damage(damage.Value));
         bullet.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
-        bullet.GetDamage().SetParentShip(shipParent);
+        bullet.GetDamage().SetDamageListener(shipParent.DamageListener);
     }
 }

@@ -1,18 +1,27 @@
 ﻿using UnityEngine;
 
+public delegate void OnDamage(DamageEvents result, GameObject target);
+
+public enum DamageEvents
+{
+    HIT,
+    KILL,
+    MISS
+}
+
 public class Damage
 {
     private int damage;
-    private ShipController parent;
+    private OnDamage onDamage;
 
     public Damage(int damage)
     {
         this.damage = damage;
     }
 
-    public void SetParentShip(ShipController parent)
+    public void SetDamageListener(OnDamage listener)
     {
-        this.parent = parent;
+        onDamage = listener;
     }
 
     public virtual void ApplyDamage(GameObject target)
@@ -20,7 +29,12 @@ public class Damage
         IDamagable damagable = target.GetComponent<IDamagable>();
         if (damagable != null)
         {
-            damagable.Damage(damage, parent);
+            damagable.Damage(damage, onDamage);
         }
+    }
+
+    public OnDamage GetOnDamage()
+    {
+        return onDamage;
     }
 }

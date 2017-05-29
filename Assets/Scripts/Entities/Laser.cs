@@ -18,6 +18,7 @@ public class Laser : MonoBehaviour, IPoolable, IBlackHoleAttractable
         timer += GameTime.TimeScale;
         if (timer > 2)
         {
+            damage.GetOnDamage().Invoke(DamageEvents.MISS, null);
             Disable();
         }
         GameManager.Instance.CheckPosition(transform);
