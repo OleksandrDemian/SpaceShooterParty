@@ -4,7 +4,7 @@ public class DestroyShield : Damage
 {
     //private int amount;
 
-    public DestroyShield(int damage) : base(damage)
+    public DestroyShield(ShipController parent) : base(parent)
     {
         //this.amount = amount;
     }

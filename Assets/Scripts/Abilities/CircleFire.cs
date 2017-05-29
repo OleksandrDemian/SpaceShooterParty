@@ -1,17 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 class CircleFire : Ability
 {
-    private Attribute damage;
     private int qta = 3;
     private ShipController shipParent;
 
-    public CircleFire(Attribute damage, int qta, ShipController parent) {
-        if (damage.Type != AttributeType.DAMAGE)
-            throw new ArgumentException("Attribute must be of type DAMAGE");
-
-        this.damage = damage;
+    public CircleFire(int qta, ShipController parent) {
         this.qta = qta;
         shipParent = parent;
     }
@@ -31,8 +25,8 @@ class CircleFire : Ability
     {
         Quaternion rotation = Quaternion.Euler(0, 0, direction);
         Laser bullet = GameManager.ObjectPooler.Get<Laser>();
-        bullet.Initialize(shipParent.transform.position, rotation, new Damage(damage.Value));
+        bullet.Initialize(shipParent.transform.position, rotation, new Damage(shipParent));
         bullet.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
-        bullet.GetDamage().SetDamageListener(shipParent.DamageListener);
+        //bullet.GetDamage().SetDamageListener(shipParent.DamageListener);
     }
 }

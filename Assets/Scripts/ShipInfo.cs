@@ -22,16 +22,16 @@
         {
             case AbilityType.CIRCLEFIRE:
                 //--------------------------ATENTION (abilitylevel for circle fire is always 5)-----------------------------//
-                ability = new CircleFire(ship.GetAttribute(AttributeType.DAMAGE), /*abilityLevel*/ 5, ship);
+                ability = new CircleFire(/*abilityLevel*/ 5, ship);
                 break;
             case AbilityType.SHIELDRECOVERY:
                 ability = new ShieldRecovery(ship.GetAttribute(AttributeType.SHIELD), 3);
                 break;
             case AbilityType.FREEZEENGINE:
-                ability = new DisableControllAbility(4, ship.transform);
+                ability = new DisableControllAbility(4, ship);
                 break;
             case AbilityType.DESTROYSHIELD:
-                ability = new DestroyShieldAbility(2, ship.transform);
+                ability = new DestroyShieldAbility(2, ship);
                 break;
             default:
                 return;

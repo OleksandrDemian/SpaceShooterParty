@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class DisableControll : Damage
+public class DisableControl : Damage
 {
     private float time;
 
-    public DisableControll(int amount, float time) : base(amount)
+    public DisableControl(ShipController parent, float time) : base(parent)
     {
         this.time = time;
     }

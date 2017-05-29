@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     private Timer matchTimer;
     //TEMP
     private bool matchEnded = false;
-    private BonusGenerator bonusGenerator;
+    //private BonusGenerator bonusGenerator;
 
     //LevelManager
     public void CheckPosition(Transform transform)
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
 
         if (gameInfo.BonusesEnbled)
         {
-            bonusGenerator = new BonusGenerator();
+            BonusGenerator bonusGenerator = new BonusGenerator();
         }
 
         //Debug.Log("Bonuses: " + gameInfo.enableBonuses);
@@ -190,6 +190,7 @@ public class GameManager : MonoBehaviour
         SceneLoader.LoadScene("Lobby");
     }
 
+#if UNITY_EDITOR
     private void OnGUI()
     {
         for (int i = 0; i < players.Count; i++)
@@ -197,6 +198,7 @@ public class GameManager : MonoBehaviour
             GUI.Label(new Rect(10, 15 + (15 * i), 100, 20), players[i].Name + ": " + players[i].kill);
         }
     }
+#endif
 
     public void MatchEnd()
     {

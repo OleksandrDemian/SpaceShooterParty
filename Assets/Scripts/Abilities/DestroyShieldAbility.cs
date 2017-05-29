@@ -5,21 +5,21 @@ class DestroyShieldAbility : Ability
 {
     //AMOUNT is unused!
     //private int amount;
-    private Transform transform;
+    private ShipController parent;
 
-    public DestroyShieldAbility(int amount, Transform transform)
+    public DestroyShieldAbility(int amount, ShipController parent)
     {
         //this.amount = amount;
-        this.transform = transform;
+        this.parent = parent;
     }
 
     public override void Trigger()
     {
-        PopUp.ShowText(transform.position, "Destroy shield");
+        PopUp.ShowText(parent.transform.position, "Destroy shield");
         Laser controller = GameManager.ObjectPooler.Get<Laser>();
         if (controller != null)
         {
-            controller.Initialize(transform.position, transform.rotation, new DestroyShield(3));
+            controller.Initialize(parent.transform.position, parent.transform.rotation, new DestroyShield(parent));
             controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(2));
         }
     }

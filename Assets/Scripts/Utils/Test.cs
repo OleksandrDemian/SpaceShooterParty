@@ -112,7 +112,7 @@ public class Test : MonoBehaviour
             }));
         }));
         */
-        
+        //bonus.AddBonus(new CircleFireBonus(15));
         bonus.AddBonus(new GenericBonus(delegate (GameObject target)
         {
             Vector3 position = target.transform.position;

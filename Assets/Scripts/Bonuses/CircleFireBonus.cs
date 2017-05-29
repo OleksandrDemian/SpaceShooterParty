@@ -20,8 +20,7 @@ public class CircleFireBonus : Bonus
         if (controller == null)
             return;
 
-        Attribute damage = controller.GetAttribute(AttributeType.DAMAGE);
-        CircleFire fire = new CircleFire(damage, lasersCount, controller);
+        CircleFire fire = new CircleFire(lasersCount, controller);
 
         fire.Trigger();
     }

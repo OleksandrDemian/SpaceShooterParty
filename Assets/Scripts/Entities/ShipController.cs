@@ -154,9 +154,9 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 
         Laser controller = GameManager.ObjectPooler.Get<Laser>();
 
-        controller.Initialize(transform.position, transform.rotation, new Damage(damage.Value));
+        controller.Initialize(transform.position, transform.rotation, new Damage(this));
         controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
-        controller.GetDamage().SetDamageListener(DamageListener);
+        //controller.GetDamage().SetDamageListener(DamageListener);
         audioManager.PlayAudio("Laser");
         lastFireTime = GameTime.GetTime();
     }
@@ -227,6 +227,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         
         if (shield.Value > 0)
         {
+            listener(DamageEvents.HIT, gameObject);
             shield.Value--;
             //PopUp.ShowText(transform.position, "1", 0, Color.blue);
         }
@@ -257,7 +258,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         Vector3 direction = toPosition - transform.position;
         float distance = Vector3.Distance(transform.position, toPosition);
         Vector3 temp = (direction.normalized) / distance * 25;
-        CalculateMoveDirection(temp);
+        moveDirection += temp * GameTime.TimeScale;
     }
 
     /*

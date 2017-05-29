@@ -14,15 +14,18 @@ public class Damage
     private int damage;
     private OnDamage onDamage;
 
-    public Damage(int damage)
+    public Damage(ShipController parent)
     {
-        this.damage = damage;
+        damage = parent.GetAttribute(AttributeType.DAMAGE).Value;
+        onDamage = parent.DamageListener;
     }
 
+    /*
     public void SetDamageListener(OnDamage listener)
     {
         onDamage = listener;
     }
+    */
 
     public virtual void ApplyDamage(GameObject target)
     {

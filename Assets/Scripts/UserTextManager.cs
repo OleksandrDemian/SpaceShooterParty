@@ -4,12 +4,12 @@ using UnityEngine.UI;
 public class UserTextManager : MonoBehaviour
 {
     private Text text;
-    private Animation anim;
+    //private Animation anim;
 
 	private void Awake ()
     {
         text = GetComponentInChildren<Text>();
-        anim = GetComponent<Animation>();
+        //anim = GetComponent<Animation>();
 
         transform.localScale = Vector3.one;
 	}

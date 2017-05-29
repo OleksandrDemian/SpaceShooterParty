@@ -26,6 +26,18 @@ public class PauseScreen : MonoBehaviour
         pauseScreen = transform.FindChild("ScreenOverlay").gameObject;
         GetComponent<Canvas>().worldCamera = Camera.main;
         isPaused = false;
+
+        Button btnEndMatch = transform.FindChild("ScreenOverlay").GetComponentInChildren<Button>();
+
+        if (btnEndMatch != null)
+        {
+            btnEndMatch.onClick.AddListener(delegate()
+            {
+                PauseTrigger();
+                GameManager.Instance.MatchEnd();
+            });
+        }
+
         pauseScreen.SetActive(false);
     }
 	

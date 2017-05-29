@@ -3,7 +3,7 @@
 public class ExplosionParticle : MonoBehaviour {
 
     private Vector2 targetPosition;
-    private ExplosionManager manager;
+    //private ExplosionManager manager;
 
 	void Start () {
 		
@@ -15,7 +15,7 @@ public class ExplosionParticle : MonoBehaviour {
 
     public void SetExplosionManager(ExplosionManager manager)
     {
-        this.manager = manager;
+        //this.manager = manager;
     }
 
     public void Initialize(Vector3 targetPosition)
