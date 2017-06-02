@@ -15,7 +15,7 @@
         ship.SetSpeed(speed);
         ship.SetShield(shield);
         ship.SetImage(GameManager.ImagePooler.GetShipSkin((shipSkin * 4) + color), color);
-        ship.GetPlayer().Write("rc" + color);
+        ship.GetPlayer().Write(Converter.ToChar(Command.COLOR).ToString() + color);
         Ability ability;
 
         switch (abilityType)

@@ -3,20 +3,97 @@
     public static Command toCommand(char command)
     {
         switch (command) {
-            case 'l':
+            case 'q':
+                return Command.NONE;
+            case 'w':
                 return Command.TURNLEFT;
-            case 'r':
-                return Command.TURNRIGHT;
-            case 's':
-                return Command.FIRE;
             case 'e':
+                return Command.TURNRIGHT;
+            case 'r':
                 return Command.ENGINETRIGGER;
-            case 'a':
+            case 't':
+                return Command.FIRE;
+            case 'y':
                 return Command.ABILITYTRIGGER;
+            case 'u':
+                return Command.ABILITYINFO;
+            case 'i':
+                return Command.NAME;
+            case 'o':
+                return Command.SHIPINFO;
+            case 's':
+                return Command.STARTGAME;
+            case 'p':
+                return Command.PAUSE;
+            case 'a':
+                return Command.KILL;
+            case 'd':
+                return Command.DEAD;
+            case 'f':
+                return Command.ADDPOINT;
+            case 'g':
+                return Command.MATCHEND;
+            case 'h':
+                return Command.COLOR;
+            case 'j':
+                return Command.SHIELD;
+            case 'k':
+                return Command.HEALTH;
+            case 'l':
+                return Command.COMMANDSSTRING;
+                
+            default:
+                return Command.NONE;
         }
-        return Command.NONE;
     }
 
+    public static char ToChar(Command command)
+    {
+        switch (command)
+        {
+            case Command.NONE:
+                return 'q';
+            case Command.TURNLEFT:
+                return 'w';
+            case Command.TURNRIGHT:
+                return 'e';
+            case Command.ENGINETRIGGER:
+                return 'r';
+            case Command.FIRE:
+                return 't';
+            case Command.ABILITYTRIGGER:
+                return 'y';
+            case Command.ABILITYINFO:
+                return 'u';
+            case Command.NAME:
+                return 'i';
+            case Command.SHIPINFO:
+                return 'o';
+            case Command.STARTGAME:
+                return 's';
+            case Command.PAUSE:
+                return 'p';
+            case Command.KILL:
+                return 'a';
+            case Command.DEAD:
+                return 'd';
+            case Command.ADDPOINT:
+                return 'f';
+            case Command.MATCHEND:
+                return 'g';
+            case Command.COLOR:
+                return 'h';
+            case Command.SHIELD:
+                return 'j';
+            case Command.HEALTH:
+                return 'k';
+            case Command.COMMANDSSTRING:
+                return 'l';
+            default:
+                return ' ';
+        }
+    }
+    /*
     public static Request toRequest(char request) {
         switch (request) {
             case 'n':
@@ -53,7 +130,12 @@
                 return "rp";
             case Request.MATCHEND:
                 return "rm";
+            case Request.DEAD:
+                return "rq";
+            case Request.KILL:
+                return "rk";
         }
         return "";
     }
+    */
 }

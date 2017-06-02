@@ -71,6 +71,9 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable, IBlackHoleAttracta
     public void Damage(int amount, OnDamage listener)
     {
         health.Value -= amount;
+
+        if(listener != null)
+            listener(DamageEvents.HIT, gameObject);
         /*PopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
         popup.Initialize(transform.position, amount.ToString(), Color.white);*/
         PopUp.ShowText(transform.position, amount.ToString(), 0.5f);

@@ -163,6 +163,8 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 
     public void DamageListener(DamageEvents result, GameObject target)
     {
+        player.ShootResult(result);
+
         if (result == DamageEvents.KILL)
         {
             if(target != gameObject)
@@ -227,7 +229,9 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         
         if (shield.Value > 0)
         {
-            listener(DamageEvents.HIT, gameObject);
+            if(listener != null)
+                listener(DamageEvents.HIT, gameObject);
+
             shield.Value--;
             //PopUp.ShowText(transform.position, "1", 0, Color.blue);
         }
@@ -235,6 +239,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         {
             Attribute health = GetAttribute(AttributeType.HEALTH);
             health.Value -= amount;
+
             if (listener == null)
                 return;
 

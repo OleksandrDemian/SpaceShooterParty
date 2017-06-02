@@ -1,4 +1,4 @@
-﻿public enum Request
+﻿/*public enum Request
 {
     NONE,
     NAME,
@@ -8,5 +8,7 @@
     ADDPOINT,
     MATCHEND,
     STARTGAME,
-    PAUSE
-}
+    PAUSE,
+    DEAD,
+    KILL
+}*/

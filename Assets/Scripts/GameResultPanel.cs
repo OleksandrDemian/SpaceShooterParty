@@ -26,7 +26,7 @@ public class GameResultPanel : MonoBehaviour
         for (i = 0; i < players.Length; i++) {
             GameObject temp = Instantiate(playerInfoPrephab);
             temp.transform.SetParent(canvasParent);
-            temp.GetComponent<Podium>().SetUp(i, players[i].Name + ": " + players[i].kill);
+            temp.GetComponent<Podium>().SetUp(i, players[i].Name + ": " + players[i].GetStatistic().KillCounter());
         }
 
         lobbyButton = Instantiate(lobbyButton);

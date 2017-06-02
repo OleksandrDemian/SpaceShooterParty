@@ -34,7 +34,7 @@ public class PauseScreen : MonoBehaviour
             btnEndMatch.onClick.AddListener(delegate()
             {
                 PauseTrigger();
-                GameManager.Instance.MatchEnd();
+                GameManager.Instance.InterruptMatch();
             });
         }
 

@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     private Timer matchTimer;
     //TEMP
     private bool matchEnded = false;
+    private bool matchInterrupted = false;
     //private BonusGenerator bonusGenerator;
 
     //LevelManager
@@ -107,12 +108,14 @@ public class GameManager : MonoBehaviour
         {
             PauseScreen.Instance.AddOnPauseEvent(delegate ()
             {
-                GameTime.Instance.SetTimeScale(0.01f);
+                GameTime.Instance.SetTimeScale(0f);
+                Cursor.visible = true;
             });
 
             PauseScreen.Instance.AddOnResumeEvent(delegate ()
             {
                 GameTime.Instance.SetTimeScaleTarget(1f);
+                Cursor.visible = false;
             });
         }
 
@@ -129,8 +132,14 @@ public class GameManager : MonoBehaviour
         if (EnabledPlayersCount < 2)
         {
             GameTime.Instance.RemoveTimer(matchTimer);
-            MatchEnd();
+            InterruptMatch();
         }
+    }
+
+    public void InterruptMatch()
+    {
+        matchInterrupted = true;
+        MatchEnd();
     }
 
     private int EnabledPlayersCount
@@ -153,7 +162,8 @@ public class GameManager : MonoBehaviour
         GameTime.Instance.SetTimeScale(0.05f);
         GameTime.Instance.SetTimeScaleTarget(1);
         GameTime.Instance.AddTimer(matchTimer);
-        Debug.Log("Durtion: " + MATCH_DURATION);
+
+        Cursor.visible = false;
 
         for (int i = 0; i < players.Count; i++)
         {
@@ -195,7 +205,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < players.Count; i++)
         {
-            GUI.Label(new Rect(10, 15 + (15 * i), 100, 20), players[i].Name + ": " + players[i].kill);
+            //GUI.Label(new Rect(10, 15 + (15 * i), 100, 20), players[i].Name + ": " + players[i].kill);
         }
     }
 #endif
@@ -210,7 +220,7 @@ public class GameManager : MonoBehaviour
         foreach (Player player in players)
         {
             player.Input.ClearCommands();
-            player.Write(Converter.toString(Request.MATCHEND));
+            player.Write(Command.MATCHEND);
         }
 
         countdown.SetText("Match ended");
@@ -221,15 +231,23 @@ public class GameManager : MonoBehaviour
     }
 
     private void OpenMatchResult()
-    {
-        GameResultPanel result = FindObjectOfType<GameResultPanel>();
-        Player[] playersOrderedList = players.ToArray();
+    {        
+        Cursor.visible = true;
 
-        
-        if(players.Count > 0 && players[0].kill > 4)
-            players[0].Write(Converter.toString(Request.ADDPOINT));
-        
-        System.Array.Sort(playersOrderedList, (y, x) => x.kill.CompareTo(y.kill));
-        result.Show(playersOrderedList);
+        if (players.Count > 0)
+        {
+            Player[] playersOrderedList = players.ToArray();
+            System.Array.Sort(playersOrderedList, (y, x) => x.GetStatistic().KillCounter().CompareTo(y.GetStatistic().KillCounter()));
+
+            if(!matchInterrupted)
+                playersOrderedList[0].Write(Command.ADDPOINT);
+
+            GameResultPanel result = FindObjectOfType<GameResultPanel>();
+            result.Show(playersOrderedList);
+        }
+        else
+        {
+            SceneLoader.LoadScene("Lobby");
+        }
     }
 }

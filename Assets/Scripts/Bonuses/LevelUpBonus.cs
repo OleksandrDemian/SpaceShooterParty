@@ -8,6 +8,6 @@ public class LevelUpBonus : Bonus
         if (controller == null)
             return;
         PopUp.ShowText(target.transform.position, "Level UP!", 1);
-        controller.GetPlayer().Write(Converter.toString(Request.ADDPOINT));
+        controller.GetPlayer().Write(Command.ADDPOINT);
     }
 }

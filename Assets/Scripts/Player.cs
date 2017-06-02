@@ -13,9 +13,10 @@ public class Player : MonoBehaviour, IJoystickListener
 
     private Transform respawnPoint;
 
-    private string playerName = "Nameless";
-    public int kill = 0;
-    public int dead = 0;
+    //private string playerName = "Nameless";
+
+    private PlayerStatistic statistics;
+
     public OnConnectionClose onConnectionClose;
     private float timeToDisconect = 2f;
 
@@ -40,7 +41,7 @@ public class Player : MonoBehaviour, IJoystickListener
 
     private void Start()
     {
-        
+        statistics = new PlayerStatistic();
     }
 
     private void Update()
@@ -100,6 +101,11 @@ public class Player : MonoBehaviour, IJoystickListener
         }
     }
 
+    public void Write(Command command)
+    {
+        Write(Converter.ToChar(command).ToString());
+    }
+
     public void InitializeShip(int shipNumber)
     {
         ship = GameManager.ObjectPooler.Get<ShipController>().GetComponent<ShipController>();
@@ -108,7 +114,6 @@ public class Player : MonoBehaviour, IJoystickListener
         if (shipInfo == null)
             return;
 
-        Debug.Log("Ship: " + shipInfo.ToString());
         shipInfo.InitializeShip(ship, shipNumber);
         ResetShipPosition();
         ship.SetRotationTarget((int)respawnPoint.rotation.eulerAngles.z);
@@ -125,11 +130,11 @@ public class Player : MonoBehaviour, IJoystickListener
         switch (type)
         {
             case AttributeType.HEALTH:
-                Write("ih" + value);
+                Write(Converter.ToChar(Command.HEALTH).ToString() + value);
                 break;
 
             case AttributeType.SHIELD:
-                Write("is" + value);
+                Write(Converter.ToChar(Command.SHIELD).ToString() + value);
                 break;
         }
     }
@@ -145,10 +150,38 @@ public class Player : MonoBehaviour, IJoystickListener
     public void OnMessageRead(string message)
     {
         timeToDisconect = 2;
-        if (message[0] == 'c')
-            ReadCommand(message);
-        if (message[0] == 'r')
-            ReadRequest(message);
+        Debug.Log("Receive: " + message);
+
+        switch (Converter.toCommand(message[0]))
+        {
+            case Command.COMMANDSSTRING:
+                ReadCommand(message);
+                break;
+
+            case Command.NAME:
+                if (LobbyManager.Instance == null)
+                    return;
+                string value = message.Substring(1);
+                name = value;
+                //playerName = value;
+                LobbyManager.Instance.AddName(name);
+                break;
+
+            case Command.SHIPINFO:
+                GetShipInfo(message.Substring(1));
+                break;
+
+            case Command.STARTGAME:
+                if (LobbyManager.Instance == null)
+                    return;
+                LobbyManager.Instance.StartGame();
+                break;
+
+            case Command.PAUSE:
+                PauseScreen.Instance.PauseTrigger();
+                break;
+        }
+        
     }
 
     public void SetConnectionReader(ConnectionReader reader)
@@ -156,19 +189,6 @@ public class Player : MonoBehaviour, IJoystickListener
         this.reader = reader;
         reader.SetJoystickListener(this);
         DontDestroyOnLoad(gameObject);
-    }
-
-    public void Death()
-    {
-        dead++;
-        reader.Write("Dead");
-        ship.gameObject.SetActive(false);
-        EnableControll(false);
-        //StartCoroutine(Respawn());
-        GameTime.Instance.AddTimer(new Timer(3, delegate()
-        {
-            Respawn();
-        }));
     }
 
     private void Respawn()
@@ -179,6 +199,7 @@ public class Player : MonoBehaviour, IJoystickListener
         ship.ResetAttributes();
         EnableControll(true);
         ship.EnableCollider(false);
+
         GameTime.Instance.AddTimer(new Timer(3, delegate()
         {
             ship.EnableCollider(true);
@@ -193,13 +214,47 @@ public class Player : MonoBehaviour, IJoystickListener
 
     public void Kill(GameObject killed)
     {
-        Debug.Log(Name + " killed " + killed.name);
-        kill++;
+        Write(Command.KILL);
+    }
+
+    public void ShootResult(DamageEvents result)
+    {
+        Debug.Log("Reg: " + result);
+        switch (result)
+        {
+            case DamageEvents.HIT:
+                statistics.Hit();
+                return;
+            case DamageEvents.KILL:
+                statistics.Kill();
+                return;
+            case DamageEvents.MISS:
+                statistics.Miss();
+                return;
+        }
+    }
+
+    public PlayerStatistic GetStatistic()
+    {
+        return statistics;
+    }
+
+    public void Death()
+    {
+        statistics.Dead();
+
+        Write(Command.DEAD );
+        ship.gameObject.SetActive(false);
+        EnableControll(false);
+        GameTime.Instance.AddTimer(new Timer(3, delegate ()
+        {
+            Respawn();
+        }));
     }
 
     public string Name
     {
-        get { return playerName; }
+        get { return name; }
     }
 
     public int ID
@@ -212,11 +267,6 @@ public class Player : MonoBehaviour, IJoystickListener
         get { return input; }
     }
 
-    public void SendRequest(Request request)
-    {
-        Write(Converter.toString(request));
-    }
-
     //TEMP
     //float delta = 0;
     private void ReadCommand(string message)
@@ -227,34 +277,6 @@ public class Player : MonoBehaviour, IJoystickListener
         input.ManageInput(message.Substring(1));
         //Debug.Log("Delta: " + delta);
         //delta = 0;
-    }
-
-    private void ReadRequest(string message)
-    {
-        switch (Converter.toRequest(message[1]))
-        {
-            case Request.NAME:
-                if (LobbyManager.Instance == null)
-                    return;
-                name = message.Substring(2);
-                playerName = message.Substring(2);
-                LobbyManager.Instance.AddName(name);
-                break;
-
-            case Request.SHIPINFO:
-                GetShipInfo(message.Substring(2));
-                break;
-
-            case Request.STARTGAME:
-                if (LobbyManager.Instance == null)
-                    return;
-                LobbyManager.Instance.StartGame();
-                break;
-
-            case Request.PAUSE:
-                PauseScreen.Instance.PauseTrigger();
-                break;
-        }
     }
 
     private void GetShipInfo(string message)
@@ -288,7 +310,7 @@ public class Player : MonoBehaviour, IJoystickListener
             return;
 
         enabled = false;
-        Debug.Log("Player: " + playerName + " left the game");
+        Debug.Log("Player: " + name + " left the game");
         if (onConnectionClose != null)
             onConnectionClose(this);
 
