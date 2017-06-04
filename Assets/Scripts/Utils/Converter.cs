@@ -41,7 +41,9 @@
                 return Command.HEALTH;
             case 'l':
                 return Command.COMMANDSSTRING;
-                
+            case 'z':
+                return Command.SERVERCHECKER;
+
             default:
                 return Command.NONE;
         }
@@ -89,6 +91,9 @@
                 return 'k';
             case Command.COMMANDSSTRING:
                 return 'l';
+            case Command.SERVERCHECKER:
+                return 'z';
+
             default:
                 return ' ';
         }

@@ -40,6 +40,11 @@ public class ConnectionReader
         }
     }
 
+    public string DirectRead()
+    {
+        return reader.ReadLine();
+    }
+
     public int ID
     {
         get { return id; }

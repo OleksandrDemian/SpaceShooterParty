@@ -196,7 +196,10 @@ public class GameManager : MonoBehaviour
     public void LoadLobbyScreen()
     {
         foreach (Player p in players)
+        {
+            p.CloseConnection();
             Destroy(p.gameObject);
+        }
         SceneLoader.LoadScene("Lobby");
     }
 
