@@ -23,7 +23,7 @@ public class LobbyManager : MonoBehaviour
 	void Start ()
     {
         Instance = this;
-        ipText.text = "IP: " + Server.GetLocalIPAddress();
+        ipText.text = "IP: " + ConnectionManager.GetLocalIP();
         UpdateNames();
 	}
 	

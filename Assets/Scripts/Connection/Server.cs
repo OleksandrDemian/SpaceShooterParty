@@ -40,7 +40,8 @@ class Server
         do
         {
             TcpClient client = server.AcceptTcpClient();
-            if (connections.Count > maxPlayers)
+
+            if (connections.Count >= maxPlayers)
             {
                 Debug.Log("Disconected!");
                 client.Close();
@@ -48,6 +49,7 @@ class Server
             }
 
             ConnectionReader reader = new ConnectionReader(client, nextID);
+            /*
             string type = reader.DirectRead();
 
             if (Converter.toCommand(type[0]) == Command.SERVERCHECKER)
@@ -55,7 +57,7 @@ class Server
                 reader.CloseConnection();
                 continue;
             }
-
+            */
             connections.Add(reader);
             hasNewConnection = true;
             nextID++;

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ConnectionManager : MonoBehaviour
 {
@@ -13,6 +14,11 @@ public class ConnectionManager : MonoBehaviour
     {
         get;
         private set;
+    }
+
+    public static string GetLocalIP()
+    {
+        return Network.player.ipAddress;
     }
 
     public void InstantiatePlayer(ConnectionReader reader)
@@ -49,7 +55,7 @@ public class ConnectionManager : MonoBehaviour
         }
     }
 
-    void OnApplicationQuit()
+    private void OnApplicationQuit()
     {
         server.Stop();
     }
