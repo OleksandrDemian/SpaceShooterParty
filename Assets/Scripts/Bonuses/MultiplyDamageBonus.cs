@@ -20,7 +20,8 @@ public class MultiplyDamageBonus : Bonus
         if (controller == null)
             return;
 
-        PopUp.ShowText(target.transform.position, "Damage x" + mult, 1);
+        Vector3 position = target.transform.position;
+        PopUp.ShowText(position, "Damage x" + mult, 1, Color.white, (position.y > 0 ? PopUpAnimation.DOWN : PopUpAnimation.UP));
 
         Attribute damage = controller.GetAttribute(AttributeType.DAMAGE);
         AttributeModifier mod = new AttributeModifier(ModifierType.MULTIPLY, mult);

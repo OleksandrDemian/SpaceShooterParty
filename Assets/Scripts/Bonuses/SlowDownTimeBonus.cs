@@ -16,10 +16,12 @@ class SlowDownTimeBonus : Bonus
 
     public override void Trigger(GameObject target)
     {
-        if(this.target < 1)
-            PopUp.ShowText(target.transform.position, "Slow down time!", 1);
-        else
-            PopUp.ShowText(target.transform.position, "Speed up time!", 1);
+        Vector3 position = target.transform.position;
+        string shownText = "Slow down time!";
+        if (this.target > 1)
+            shownText = "Speed up time!";
+
+        PopUp.ShowText(position, shownText, 1, Color.white, (position.y > 0 ? PopUpAnimation.DOWN : PopUpAnimation.UP));
 
         GameTime gt = GameTime.Instance;
 

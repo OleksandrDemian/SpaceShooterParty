@@ -59,7 +59,7 @@ public class Test : MonoBehaviour
     {
         //SceneLoader.LoadScene("Lobby");
         //AbilityTest();
-        //BonusTest();
+        BonusTest();
         /*ExplosionManager manager = ObjectPool.Instance.Get<ExplosionManager>();
         manager.Initialize(Vector3.zero);*/
         /*BlackHole bh = ObjectPool.Instance.Get<BlackHole>();

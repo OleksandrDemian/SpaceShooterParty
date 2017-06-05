@@ -163,18 +163,16 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 
     public void DamageListener(DamageEvents result, GameObject target)
     {
-        player.ShootResult(result);
 
-        if (result == DamageEvents.KILL)
-        {
-            if(target != gameObject)
-                player.Kill(target);
-        }
+        if (target == gameObject)
+            return;
+
+        player.ShootResult(result);
     }
 
     public void AbilityTrigger()
     {
-        if (GameTime.GetTime() < lastAbilityTime + 3)
+        if (GameTime.GetTime() < lastAbilityTime + ability.RechargeTime)
             return;
 
         ability.Trigger();

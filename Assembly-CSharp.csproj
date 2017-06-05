@@ -69,7 +69,6 @@
      <Compile Include="Assets\Scripts\Bonuses\MultiplyDamageBonus.cs" />
      <Compile Include="Assets\Scripts\Bonuses\SlowDownTimeBonus.cs" />
      <Compile Include="Assets\Scripts\Connection\Command.cs" />
-     <Compile Include="Assets\Scripts\Connection\ConnectionManager.cs" />
      <Compile Include="Assets\Scripts\Connection\ConnectionReader.cs" />
      <Compile Include="Assets\Scripts\Connection\Request.cs" />
      <Compile Include="Assets\Scripts\Connection\Server.cs" />
@@ -93,6 +92,7 @@
      <Compile Include="Assets\Scripts\Interfaces\IPoolable.cs" />
      <Compile Include="Assets\Scripts\KeyBoardPlayer.cs" />
      <Compile Include="Assets\Scripts\LaserTrigger.cs" />
+     <Compile Include="Assets\Scripts\Managers\ConnectionManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameTime.cs" />
      <Compile Include="Assets\Scripts\Managers\LobbyManager.cs" />

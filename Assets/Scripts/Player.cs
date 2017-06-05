@@ -13,8 +13,6 @@ public class Player : MonoBehaviour, IJoystickListener
 
     private Transform respawnPoint;
 
-    //private string playerName = "Nameless";
-
     private PlayerStatistic statistics;
 
     public OnConnectionClose onConnectionClose;
@@ -212,11 +210,6 @@ public class Player : MonoBehaviour, IJoystickListener
         ship.transform.rotation = respawnPoint.rotation;
     }
 
-    public void Kill(GameObject killed)
-    {
-        Write(Command.KILL);
-    }
-
     public void ShootResult(DamageEvents result)
     {
         Debug.Log("Reg: " + result);
@@ -227,6 +220,7 @@ public class Player : MonoBehaviour, IJoystickListener
                 return;
             case DamageEvents.KILL:
                 statistics.Kill();
+                Write(Command.KILL);
                 return;
             case DamageEvents.MISS:
                 statistics.Miss();
@@ -243,7 +237,8 @@ public class Player : MonoBehaviour, IJoystickListener
     {
         statistics.Dead();
 
-        Write(Command.DEAD );
+        Write(Command.DEAD);
+
         ship.gameObject.SetActive(false);
         EnableControll(false);
         GameTime.Instance.AddTimer(new Timer(3, delegate ()

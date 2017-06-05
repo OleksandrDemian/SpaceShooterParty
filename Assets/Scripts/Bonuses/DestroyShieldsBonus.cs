@@ -29,7 +29,8 @@ public class DestroyShieldsBonus : Bonus
         }
         else
         {
-            PopUp.ShowText(target.transform.position, "Destroy enemies shields", 1);
+            Vector3 position = target.transform.position;
+            PopUp.ShowText(position, "Destroy enemies shields", 1, Color.white, (position.y > 0 ? PopUpAnimation.DOWN : PopUpAnimation.UP));
 
             List<Player> players = GameManager.Instance.GetPlayers();
             for (int i = 0; i < players.Count; i++)

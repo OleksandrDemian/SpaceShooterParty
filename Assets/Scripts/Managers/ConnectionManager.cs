@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class ConnectionManager : MonoBehaviour
 {
@@ -34,6 +33,7 @@ public class ConnectionManager : MonoBehaviour
     private void Start()
     {
         Instance = this;
+        Debug.Log("Old IP: " + Server.GetLocalIPAddress());
         server = new Server(6546);
     }
 	

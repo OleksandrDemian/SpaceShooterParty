@@ -29,4 +29,12 @@ class CircleFire : Ability
         bullet.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
         //bullet.GetDamage().SetDamageListener(shipParent.DamageListener);
     }
+
+    public override int RechargeTime
+    {
+        get
+        {
+            return base.RechargeTime;
+        }
+    }
 }

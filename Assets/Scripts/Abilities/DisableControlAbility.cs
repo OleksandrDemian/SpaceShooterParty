@@ -18,4 +18,12 @@
             controller.SetSprite(GameManager.ImagePooler.GetLaserSkin(1));
         }
     }
+
+    public override int RechargeTime
+    {
+        get
+        {
+            return 5;
+        }
+    }
 }
