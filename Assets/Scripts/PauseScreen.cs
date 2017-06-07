@@ -49,6 +49,11 @@ public class PauseScreen : MonoBehaviour
         }
 	}
 
+    public bool IsPaused()
+    {
+        return isPaused;
+    }
+
     public void PauseTrigger()
     {
         isPaused = !isPaused;

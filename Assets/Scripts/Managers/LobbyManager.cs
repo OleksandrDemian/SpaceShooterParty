@@ -23,7 +23,12 @@ public class LobbyManager : MonoBehaviour
 	void Start ()
     {
         Instance = this;
-        ipText.text = "IP: " + ConnectionManager.GetLocalIP();
+        string ip = ConnectionManager.GetLocalIP();
+
+        if (ip == "")
+            ip = "*" + Server.GetLocalIPAddress();
+
+        ipText.text = "IP: " + ip;
         UpdateNames();
 	}
 	

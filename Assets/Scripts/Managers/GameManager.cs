@@ -234,7 +234,10 @@ public class GameManager : MonoBehaviour
     }
 
     private void OpenMatchResult()
-    {        
+    {
+        if (PauseScreen.Instance.IsPaused())
+            PauseScreen.Instance.PauseTrigger();
+
         Cursor.visible = true;
 
         if (players.Count > 0)
