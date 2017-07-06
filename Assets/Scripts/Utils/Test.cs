@@ -49,11 +49,13 @@ public class Test : MonoBehaviour
         Debug.Log(attr);
     }
 
+#if UNITY_EDITOR
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             Trigger();
     }
+#endif
 
     private void Trigger()
     {

@@ -31,7 +31,7 @@ public class GameTime : MonoBehaviour
         return time;
     }
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
     }

@@ -74,6 +74,7 @@
      <Compile Include="Assets\Scripts\Connection\Server.cs" />
      <Compile Include="Assets\Scripts\Connection\SocketInputManager.cs" />
      <Compile Include="Assets\Scripts\Damage.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
      <Compile Include="Assets\Scripts\Entities\Asteroid.cs" />
      <Compile Include="Assets\Scripts\Entities\BlackHole.cs" />
      <Compile Include="Assets\Scripts\Entities\Laser.cs" />
@@ -94,6 +95,7 @@
      <Compile Include="Assets\Scripts\LaserTrigger.cs" />
      <Compile Include="Assets\Scripts\Managers\ConnectionManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\GameManagerBase.cs" />
      <Compile Include="Assets\Scripts\Managers\GameTime.cs" />
      <Compile Include="Assets\Scripts\Managers\LobbyManager.cs" />
      <Compile Include="Assets\Scripts\MapManager.cs" />
@@ -116,9 +118,6 @@
      <None Include="Assets\Audio\Lasers\Source.txt" />
      <None Include="Assets\KnownProblems.txt" />
      <None Include="Assets\Audio\Ships\readme.txt" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -133,9 +132,6 @@
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Purchasing">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityPurchasing/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>

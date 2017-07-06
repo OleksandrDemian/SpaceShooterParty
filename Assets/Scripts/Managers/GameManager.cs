@@ -12,21 +12,16 @@ public class GameManager : MonoBehaviour
         get;
         private set;
     }
-
     public static ObjectPool ObjectPooler
     {
         get;
         private set;
     }
-
     public static ImagePool ImagePooler
     {
         get;
         private set;
     }
-
-    //LevelManager
-    
     public Vector2 MapBounds
     {
         get;
@@ -35,54 +30,35 @@ public class GameManager : MonoBehaviour
 
     private List<Player> players;
     private Transform[] startPoints;
-    private int MATCH_DURATION = 60; //JAVA syntax (maybe)
+    private int MATCH_DURATION = 60;
     private GameInfo gameInfo;
     private MatchCountdown countdown;
     private Timer matchTimer;
-    //TEMP
     private bool matchEnded = false;
     private bool matchInterrupted = false;
-    //private BonusGenerator bonusGenerator;
 
-    //LevelManager
-    public void CheckPosition(Transform transform)
-    {
-        Vector3 position = transform.position;
-        if (Mathf.Abs(transform.position.x) > MapBounds.x)
-        {
-            if (position.x > 0)
-                position.x = -MapBounds.x;
-            else
-                position.x = MapBounds.x;
-        }
-            
-        if (Mathf.Abs(transform.position.y) > MapBounds.y)
-        {
-            if (position.y > 0)
-                position.y = -MapBounds.y;
-            else
-                position.y = MapBounds.y;
-        }
-        transform.position = position;
-    }
-
-	private void Start ()
+    private void Start()
     {
         Instance = this;
+
         ObjectPooler = GetComponent<ObjectPool>();
         ImagePooler = GetComponent<ImagePool>();
 
-        gameInfo = GameInfo.Instance;
+        if (GameInfo.Instance != null)
+            gameInfo = GameInfo.Instance;
+        else
+            gameInfo = new GameInfo();
+
         players = GetPlayers();
         startPoints = GetStartPoints();
         //MatchTime = gameInfo.gameTime;
         MATCH_DURATION = gameInfo.MatchTime;
 
-        //NEW STUFF
         Camera.main.orthographicSize = gameInfo.MapSize;
         MapBounds = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 0));
         MapBounds += new Vector2(.3f, .3f);
-        //END NEW STUFF
+
+        AdjustStartPositions();
 
         countdown = MatchCountdown.Instance;
         countdown.SetMatchTime(MATCH_DURATION);
@@ -115,11 +91,42 @@ public class GameManager : MonoBehaviour
             PauseScreen.Instance.AddOnResumeEvent(delegate ()
             {
                 GameTime.Instance.SetTimeScaleTarget(1f);
-                Cursor.visible = false;
+                Cursor.visible = matchEnded;
             });
         }
 
-        StartMatch ();
+        StartMatch();
+    }
+
+    private void AdjustStartPositions()
+    {
+        float value = (float)gameInfo.MapSize / 12;
+
+        for (int i = 0; i < startPoints.Length; i++)
+        {
+            startPoints[i].position *= value;
+        }
+    }
+
+    public void CheckPosition(Transform transform)
+    {
+        Vector3 position = transform.position;
+        if (Mathf.Abs(transform.position.x) > MapBounds.x)
+        {
+            if (position.x > 0)
+                position.x = -MapBounds.x;
+            else
+                position.x = MapBounds.x;
+        }
+            
+        if (Mathf.Abs(transform.position.y) > MapBounds.y)
+        {
+            if (position.y > 0)
+                position.y = -MapBounds.y;
+            else
+                position.y = MapBounds.y;
+        }
+        transform.position = position;
     }
 
     //PLAYERS COUNT < 2!!!!!

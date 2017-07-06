@@ -8,17 +8,11 @@ public class Player : MonoBehaviour, IJoystickListener
     private ConnectionReader reader;
     private ShipController ship;
     private bool controllEnabled = false;
-
     private ShipInfo shipInfo;
-
     private Transform respawnPoint;
-
     private PlayerStatistic statistics;
-
     public OnConnectionClose onConnectionClose;
     private float timeToDisconect = 2f;
-
-    //TEMP
     private SocketInputManager input = new SocketInputManager();
 
     public ShipController SpaceShip
@@ -148,7 +142,7 @@ public class Player : MonoBehaviour, IJoystickListener
     public void OnMessageRead(string message)
     {
         timeToDisconect = 2;
-        Debug.Log("Receive: " + message);
+        //Debug.Log("Receive: " + message);
 
         switch (Converter.toCommand(message[0]))
         {

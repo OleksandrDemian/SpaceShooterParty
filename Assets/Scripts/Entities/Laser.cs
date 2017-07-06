@@ -18,7 +18,8 @@ public class Laser : MonoBehaviour, IPoolable, IBlackHoleAttractable
         timer += GameTime.TimeScale;
         if (timer > 2)
         {
-            damage.GetOnDamage().Invoke(DamageEvents.MISS, null);
+            if(damage != null)
+                damage.GetOnDamage().Invoke(DamageEvents.MISS, null);
             Disable();
         }
         GameManager.Instance.CheckPosition(transform);
@@ -32,6 +33,9 @@ public class Laser : MonoBehaviour, IPoolable, IBlackHoleAttractable
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.tag == "IgnoreLasers")
+            return;
+
+        if (damage == null)
             return;
 
         damage.ApplyDamage(collider.gameObject);

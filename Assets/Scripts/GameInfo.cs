@@ -1,7 +1,7 @@
 ﻿public class GameInfo
 {
     private int gameTime = 60;
-    private int mapSize = 11;
+    private int mapSize = 12;
     private bool enableAsteroids = true;
     private bool enableShields = true;
     private bool enableBonuses = true;
@@ -9,6 +9,16 @@
     public GameInfo()
     {
         Instance = this;
+    }
+
+    public GameInfo(int time, int size, bool asteroids, bool shields, bool bonuses)
+    {
+        Instance = this;
+        gameTime = time;
+        mapSize = size;
+        enableAsteroids = asteroids;
+        enableBonuses = bonuses;
+        enableShields = shields;
     }
 
     public static GameInfo Instance
