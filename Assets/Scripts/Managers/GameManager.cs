@@ -37,28 +37,31 @@ public class GameManager : MonoBehaviour
     private bool matchEnded = false;
     private bool matchInterrupted = false;
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
-
-        ObjectPooler = GetComponent<ObjectPool>();
-        ImagePooler = GetComponent<ImagePool>();
 
         if (GameInfo.Instance != null)
             gameInfo = GameInfo.Instance;
         else
             gameInfo = new GameInfo();
+    }
+
+    private void Start()
+    {
+        ObjectPooler = GetComponent<ObjectPool>();
+        ImagePooler = GetComponent<ImagePool>();
 
         players = GetPlayers();
         startPoints = GetStartPoints();
         //MatchTime = gameInfo.gameTime;
         MATCH_DURATION = gameInfo.MatchTime;
 
-        Camera.main.orthographicSize = gameInfo.MapSize;
-        MapBounds = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 0));
-        MapBounds += new Vector2(.3f, .3f);
+        Debug.Log("GameInfo: " + gameInfo.ToString());
 
-        AdjustStartPositions();
+        AdjustCameraSize(gameInfo.MapSize);
+
+        AdjustStartPositions(gameInfo.MapSize);
 
         countdown = MatchCountdown.Instance;
         countdown.SetMatchTime(MATCH_DURATION);
@@ -98,9 +101,22 @@ public class GameManager : MonoBehaviour
         StartMatch();
     }
 
-    private void AdjustStartPositions()
+    private void AdjustCameraSize(int size)
     {
-        float value = (float)gameInfo.MapSize / 12;
+        if (size < 8)
+        {
+            Debug.LogError("Map size is wrong!!!");
+            size = 12;
+        }
+
+        Camera.main.orthographicSize = size;
+        MapBounds = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, 0));
+        MapBounds += new Vector2(.3f, .3f);
+    }
+
+    private void AdjustStartPositions(float mapSize)
+    {
+        float value = mapSize / 12;
 
         for (int i = 0; i < startPoints.Length; i++)
         {

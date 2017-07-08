@@ -80,7 +80,7 @@ public class Attribute
 
     public override string ToString()
     {
-        return "Value: " + Value + " MaxValue: " + maxValue + " DefaultValue: " + defaultValue;
+        return "Type: " + type + " Value: " + Value + " MaxValue: " + maxValue + " DefaultValue: " + defaultValue;
     }
 
     private void CalculateValue()

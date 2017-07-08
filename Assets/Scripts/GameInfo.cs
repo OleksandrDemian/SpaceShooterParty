@@ -5,6 +5,7 @@
     private bool enableAsteroids = true;
     private bool enableShields = true;
     private bool enableBonuses = true;
+    private bool enabeAudio = true;
 
     public GameInfo()
     {
@@ -14,6 +15,7 @@
     public GameInfo(int time, int size, bool asteroids, bool shields, bool bonuses)
     {
         Instance = this;
+
         gameTime = time;
         mapSize = size;
         enableAsteroids = asteroids;
@@ -85,5 +87,22 @@
         {
             enableBonuses = value;
         }
+    }
+
+    public bool AudioEnabled
+    {
+        get
+        {
+            return enabeAudio;
+        }
+        set
+        {
+            enabeAudio = value;
+        }
+    }
+
+    public override string ToString()
+    {
+        return "Time: " + gameTime + "/Size: " + mapSize + "/Shield: " + enableShields + "/Bonuses: " + enableBonuses + "/Audio: " + enabeAudio + "/Asteroids: " + enableAsteroids;
     }
 }

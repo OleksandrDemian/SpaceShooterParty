@@ -4,6 +4,7 @@ using UnityEngine;
 public class ExplosionManager : MonoBehaviour, IPoolable
 {
     private ExplosionParticle[] particles;
+    private float radius = 8f;
 
     public GameObject GetGameObject
     {
@@ -22,7 +23,7 @@ public class ExplosionManager : MonoBehaviour, IPoolable
 
         for (int i = 0; i < particles.Length; i++)
         {
-            particles[i].Initialize(new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0));
+            particles[i].Initialize(new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0));
         }
 
         StartCoroutine(DisableWait());

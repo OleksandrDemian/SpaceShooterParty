@@ -30,7 +30,11 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
+
         audioManager = GetComponent<AudioManager>();
+        if (!GameInfo.Instance.AudioEnabled)
+            audioManager.enabled = false;
+
         anim = GetComponent<Animation>();
 
         engineTrail = transform.Find("Trail").GetComponent<SpriteRenderer>();
@@ -43,6 +47,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         if (!GameInfo.Instance.ShieldsEnabled)
         {
             GetAttribute(AttributeType.SHIELD).AddModifier(new AttributeModifier(ModifierType.MULTIPLY, 0));
+            Debug.Log("Shield: " + GetAttribute(AttributeType.SHIELD).ToString());
         }
     }
 
@@ -51,6 +56,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, rotationTarget), rotationSpeed * GameTime.TimeScale);
         CalculateMoveDirection(transform.up * speed);
         GameManager.Instance.CheckPosition(transform);
+
     }
 
     private void FixedUpdate()
@@ -61,13 +67,6 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
     private void CalculateMoveDirection(Vector3 dir)
     {
         moveDirection = Vector3.Lerp(moveDirection, dir, GameTime.TimeScale);
-    }
-
-    //UNUSED
-    public void AddAttribute(AttributeType type, int value)
-    {
-        Attribute attribute = new Attribute(type, value);
-        attributes.Add(attribute);
     }
 
     public void SetPlayer(Player player)
@@ -92,7 +91,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         shield.onValueChange = OnShieldValueChange;
         attributes.Add(shield);
     }
-
+    
     public void SetHealth(int value)
     {
         Attribute health = new Attribute(AttributeType.HEALTH, value);
@@ -199,6 +198,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
     {
         for (int i = 0; i < attributes.Count; i++)
             attributes[i].ResetValue();
+
         EnableEngine(false);
         moveDirection = Vector3.zero;
         rotationTarget = (int)transform.rotation.eulerAngles.z;
@@ -278,15 +278,13 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 
         if(delta < 0)
             PopUp.ShowText(transform.position, "Health: " + delta, 0, Color.red);
-        else
+        else if(delta > 0)
             PopUp.ShowText(transform.position, "Health: " + delta, 0, Color.white);
 
         if (value < 1)
         {
-#if UNITY_EDITOR
-            ExplosionManager manager = ObjectPool.Instance.Get<ExplosionManager>();
-            manager.Initialize(transform.position);
-#endif
+            ExplosionManager expManager = ObjectPool.Instance.Get<ExplosionManager>();
+            expManager.Initialize(transform.position);
 
             player.Death();
         }
@@ -299,7 +297,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 
         if (delta < 0)
             PopUp.ShowText(transform.position, "Shield: " + delta, 0, Color.blue, PopUpAnimation.LEFT);
-        else
+        else if(delta > 0)
             PopUp.ShowText(transform.position, "Shield: " + delta, 0, Color.white, PopUpAnimation.RIGHT);
 
         if (value < 1)

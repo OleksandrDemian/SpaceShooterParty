@@ -31,11 +31,6 @@ public class LobbyManager : MonoBehaviour
         ipText.text = "IP: " + ip;
         UpdateNames();
 	}
-	
-	void Update ()
-    {
-
-    }
 
     public void AddName(string name)
     {

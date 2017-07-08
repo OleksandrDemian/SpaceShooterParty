@@ -30,6 +30,9 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable, IBlackHoleAttracta
 
     private void OnHealthChanged(int value, int oldValue) {
         if (value < 0) {
+            ExplosionManager expManager = ObjectPool.Instance.Get<ExplosionManager>();
+            expManager.Initialize(transform.position);
+
             Disable();
         }
     }

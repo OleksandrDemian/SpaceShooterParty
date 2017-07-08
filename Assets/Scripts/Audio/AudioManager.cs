@@ -4,7 +4,7 @@
 public class AudioManager : MonoBehaviour {
 
     private AudioSource source;
-
+    
     [SerializeField]
     private AudioClip[] clips;
 
@@ -20,6 +20,9 @@ public class AudioManager : MonoBehaviour {
 
     public void PlayAudio(string name)
     {
+        if (!enabled)
+            return;
+
         for (int i = 0; i < clips.Length; i++)
         {
             if (clips[i].name == name)

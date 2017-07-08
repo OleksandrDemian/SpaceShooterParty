@@ -57,7 +57,6 @@ public class PauseScreen : MonoBehaviour
     public void PauseTrigger()
     {
         isPaused = !isPaused;
-        Debug.Log(isPaused);
         if (isPaused)
         {
             if(onPause != null)

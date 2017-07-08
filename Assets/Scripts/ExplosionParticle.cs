@@ -23,6 +23,6 @@ public class ExplosionParticle : MonoBehaviour {
         transform.localPosition = Vector3.zero;
         this.targetPosition = transform.position + targetPosition;
 
-        GetComponent<Animation>().Play("ExplosionParticleAnimation");
+        //GetComponent<Animation>().Play("ExplosionParticleAnimation");
     }
 }
