@@ -21,16 +21,17 @@ public class DestroyShieldsBonus : Bonus
         if (controller == null)
             return;
 
+        Vector3 position = target.transform.position;
+
         if (itSelf)
         {
-            PopUp.ShowText(target.transform.position, "Destroy shields", 1);
+            PopUp.ShowText(position, "Destroy shields", 1, Color.white, GetAnimation(position));
 
             controller.GetAttribute(AttributeType.SHIELD).Value = 0;
         }
         else
         {
-            Vector3 position = target.transform.position;
-            PopUp.ShowText(position, "Destroy enemies shields", 1, Color.white, (position.y > 0 ? PopUpAnimation.DOWN : PopUpAnimation.UP));
+            PopUp.ShowText(position, "Destroy enemies shields", 1, Color.white, GetAnimation(position));
 
             List<Player> players = GameManager.Instance.GetPlayers();
             for (int i = 0; i < players.Count; i++)

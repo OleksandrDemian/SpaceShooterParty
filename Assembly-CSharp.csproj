@@ -84,6 +84,7 @@
      <Compile Include="Assets\Scripts\EntityType.cs" />
      <Compile Include="Assets\Scripts\ExplosionManager.cs" />
      <Compile Include="Assets\Scripts\ExplosionParticle.cs" />
+     <Compile Include="Assets\Scripts\Fire.cs" />
      <Compile Include="Assets\Scripts\GameInfo.cs" />
      <Compile Include="Assets\Scripts\GameInfoPanel.cs" />
      <Compile Include="Assets\Scripts\GameResultPanel.cs" />

@@ -8,7 +8,7 @@ public class LevelUpBonus : Bonus
         if (controller == null)
             return;
 
-        PopUp.ShowText(target.transform.position, "Level UP!", 1, Color.white, (target.transform.position.y > 0 ? PopUpAnimation.DOWN : PopUpAnimation.UP));
+        PopUp.ShowText(target.transform.position, "Level UP!", 1, Color.white, GetAnimation(target.transform.position));
         controller.GetPlayer().Write(Command.ADDPOINT);
     }
 }

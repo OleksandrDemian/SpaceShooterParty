@@ -21,7 +21,7 @@ class SlowDownTimeBonus : Bonus
         if (this.target > 1)
             shownText = "Speed up time!";
 
-        PopUp.ShowText(position, shownText, 1, Color.white, (position.y > 0 ? PopUpAnimation.DOWN : PopUpAnimation.UP));
+        PopUp.ShowText(position, shownText, 1, Color.white, GetAnimation(position));
 
         GameTime gt = GameTime.Instance;
 

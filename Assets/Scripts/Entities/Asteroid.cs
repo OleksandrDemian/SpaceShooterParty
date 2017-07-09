@@ -29,9 +29,9 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable, IBlackHoleAttracta
     }
 
     private void OnHealthChanged(int value, int oldValue) {
-        if (value < 0) {
+        if (value < 1) {
             ExplosionManager expManager = ObjectPool.Instance.Get<ExplosionManager>();
-            expManager.Initialize(transform.position);
+            expManager.Initialize(transform.position, 6);
 
             Disable();
         }
@@ -79,7 +79,7 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable, IBlackHoleAttracta
             listener(DamageEvents.HIT, gameObject);
         /*PopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
         popup.Initialize(transform.position, amount.ToString(), Color.white);*/
-        PopUp.ShowText(transform.position, amount.ToString(), 0.5f);
+        PopUp.ShowText(transform.position, amount.ToString(), 0.5f, Color.white, PopUpAnimation.GRAVITY);
     }
 
     public void Attract(Vector3 toPosition)

@@ -6,7 +6,8 @@ public enum PopUpAnimation
     UP,
     DOWN,
     RIGHT,
-    LEFT
+    LEFT,
+    GRAVITY
 }
 
 public class PopUp : MonoBehaviour, IPoolable {
@@ -35,19 +36,25 @@ public class PopUp : MonoBehaviour, IPoolable {
     public static void ShowText(Vector3 position, string message, float time, Color color)
     {
         PopUp popup = GameManager.ObjectPooler.Get<PopUp>();
-        popup.Initialize(position, message, time, color, PopUpAnimation.UP);
+        popup.Initialize(position, message, time, color, PopUpAnimation.GRAVITY);
     }
 
     public static void ShowText(Vector3 position, string message, float time)
     {
         PopUp popup = ObjectPool.Instance.Get<PopUp>();
-        popup.Initialize(position, message, time, Color.white, PopUpAnimation.UP);
+        popup.Initialize(position, message, time, Color.white, PopUpAnimation.GRAVITY);
     }
 
     public static void ShowText(Vector3 position, string message)
     {
         PopUp popup = ObjectPool.Instance.Get<PopUp>();
-        popup.Initialize(position, message, 0, Color.white, PopUpAnimation.UP);
+        popup.Initialize(position, message, 0, Color.white, PopUpAnimation.GRAVITY);
+    }
+
+    public static void ShowText(Vector3 position, string message, PopUpAnimation animation)
+    {
+        PopUp popup = ObjectPool.Instance.Get<PopUp>();
+        popup.Initialize(position, message, 0, Color.white, animation);
     }
 
     public void Initialize(Vector3 position, string message, float waitTime, Color color, PopUpAnimation animation)
@@ -62,21 +69,24 @@ public class PopUp : MonoBehaviour, IPoolable {
         switch (animation)
         {
             case PopUpAnimation.UP:
-                StartCoroutine(AnimateDIrection(Vector3.up));
+                StartCoroutine(AnimateDirection(Vector3.up));
                 break;
             case PopUpAnimation.DOWN:
-                StartCoroutine(AnimateDIrection(Vector3.down));
+                StartCoroutine(AnimateDirection(Vector3.down));
                 break;
             case PopUpAnimation.RIGHT:
-                StartCoroutine(AnimateDIrection(Vector3.right));
+                StartCoroutine(AnimateDirection(Vector3.right));
                 break;
             case PopUpAnimation.LEFT:
-                StartCoroutine(AnimateDIrection(Vector3.left));
+                StartCoroutine(AnimateDirection(Vector3.left));
+                break;
+            case PopUpAnimation.GRAVITY:
+                StartCoroutine(AnimateGravity());
                 break;
         }
     }
 
-    private System.Collections.IEnumerator AnimateDIrection(Vector3 direction)
+    private System.Collections.IEnumerator AnimateDirection(Vector3 direction)
     {
         Vector3 targetPosition = transform.position + direction;
         while (text.color.a < 0.99f) {
@@ -90,6 +100,20 @@ public class PopUp : MonoBehaviour, IPoolable {
         while (text.color.a > 0.1f)
         {
             text.color = Color.LerpUnclamped(text.color, Color.clear, 10 * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        Disable();
+    }
+
+    private System.Collections.IEnumerator AnimateGravity()
+    {
+        Vector3 direction = new Vector3(Random.Range(-2f, 2f), Random.Range(3f, 6f), 0);
+        text.color = targetColor;
+        while (text.color.a > 0.1f)
+        {
+            transform.position += (direction * GameTime.TimeScale);
+            direction.y -= (GameTime.TimeScale * 8);
+            text.color = Color.LerpUnclamped(text.color, Color.clear, GameTime.TimeScale);
             yield return new WaitForEndOfFrame();
         }
         Disable();

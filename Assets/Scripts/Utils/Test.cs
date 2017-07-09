@@ -86,10 +86,9 @@ public class Test : MonoBehaviour
     private void BonusTest()
     {
         PowerUp bonus = ObjectPool.Instance.Get<PowerUp>();
-
         bonus.transform.position = Vector2.zero;
-
         bool negative = false;
+
         /*
         bonus.AddBonus(new GenericBonus(delegate (GameObject target)
         {
@@ -118,6 +117,22 @@ public class Test : MonoBehaviour
         //bonus.AddBonus(new CircleFireBonus(15));
         bonus.AddBonus(new GenericBonus(delegate (GameObject target)
         {
+            ShipController controller = target.GetComponent<ShipController>();
+            if (controller == null)
+                return;
+
+            Vector3 position = target.transform.position;
+            PopUp.ShowText(position, "Double fire", 1, Color.white, Bonus.GetAnimation(position));
+            controller.GetFire().SetMode(FireMode.DOUBLESHOT);
+
+            GameTime.Instance.AddTimer(new Timer(10, delegate ()
+            {
+                controller.GetFire().SetMode(FireMode.ONESHOT);
+            }));
+        }));
+        /*
+        bonus.AddBonus(new GenericBonus(delegate (GameObject target)
+        {
             Vector3 position = target.transform.position;
             PopUp.ShowText(position, "Black hole", 2);
             GameTime.Instance.AddTimer(new Timer(3, delegate ()
@@ -129,7 +144,7 @@ public class Test : MonoBehaviour
                 bh.Initialize(position);
             }));
         }));
-        
+        */
         bonus.EnableFollowing(negative);
     }
 

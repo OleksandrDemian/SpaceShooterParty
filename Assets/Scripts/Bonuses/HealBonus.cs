@@ -29,9 +29,10 @@ public class HealBonus : Bonus
         {
             controller.GetAttribute(AttributeType.HEALTH).Value += amount;
         }
+        Vector3 position = target.transform.position;
         if(amount >= 0)
-            PopUp.ShowText(target.transform.position, "Heal", 1, Color.white, PopUpAnimation.RIGHT);
+            PopUp.ShowText(position, "Heal", 1, Color.white, GetAnimation(position));
         else
-            PopUp.ShowText(target.transform.position, "Damage", 1, Color.white, PopUpAnimation.RIGHT);
+            PopUp.ShowText(position, "Damage", 1, Color.red, GetAnimation(position));
     }
 }

@@ -26,10 +26,7 @@ public class Attribute
         set
         {
             int old = this.value;
-            this.value = value;
-
-            if (this.value > maxValue)
-                this.value = maxValue;
+            this.value = UnityEngine.Mathf.Clamp(value, 0, maxValue);
 
             if (onValueChange != null)
                 onValueChange(Value, old);

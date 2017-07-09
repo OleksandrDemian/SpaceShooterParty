@@ -21,13 +21,13 @@ public class MultiplyDamageBonus : Bonus
             return;
 
         Vector3 position = target.transform.position;
-        PopUp.ShowText(position, "Damage x" + mult, 1, Color.white, (position.y > 0 ? PopUpAnimation.DOWN : PopUpAnimation.UP));
+        PopUp.ShowText(position, "Damage x" + mult, 1, Color.white, GetAnimation(position));
 
         Attribute damage = controller.GetAttribute(AttributeType.DAMAGE);
         AttributeModifier mod = new AttributeModifier(ModifierType.MULTIPLY, mult);
         damage.AddModifier(mod);
         GameTime.Instance.AddTimer(new Timer(10, delegate() {
-            PopUp.ShowText(target.transform.position, "Multiply damage removed!", 1);
+            PopUp.ShowText(target.transform.position, "Multiply damage removed!", 1, Color.white, GetAnimation(position));
             damage.RemoveModifier(mod);
         }));
     }

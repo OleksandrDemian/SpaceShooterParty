@@ -2,7 +2,7 @@
 
 public class AsteroidsGenerator : MonoBehaviour
 {
-    private float generate = 5;
+    private float generate = 1;
 	
 	void Update ()
     {

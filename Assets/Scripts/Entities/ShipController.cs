@@ -25,7 +25,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
     private Animation anim;
 
     //TEMP
-    private float lastFireTime;
+    private Fire fireManager;
     private float lastAbilityTime;
 
     private void Start() {
@@ -41,7 +41,8 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         shieldSprite = transform.Find("Shield").GetComponent<SpriteRenderer>();
 
         EnableEngine(false);
-        lastFireTime = GameTime.GetTime();
+
+        fireManager = new Fire(this, 0.3f);
         lastAbilityTime = GameTime.GetTime();
 
         if (!GameInfo.Instance.ShieldsEnabled)
@@ -99,6 +100,11 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         attributes.Add(health);
     }
 
+    public Fire GetFire()
+    {
+        return fireManager;
+    }
+
     public void EnableCollider(bool action)
     {
         Collider2D col = GetComponent<Collider2D>();
@@ -144,6 +150,8 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 
     public void Fire()
     {
+        fireManager.Trigger();
+        /*
         if (GameTime.GetTime() < lastFireTime + 0.3f)
             return;
 
@@ -158,6 +166,12 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         //controller.GetDamage().SetDamageListener(DamageListener);
         audioManager.PlayAudio("Laser");
         lastFireTime = GameTime.GetTime();
+        */
+    }
+
+    public AudioManager GetAudioManager()
+    {
+        return audioManager;
     }
 
     public void DamageListener(DamageEvents result, GameObject target)
@@ -276,15 +290,12 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         int delta = value - oldValue;
         player.OnShipValueChange(AttributeType.HEALTH, value);
 
-        if(delta < 0)
-            PopUp.ShowText(transform.position, "Health: " + delta, 0, Color.red);
-        else if(delta > 0)
-            PopUp.ShowText(transform.position, "Health: " + delta, 0, Color.white);
+        PopUp.ShowText(transform.position, delta.ToString(), 0, Color.white);
 
         if (value < 1)
         {
             ExplosionManager expManager = ObjectPool.Instance.Get<ExplosionManager>();
-            expManager.Initialize(transform.position);
+            expManager.Initialize(transform.position, 10);
 
             player.Death();
         }
@@ -295,10 +306,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         int delta = value - oldValue;
         player.OnShipValueChange(AttributeType.SHIELD, value);
 
-        if (delta < 0)
-            PopUp.ShowText(transform.position, "Shield: " + delta, 0, Color.blue, PopUpAnimation.LEFT);
-        else if(delta > 0)
-            PopUp.ShowText(transform.position, "Shield: " + delta, 0, Color.white, PopUpAnimation.RIGHT);
+        PopUp.ShowText(transform.position, delta.ToString(), 0, Color.cyan);
 
         if (value < 1)
             shieldSprite.enabled = false;

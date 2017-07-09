@@ -12,7 +12,7 @@
 
     public override void Trigger()
     {
-        PopUp.ShowText(parent.transform.position, "Destroy shield");
+        PopUp.ShowText(parent.transform.position, "Destroy shield", PopUpAnimation.UP);
         Laser controller = GameManager.ObjectPooler.Get<Laser>();
         if (controller != null)
         {

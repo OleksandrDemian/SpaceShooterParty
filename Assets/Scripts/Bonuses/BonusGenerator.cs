@@ -33,7 +33,7 @@ public class BonusGenerator
 
     private Bonus GetRandomBonus(ref bool negative)
     {
-        int rand = Random.Range(0, 14);
+        int rand = Random.Range(0, 16);
 
         switch (rand)
         {
@@ -86,7 +86,8 @@ public class BonusGenerator
                 return new GenericBonus(delegate(GameObject target)
                 {
                     Vector3 position = target.transform.position;
-                    PopUp.ShowText(position, "Black hole", 2);
+                    
+                    PopUp.ShowText(position, "Black hole", 2, Color.white, Bonus.GetAnimation(position));
                     GameTime.Instance.AddTimer(new Timer(3, delegate()
                     {
                         BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
@@ -105,7 +106,8 @@ public class BonusGenerator
                     if (player == null)
                         return;
 
-                    PopUp.ShowText(target.transform.position, "Disable players", 1);
+                    Vector3 position = target.transform.position;
+                    PopUp.ShowText(position, "Disable players", 1, Color.white, Bonus.GetAnimation(position));
                     List<Player> players = GameManager.Instance.GetPlayers();
                     players.Remove(player);
 
@@ -120,6 +122,23 @@ public class BonusGenerator
                         {
                             players[i].EnableControll(true);
                         }
+                    }));
+                });
+            case 14:
+                negative = false;
+                return new GenericBonus(delegate(GameObject target)
+                {
+                    ShipController controller = target.GetComponent<ShipController>();
+                    if (controller == null)
+                        return;
+
+                    Vector3 position = target.transform.position;
+                    PopUp.ShowText(position, "Double fire", 1, Color.white, Bonus.GetAnimation(position));
+                    controller.GetFire().SetMode(FireMode.DOUBLESHOT);
+
+                    GameTime.Instance.AddTimer(new Timer(10, delegate ()
+                    {
+                        controller.GetFire().SetMode(FireMode.ONESHOT);
                     }));
                 });
 

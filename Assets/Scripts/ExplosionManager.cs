@@ -26,9 +26,19 @@ public class ExplosionManager : MonoBehaviour, IPoolable
             particles[i].Initialize(new Vector3(Random.Range(-radius, radius), Random.Range(-radius, radius), 0));
         }
 
-        StartCoroutine(DisableWait());
+        GameTime.Instance.AddTimer(new Timer(0.7f, delegate()
+        {
+            Disable();
+        }));
     }
 
+    public void Initialize(Vector3 position, float radius)
+    {
+        this.radius = radius;
+        Initialize(position);
+    }
+
+    /*
     private IEnumerator DisableWait()
     {
         float timer = 0;
@@ -39,15 +49,12 @@ public class ExplosionManager : MonoBehaviour, IPoolable
         }
         Disable();
     }
+    */
 
     private void Disable()
     {
+        radius = 8f;
         GameManager.ObjectPooler.Add(this);
         gameObject.SetActive(false);
     }
-	
-	private void Update ()
-    {
-		
-	}
 }
