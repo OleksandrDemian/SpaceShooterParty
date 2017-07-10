@@ -16,6 +16,8 @@ public class ExplosionManager : MonoBehaviour, IPoolable
 
     public void Initialize(Vector3 position)
     {
+        CameraController.Instance.Shake();
+
         transform.position = position;
 
         if(particles == null)

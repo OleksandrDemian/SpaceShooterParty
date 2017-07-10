@@ -32,7 +32,6 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable, IBlackHoleAttracta
         if (value < 1) {
             ExplosionManager expManager = ObjectPool.Instance.Get<ExplosionManager>();
             expManager.Initialize(transform.position, 6);
-
             Disable();
         }
     }

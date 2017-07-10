@@ -2,14 +2,17 @@
 
 public class AsteroidsGenerator : MonoBehaviour
 {
-    private float generate = 1;
+    [SerializeField]
+    [Range(1, 20)]
+    private int generatingRate = 5;
+    private float generateAt = 1;
 	
 	void Update ()
     {
-        if (Time.time > generate)
+        if (GameTime.GetTime() > generateAt)
         {
             GenerateAsteroid();
-            generate = Time.time + Random.Range(5, 10);
+            generateAt = GameTime.GetTime() + Random.Range(generatingRate, generatingRate + 5);
         }
 	}
 

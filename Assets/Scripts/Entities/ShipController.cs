@@ -296,7 +296,6 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         {
             ExplosionManager expManager = ObjectPool.Instance.Get<ExplosionManager>();
             expManager.Initialize(transform.position, 10);
-
             player.Death();
         }
     }

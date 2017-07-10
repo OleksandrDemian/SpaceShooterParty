@@ -25,6 +25,11 @@ public class Fire
         this.mode = mode;
     }
 
+    public void SetFireRate(float fireRate)
+    {
+        this.fireRate = fireRate;
+    }
+
     public void Trigger()
     {
         if (GameTime.GetTime() < lastFire + fireRate)

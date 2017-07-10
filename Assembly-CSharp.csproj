@@ -94,6 +94,7 @@
      <Compile Include="Assets\Scripts\Interfaces\IPoolable.cs" />
      <Compile Include="Assets\Scripts\KeyBoardPlayer.cs" />
      <Compile Include="Assets\Scripts\LaserTrigger.cs" />
+     <Compile Include="Assets\Scripts\Managers\CameraController.cs" />
      <Compile Include="Assets\Scripts\Managers\ConnectionManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManagerBase.cs" />
