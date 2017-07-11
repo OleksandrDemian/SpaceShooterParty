@@ -19,7 +19,7 @@ public class Laser : MonoBehaviour, IPoolable, IBlackHoleAttractable
         if (timer > 2)
         {
             if(damage != null)
-                damage.GetOnDamage().Invoke(DamageEvents.MISS, null);
+                damage.GetListener().DamageListener(DamageEvents.MISS, null);
             Disable();
         }
         GameManager.Instance.CheckPosition(transform);

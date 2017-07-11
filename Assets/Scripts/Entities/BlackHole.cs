@@ -11,7 +11,7 @@ public class BlackHole : MonoBehaviour, IPoolable
 {
     private List<IBlackHoleAttractable> subjected;
     private Animation anim;
-    private OnDamage onDamage;
+    private IDamageListener damageListener;
 	
 	private void Update ()
     {
@@ -36,9 +36,9 @@ public class BlackHole : MonoBehaviour, IPoolable
         }
     }
 
-    public void SetOnDamageListener(OnDamage onDamage)
+    public void SetDamageListener(IDamageListener listener)
     {
-        this.onDamage = onDamage;
+        damageListener = listener;
     }
 
     public void Initialize(Vector3 position)
@@ -90,7 +90,7 @@ public class BlackHole : MonoBehaviour, IPoolable
     {
         IDamagable damagable = collider.gameObject.GetComponent<IDamagable>();
         if (damagable != null)
-            damagable.Damage(666, onDamage);
+            damagable.Damage(666, damageListener);
     }
 
     public GameObject GetGameObject

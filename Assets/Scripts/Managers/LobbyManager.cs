@@ -65,11 +65,11 @@ public class LobbyManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("There is no indicator of popUp's position");
+                Debug.LogError ("There is no indicator of popUp's position");
                 position = new Vector3(0, -8, 0);
             }
 
-            PopUp.ShowText(position, "There must be at least 2 players", 1);
+            PopUp.ShowText(position, "There must be at least 2 players", PopUpAnimation.UP, 1);
         }
     }
 

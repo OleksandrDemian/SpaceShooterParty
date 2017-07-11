@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-public delegate void OnDamage(DamageEvents result, GameObject target);
-
 public enum DamageEvents
 {
     HIT,
@@ -11,33 +9,24 @@ public enum DamageEvents
 
 public class Damage
 {
-    private int damage;
-    private OnDamage onDamage;
+    private IDamageListener listener;
 
-    public Damage(ShipController parent)
+    public Damage(IDamageListener listener)
     {
-        damage = parent.GetAttribute(AttributeType.DAMAGE).Value;
-        onDamage = parent.DamageListener;
+        this.listener = listener;
     }
-
-    /*
-    public void SetDamageListener(OnDamage listener)
-    {
-        onDamage = listener;
-    }
-    */
 
     public virtual void ApplyDamage(GameObject target)
     {
         IDamagable damagable = target.GetComponent<IDamagable>();
         if (damagable != null)
         {
-            damagable.Damage(damage, onDamage);
+            damagable.Damage(listener.GetDamage(), listener);
         }
     }
 
-    public OnDamage GetOnDamage()
+    public IDamageListener GetListener()
     {
-        return onDamage;
+        return listener;
     }
 }

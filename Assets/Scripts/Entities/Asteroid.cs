@@ -70,12 +70,12 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable, IBlackHoleAttracta
     /// </summary>
     /// <param name="amount">amount of damage</param>
     /// <param name="onDead">a function called when the asteroid is destroed</param>
-    public void Damage(int amount, OnDamage listener)
+    public void Damage(int amount, IDamageListener listener)
     {
         health.Value -= amount;
 
         if(listener != null)
-            listener(DamageEvents.HIT, gameObject);
+            listener.DamageListener(DamageEvents.HIT, gameObject);
         /*PopUp popup = GameManager.ObjectPooler.Get(EntityType.DAMAGEPOPUP).GetComponent<PopUp>();
         popup.Initialize(transform.position, amount.ToString(), Color.white);*/
         PopUp.ShowText(transform.position, amount.ToString(), 0.5f, Color.white, PopUpAnimation.GRAVITY);

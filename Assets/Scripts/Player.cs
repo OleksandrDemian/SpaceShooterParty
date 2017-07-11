@@ -206,7 +206,7 @@ public class Player : MonoBehaviour, IJoystickListener
 
     public void ShootResult(DamageEvents result)
     {
-        Debug.Log("Reg: " + result);
+        //Debug.Log("Reg: " + result);
         switch (result)
         {
             case DamageEvents.HIT:

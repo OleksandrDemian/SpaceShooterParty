@@ -1,32 +1,30 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class AudioManager : MonoBehaviour {
-
-    private AudioSource source;
-    
+public class AudioManager : MonoBehaviour
+{    
     [SerializeField]
     private AudioClip[] clips;
 
-	void Start ()
+    public void CheckAudio()
     {
-        source = GetComponent<AudioSource>();
-	}
-	
-	void Update ()
-    {
-
-	}
+        if (!GameInfo.Instance.AudioEnabled)
+        {
+            enabled = false;
+            return;
+        }
+    }
 
     public void PlayAudio(string name)
     {
         if (!enabled)
             return;
-
+        
         for (int i = 0; i < clips.Length; i++)
         {
             if (clips[i].name == name)
             {
+                AudioSource source = GetComponent<AudioSource>();
                 source.PlayOneShot(clips[i], 1);
                 return;
             }

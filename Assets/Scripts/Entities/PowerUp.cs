@@ -11,6 +11,7 @@ public class PowerUp : MonoBehaviour, IPoolable
     private float lastTargetCheck = 0;
 
     private Animation anim;
+    private AudioManager audioManager;
 
     private void Update()
     {
@@ -34,7 +35,12 @@ public class PowerUp : MonoBehaviour, IPoolable
         {
             anim = GetComponent<Animation>();
         }
-
+        if (audioManager == null)
+        {
+            audioManager = GetComponent<AudioManager>();
+            audioManager.CheckAudio();
+        }
+        audioManager.PlayAudio("powerUp2");
         anim.Play("FadeIn");
     }
 
@@ -102,6 +108,7 @@ public class PowerUp : MonoBehaviour, IPoolable
 
     private void Disable()
     {
+        audioManager.PlayAudio("powerUp1");
         GetComponent<Collider2D>().enabled = false;
         followTarget = false;
         StartCoroutine(DisableWait());

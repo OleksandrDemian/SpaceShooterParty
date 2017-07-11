@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(AudioManager))]
-public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
+public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable, IDamageListener
 {
     private int speed = 0;
     private int rotationSpeed = 4;
@@ -28,12 +28,19 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
     private Fire fireManager;
     private float lastAbilityTime;
 
+    public GameObject GetGameObject
+    {
+        get
+        {
+            return gameObject;
+        }
+    }
+
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
 
         audioManager = GetComponent<AudioManager>();
-        if (!GameInfo.Instance.AudioEnabled)
-            audioManager.enabled = false;
+        audioManager.CheckAudio();
 
         anim = GetComponent<Animation>();
 
@@ -188,6 +195,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         if (GameTime.GetTime() < lastAbilityTime + ability.RechargeTime)
             return;
 
+        audioManager.PlayAudio("laser5");
         ability.Trigger();
         lastAbilityTime = GameTime.GetTime();
     }
@@ -235,14 +243,14 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         engineTrail.enabled = speed > 0 ? true : false;
     }
 
-    public void Damage(int amount, OnDamage listener)
+    public void Damage(int amount, IDamageListener listener)
     {
         Attribute shield = GetAttribute(AttributeType.SHIELD);
         
         if (shield.Value > 0)
         {
             if(listener != null)
-                listener(DamageEvents.HIT, gameObject);
+                listener.DamageListener(DamageEvents.HIT, gameObject);
 
             shield.Value--;
             //PopUp.ShowText(transform.position, "1", 0, Color.blue);
@@ -257,11 +265,11 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
 
             if (health.Value < 1)
             {
-                listener(DamageEvents.KILL, gameObject);
+                listener.DamageListener(DamageEvents.KILL, gameObject);
             }
             else
             {
-                listener(DamageEvents.HIT, gameObject);
+                listener.DamageListener(DamageEvents.HIT, gameObject);
             }
             //PopUp.ShowText(transform.position, amount.ToString(), 0, Color.red);
         }
@@ -276,6 +284,11 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable
         float distance = Vector3.Distance(transform.position, toPosition);
         Vector3 temp = (direction.normalized) / distance * 25;
         moveDirection += temp * GameTime.TimeScale;
+    }
+
+    public int GetDamage()
+    {
+        return GetAttribute(AttributeType.DAMAGE).Value;
     }
 
     /*

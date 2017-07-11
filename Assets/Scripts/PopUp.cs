@@ -57,6 +57,12 @@ public class PopUp : MonoBehaviour, IPoolable {
         popup.Initialize(position, message, 0, Color.white, animation);
     }
 
+    public static void ShowText(Vector3 position, string message, PopUpAnimation animation, float time)
+    {
+        PopUp popup = ObjectPool.Instance.Get<PopUp>();
+        popup.Initialize(position, message, time, Color.white, animation);
+    }
+
     public void Initialize(Vector3 position, string message, float waitTime, Color color, PopUpAnimation animation)
     {
         text = GetComponent<Text>();

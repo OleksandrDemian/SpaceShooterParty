@@ -21,7 +21,7 @@ public class BonusGenerator
         int x = Random.Range((int)-bounds.x, (int)bounds.x);
         int y = Random.Range((int)-bounds.y, (int)bounds.y);
 
-        Debug.Log("Position: " + x + " " + y);
+        //Debug.Log("Position: " + x + " " + y);
         bonus.transform.position = new Vector2(x, y);
 
         bool negative = false;
@@ -93,7 +93,7 @@ public class BonusGenerator
                         BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
                         ShipController player = target.GetComponent<ShipController>();
                         if(player != null)
-                            bh.SetOnDamageListener(player.DamageListener);
+                            bh.SetDamageListener(player);
                         bh.Initialize(position);
                     }));
                 });

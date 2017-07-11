@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-public class Enemy : MonoBehaviour {
-
+public class Enemy : MonoBehaviour
+{
     protected int speed = 5;
     protected Vector2 targetPosition = Vector2.zero;
     protected float fireRate = 2;
