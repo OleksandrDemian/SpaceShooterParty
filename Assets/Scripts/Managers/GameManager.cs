@@ -145,26 +145,23 @@ public class GameManager : MonoBehaviour
         transform.position = position;
     }
 
-    //PLAYERS COUNT < 2!!!!!
     private void OnPlayerConnectionClose(Player player)
     {
-        //Check how match players there are!
         countdown.ShowText(player.Name + " left!", 3);
-        Debug.Log("Players: " + EnabledPlayersCount);
-        //PLAYERS COUNT < 2!!!!!
+
         if (EnabledPlayersCount < 2)
         {
             GameTime.Instance.RemoveTimer(matchTimer);
             InterruptMatch();
         }
     }
-
+    
     public void InterruptMatch()
     {
         matchInterrupted = true;
         MatchEnd();
     }
-
+    
     private int EnabledPlayersCount
     {
         get
@@ -254,6 +251,11 @@ public class GameManager : MonoBehaviour
 
         GameTime.Instance.SetTimeScaleTarget(0.04f);
         matchEnded = true;
+    }
+
+    public Vector3 GetRandomPoint()
+    {
+        return new Vector3(Random.Range(-MapBounds.x, MapBounds.x), Random.Range(-MapBounds.y, MapBounds.y), 0) * 0.85f;
     }
 
     private void OpenMatchResult()

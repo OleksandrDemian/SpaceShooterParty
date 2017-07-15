@@ -10,7 +10,6 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable, IBlackHoleAttracta
 
     void Start () {
         rb = GetComponent<Rigidbody2D>();
-        Initialize();
 	}
 	
 	void FixedUpdate () {
@@ -25,13 +24,25 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable, IBlackHoleAttracta
     {
         IDamagable damagable = collider.gameObject.GetComponent<IDamagable>();
         if (damagable != null)
-            damagable.Damage(10 + Random.Range(-5, 15), null);
+            damagable.Damage((int)(transform.localScale.x * 10), null);
     }
 
     private void OnHealthChanged(int value, int oldValue) {
         if (value < 1) {
             ExplosionManager expManager = ObjectPool.Instance.Get<ExplosionManager>();
             expManager.Initialize(transform.position, 6);
+                        
+            if (transform.localScale.x > 1)
+            {
+                int qta = Random.Range(0, 4);
+                for (int i = 0; i < qta; i++)
+                {
+                    Asteroid ast = ObjectPool.Instance.Get<Asteroid>();
+                    ast.Initialize(transform.position);
+                }
+            }
+            
+
             Disable();
         }
     }
@@ -46,9 +57,9 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable, IBlackHoleAttracta
         direction = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
         direction.Normalize();
 
-        float size = 1 + Random.Range(-0.2f, 0.5f);
-        transform.localScale = Vector3.one;
-        transform.localScale *= size;
+        float size = Random.Range(.9f, 1.5f);
+
+        transform.localScale = Vector3.one * size;
 
         health = new Attribute(AttributeType.HEALTH, (int)((70 + Random.Range(-10, 10)) * size));
         health.onValueChange = OnHealthChanged;
@@ -59,6 +70,27 @@ public class Asteroid : MonoBehaviour, IPoolable, IDamagable, IBlackHoleAttracta
         speed = Random.Range(1, 5);
     }
 
+    
+    public void Initialize(Vector3 position)
+    {
+        direction = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
+        direction.Normalize();
+
+        transform.position = position + (Vector3)direction;
+
+        float size = Random.Range(.7f, .9f);
+
+        transform.localScale = Vector3.one * size;
+
+        health = new Attribute(AttributeType.HEALTH, (int)((50 + Random.Range(-10, 10)) * size));
+        health.onValueChange = OnHealthChanged;
+
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        sprite.sprite = GameManager.ImagePooler.GetAsteroidSkin();
+
+        speed = Random.Range(3, 6);
+    }
+    
     private void Disable()
     {
         GameManager.ObjectPooler.Add(this);

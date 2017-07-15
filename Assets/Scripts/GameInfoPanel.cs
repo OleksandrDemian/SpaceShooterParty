@@ -14,6 +14,7 @@ public class GameInfoPanel : MonoBehaviour
         bool bAsteroids = PlayerPrefs.GetString("Asteroids", "1") == "1" ? true : false;
         bool bShields = PlayerPrefs.GetString("Shields", "1") == "1" ? true : false;
         bool bbonuses = PlayerPrefs.GetString("Bonuses", "1") == "1" ? true : false;
+        bool btimer = PlayerPrefs.GetString("Timer", "1") == "1" ? true : false;
         bool bAudio = PlayerPrefs.GetString("Audio", "1") == "1" ? true : false;
 
         info = new GameInfo(savedTime, savedSize, bAsteroids, bShields, bbonuses);
@@ -26,22 +27,32 @@ public class GameInfoPanel : MonoBehaviour
 
         Toggle asteroids = transform.FindChild("Asteroids").GetComponent<Toggle>();
         Toggle shields = transform.FindChild("Shields").GetComponent<Toggle>();
+        Toggle bigTimer = transform.FindChild("BigTimer").GetComponent<Toggle>();
         Toggle bonus = transform.FindChild("Bonuses").GetComponent<Toggle>();
         Toggle audio = transform.FindChild("Audio").GetComponent<Toggle>();
+        audio.isOn = false;
 
         timeSlider.onValueChanged.AddListener(OnSliderTimeValueChange);
         cameraSizeSlider.onValueChanged.AddListener(OnSliderMapSizeValueChange);
         asteroids.onValueChanged.AddListener(OnAsteroidBoolValueChange);
         shields.onValueChanged.AddListener(OnShieldsBoolValueChange);
         bonus.onValueChanged.AddListener(OnBonusBoolValueChange);
-        audio.onValueChanged.AddListener(OnAudioBoolValueChange);
+        bigTimer.onValueChanged.AddListener(OnTimerStateBoolValueChange);
+
+        //audio.onValueChanged.AddListener(OnAudioBoolValueChange);
+        audio.onValueChanged.AddListener(delegate(bool value) 
+        {
+            audio.isOn = false;
+            PopUp.ShowText(new Vector3(0, -5, 0), "Audio is not enabled. Still working on it", PopUpAnimation.UP, 1.5f);
+        });
 
         timeSlider.value = savedTime;
         cameraSizeSlider.value = savedSize;
         asteroids.isOn = bAsteroids;
         shields.isOn = bShields;
         bonus.isOn = bbonuses;
-        audio.isOn = bAudio;
+        bigTimer.isOn = btimer;
+        //audio.isOn = bAudio;
     }
 
     private void OnSliderMapSizeValueChange(float value)
@@ -64,6 +75,12 @@ public class GameInfoPanel : MonoBehaviour
     {
         info.AsteroidsEnabled = value;
         PlayerPrefs.SetString("Asteroids", value ? "1" : "0");
+    }
+
+    private void OnTimerStateBoolValueChange(bool value)
+    {
+        info.TimerAtCenter = value;
+        PlayerPrefs.SetString("Timer", value ? "1" : "0");
     }
 
     private void OnShieldsBoolValueChange(bool value)

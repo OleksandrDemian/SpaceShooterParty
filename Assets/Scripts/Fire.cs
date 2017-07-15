@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public enum FireMode
 {
     ONESHOT,
-    DOUBLESHOT
+    DOUBLESHOT,
+    SERIALFIRE
 }
 
 public class Fire
@@ -64,6 +66,28 @@ public class Fire
 
                 controller1.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
                 controller2.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
+                break;
+            case FireMode.SERIALFIRE:
+                Laser controller4 = GameManager.ObjectPooler.Get<Laser>();
+
+                controller4.Initialize(transform.position, transform.rotation, new Damage(listener));
+                controller4.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
+
+                GameTime.Instance.AddTimer(new Timer(0.1f, delegate()
+                {
+                    Laser controller3 = GameManager.ObjectPooler.Get<Laser>();
+
+                    controller3.Initialize(transform.position, transform.rotation, new Damage(listener));
+                    controller3.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
+                }));
+
+                GameTime.Instance.AddTimer(new Timer(0.2f, delegate ()
+                {
+                    Laser controller3 = GameManager.ObjectPooler.Get<Laser>();
+
+                    controller3.Initialize(transform.position, transform.rotation, new Damage(listener));
+                    controller3.SetSprite(GameManager.ImagePooler.GetLaserSkin(0));
+                }));
                 break;
         }
     }

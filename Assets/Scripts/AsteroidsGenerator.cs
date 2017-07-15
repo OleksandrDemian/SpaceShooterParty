@@ -18,9 +18,17 @@ public class AsteroidsGenerator : MonoBehaviour
 
     private void GenerateAsteroid()
     {
-        //GameObject asteroid = GameManager.ObjectPooler.Get(EntityType.ASTEROID);
-        //GameObject asteroid = GameManager.ObjectPooler.Get<Asteroid>() as GameObject;
-        Asteroid asteroid = GameManager.ObjectPooler.Get<Asteroid>();
-        asteroid.Initialize();
+        int random = Random.Range(0, 100);
+
+        if (random > 20)
+        {
+            Asteroid asteroid = GameManager.ObjectPooler.Get<Asteroid>();
+            asteroid.Initialize();
+        }
+        else
+        {
+            Turret turret = ObjectPool.Instance.Get<Turret>();
+            turret.Initialize(GameManager.Instance.GetRandomPoint());
+        }
     }
 }

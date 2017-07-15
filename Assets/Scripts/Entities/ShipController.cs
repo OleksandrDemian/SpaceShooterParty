@@ -136,7 +136,7 @@ public class ShipController : MonoBehaviour, IDamagable, IBlackHoleAttractable, 
         //Debug.Log(sprite.name);
         //Set space ship's skin
         SpriteRenderer ren = transform.Find("Ship").GetComponent<SpriteRenderer>();
-        ren.sortingOrder = number;
+        ren.sortingOrder = number + 10;
         ren.sprite = sprite;
     }
 

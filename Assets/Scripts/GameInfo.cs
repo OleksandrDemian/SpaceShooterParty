@@ -5,7 +5,8 @@
     private bool enableAsteroids = true;
     private bool enableShields = true;
     private bool enableBonuses = true;
-    private bool enabeAudio = true;
+    private bool enabeAudio = false;
+    private bool timerAtCenter = true;
 
     public GameInfo()
     {
@@ -98,6 +99,18 @@
         set
         {
             enabeAudio = value;
+        }
+    }
+
+    public bool TimerAtCenter
+    {
+        get
+        {
+            return timerAtCenter;
+        }
+        set
+        {
+            timerAtCenter = value;
         }
     }
 

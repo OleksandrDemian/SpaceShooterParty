@@ -19,7 +19,16 @@ public class MatchCountdown : MonoBehaviour
         Instance = this;
     }
 
-	void Update () {
+    private void Start()
+    {
+        if (!GameInfo.Instance.TimerAtCenter)
+        {
+            timerTxt.fontSize = 30;
+            timerTxt.alignment = TextAnchor.UpperCenter;
+        }
+    }
+
+	private void Update () {
         matchTime -= GameTime.TimeScale;
         if (countdown)
             if(timerTxt != null)

@@ -61,11 +61,15 @@ public class Test : MonoBehaviour
     {
         //SceneLoader.LoadScene("Lobby");
         //AbilityTest();
-        BonusTest();
+        //BonusTest();
         /*ExplosionManager manager = ObjectPool.Instance.Get<ExplosionManager>();
         manager.Initialize(Vector3.zero);*/
         /*BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
-        bh.Initialize(Vector3.zero);*/
+        bh.Initialize(GameManager.Instance.GetRandomPoint());*/
+
+        Asteroid ast = ObjectPool.Instance.Get<Asteroid>();
+        ast.Initialize();
+
         /*PowerUp b = ObjectPool.Instance.Get<PowerUp>();
         b.AddBonus(new SlowDownTimeBonus(1.8f));
         b.transform.position = Vector2.zero;*/
@@ -130,7 +134,7 @@ public class Test : MonoBehaviour
                 controller.GetFire().SetMode(FireMode.ONESHOT);
             }));
         }));
-        /*
+        
         bonus.AddBonus(new GenericBonus(delegate (GameObject target)
         {
             Vector3 position = target.transform.position;
@@ -140,11 +144,11 @@ public class Test : MonoBehaviour
                 BlackHole bh = ObjectPool.Instance.Get<BlackHole>();
                 ShipController player = target.GetComponent<ShipController>();
                 if (player != null)
-                    bh.SetOnDamageListener(player.DamageListener);
+                    bh.SetDamageListener(player);
                 bh.Initialize(position);
             }));
         }));
-        */
+        
         bonus.EnableFollowing(negative);
     }
 

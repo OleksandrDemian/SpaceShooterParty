@@ -17,6 +17,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlayAudio(string name)
     {
+        return;
+
         if (!enabled)
             return;
         
